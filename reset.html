@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restablecer contraseña — PagoLocal</title>
+<meta name="theme-color" content="#0D0D14">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='65' font-size='52' font-family='system-ui,-apple-system,sans-serif' font-weight='700' text-anchor='middle' fill='%230D0D14'%3EP%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0D0D14;
+    --surface: #16161F;
+    --card: #1E1E2A;
+    --border: #2A2A3C;
+    --accent: #00F0A0;
+    --accent-dim: #00F0A020;
+    --red: #FF4D6A;
+    --red-dim: #FF4D6A20;
+    --text: #F0F0FA;
+    --muted: #6060A0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .logo-mark {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--accent);
+    color: var(--bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .header p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .field { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  input[type="password"] {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    padding: 14px 16px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  input[type="password"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  button {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: opacity 0.15s, transform 0.05s;
+    font-family: inherit;
+  }
+  button:hover:not(:disabled) { opacity: 0.9; }
+  button:active:not(:disabled) { transform: translateY(1px); }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .alert {
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .alert.show { display: block; }
+  .alert.error {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    color: var(--red);
+  }
+  .alert.success {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="logo-mark">P</div>
+    <h1>Restablecer contraseña</h1>
+    <p id="subtitle">Introduce tu nueva contraseña.</p>
+  </div>
+
+  <div id="alert" class="alert"></div>
+
+  <form id="reset-form">
+    <div class="field">
+      <label for="pwd1">Nueva contraseña</label>
+      <input type="password" id="pwd1" minlength="6" required autocomplete="new-password">
+      <div class="hint">Mínimo 6 caracteres.</div>
+    </div>
+
+    <div class="field">
+      <label for="pwd2">Confirma tu nueva contraseña</label>
+      <input type="password" id="pwd2" minlength="6" required autocomplete="new-password">
+    </div>
+
+    <button type="submit" id="btn-submit">Restablecer contraseña</button>
+  </form>
+
+  <div class="footer">
+    <p>¿Recuerdas tu contraseña? <a href="/">Volver a la app</a></p>
+  </div>
+</div>
+
+<script>
+(function(){
+  const API_BASE = 'https://localpay-backend-production.up.railway.app';
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  const form = document.getElementById('reset-form');
+  const alertBox = document.getElementById('alert');
+  const subtitle = document.getElementById('subtitle');
+  const btn = document.getElementById('btn-submit');
+
+  function showAlert(msg, type){
+    alertBox.textContent = msg;
+    alertBox.className = 'alert show ' + type;
+  }
+
+  // Si no hay token en el URL, no se puede continuar
+  if(!token){
+    form.classList.add('hidden');
+    subtitle.textContent = 'Enlace inválido.';
+    showAlert('Este enlace no es válido. Solicita un nuevo email de restablecimiento desde la app.', 'error');
+    return;
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const pwd1 = document.getElementById('pwd1').value;
+    const pwd2 = document.getElementById('pwd2').value;
+
+    if(pwd1.length < 6){
+      showAlert('La contraseña debe tener al menos 6 caracteres.', 'error');
+      return;
+    }
+    if(pwd1 !== pwd2){
+      showAlert('Las contraseñas no coinciden.', 'error');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Procesando...';
+    alertBox.className = 'alert';
+
+    try {
+      const r = await fetch(API_BASE + '/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, nueva_password: pwd1 })
+      });
+      const data = await r.json().catch(()=>({}));
+
+      if(r.ok && data.ok){
+        form.classList.add('hidden');
+        subtitle.textContent = 'Contraseña actualizada.';
+        showAlert('Tu contraseña ha sido restablecida correctamente. Ya puedes volver a la app e iniciar sesión.', 'success');
+      } else {
+        const motivo = data.error || 'No se ha podido restablecer la contraseña.';
+        const expirado = /expirad|inv[áa]lid|caducad/i.test(motivo);
+        showAlert(expirado ? 'Este enlace ha caducado o ya se ha usado. Solicita uno nuevo desde la app.' : motivo, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Restablecer contraseña';
+      }
+    } catch(err) {
+      showAlert('No se ha podido conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Restablecer contraseña';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
