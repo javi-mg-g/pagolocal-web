@@ -66,6 +66,19 @@
     color: var(--muted);
     font-size: 14px;
   }
+  .badge-context {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
   .field { margin-bottom: 16px; }
   label {
     display: block;
@@ -150,8 +163,9 @@
 <div class="card">
   <div class="header">
     <div class="logo-mark">P</div>
-    <h1>Restablecer contraseña</h1>
+    <h1 id="title">Restablecer contraseña</h1>
     <p id="subtitle">Introduce tu nueva contraseña.</p>
+    <div id="badge-context" class="badge-context hidden">Cuenta de comercio</div>
   </div>
 
   <div id="alert" class="alert"></div>
@@ -181,11 +195,28 @@
   const API_BASE = 'https://localpay-backend-production.up.railway.app';
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
+  // [Bloque 7] tipo=comercio cambia el endpoint y el texto. Por defecto: usuario.
+  const tipo  = (params.get('tipo') || 'usuario').toLowerCase();
+  const esComercio = tipo === 'comercio';
 
-  const form = document.getElementById('reset-form');
-  const alertBox = document.getElementById('alert');
-  const subtitle = document.getElementById('subtitle');
-  const btn = document.getElementById('btn-submit');
+  // Endpoint según tipo de cuenta
+  const endpoint = esComercio
+    ? '/api/auth/reset-password-comercio'
+    : '/api/auth/reset-password';
+
+  const form        = document.getElementById('reset-form');
+  const alertBox    = document.getElementById('alert');
+  const titleEl     = document.getElementById('title');
+  const subtitle    = document.getElementById('subtitle');
+  const badgeCtx    = document.getElementById('badge-context');
+  const btn         = document.getElementById('btn-submit');
+
+  // Adaptar UI si es comercio
+  if (esComercio) {
+    titleEl.textContent  = 'Contraseña de comercio';
+    subtitle.textContent = 'Introduce la nueva contraseña con la que vas a iniciar sesión en la app de comercios.';
+    badgeCtx.classList.remove('hidden');
+  }
 
   function showAlert(msg, type){
     alertBox.textContent = msg;
@@ -219,7 +250,7 @@
     alertBox.className = 'alert';
 
     try {
-      const r = await fetch(API_BASE + '/api/auth/reset-password', {
+      const r = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, nueva_password: pwd1 })
@@ -229,7 +260,10 @@
       if(r.ok && data.ok){
         form.classList.add('hidden');
         subtitle.textContent = 'Contraseña actualizada.';
-        showAlert('Tu contraseña ha sido restablecida correctamente. Ya puedes volver a la app e iniciar sesión.', 'success');
+        const msgOk = esComercio
+          ? 'Tu contraseña ha sido restablecida correctamente. Ya puedes iniciar sesión en la app de comercios.'
+          : 'Tu contraseña ha sido restablecida correctamente. Ya puedes volver a la app e iniciar sesión.';
+        showAlert(msgOk, 'success');
       } else {
         const motivo = data.error || 'No se ha podido restablecer la contraseña.';
         const expirado = /expirad|inv[áa]lid|caducad/i.test(motivo);
