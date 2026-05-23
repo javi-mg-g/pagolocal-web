@@ -1,1 +1,26 @@
-asdf
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "xyz.pagolocal.usuario",
+      "sha256_cert_fingerprints": [
+        "7A:7A:9B:C7:B7:6C:E4:B1:B3:E5:1F:76:3E:DD:97:BF:B1:1F:8B:1D:7B:9A:55:ED:CA:94:57:BE:A8:C1:47:D0"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "xyz.pagolocal.comercios",
+      "sha256_cert_fingerprints": [
+        "25:58:FD:F5:B6:F2:34:7F:7F:BB:41:06:63:3E:F1:38:DF:40:D2:D8:35:8B:38:36:52:42:DF:2A:2E:F6:AB:BF"
+      ]
+    }
+  }
+]
