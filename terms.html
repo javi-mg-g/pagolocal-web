@@ -1,185 +1,205 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Términos y Condiciones — PagoLocal</title>
-<meta name="theme-color" content="#0D0D14">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='65' font-size='52' font-family='system-ui,-apple-system,sans-serif' font-weight='700' text-anchor='middle' fill='%230D0D14'%3EP%3C/text%3E%3C/svg%3E">
-<style>
-  :root {
-    --bg: #0D0D14; --surface: #16161F; --card: #1E1E2A;
-    --border: #2A2A3C; --accent: #00F0A0;
-    --text: #F0F0FA; --muted: #9090C0;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--text); }
-  body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .container { max-width: 760px; margin: 0 auto; padding: 24px; }
-  header {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 32px;
-  }
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .logo-mark {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    background: var(--accent);
-    color: var(--bg);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 18px;
-  }
-  h1 {
-    font-size: clamp(28px, 4vw, 36px);
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-  }
-  .meta {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 32px;
-  }
-  h2 {
-    font-size: 22px;
-    margin: 32px 0 12px;
-    color: var(--accent);
-    letter-spacing: -0.01em;
-  }
-  h3 {
-    font-size: 17px;
-    margin: 20px 0 8px;
-    color: var(--text);
-  }
-  p, li {
-    color: var(--text);
-    font-size: 15px;
-    margin-bottom: 12px;
-  }
-  ul, ol {
-    padding-left: 22px;
-    margin-bottom: 12px;
-  }
-  li { margin-bottom: 6px; }
-  strong { color: var(--text); font-weight: 600; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  footer {
-    margin-top: 48px;
-    padding: 24px 0;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 13px;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#00F0A0" />
+  <title>Términos y Condiciones — PagoLocal</title>
+  <meta name="description" content="Términos y Condiciones de uso de PagoLocal." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='62' font-weight='700' text-anchor='middle' fill='%231A1A1A'%3EP%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    /* Estilos específicos del documento legal */
+    .legal {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+    .legal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      transition: color .15s ease;
+    }
+    .legal-back:hover { color: var(--primary); }
+    .legal-back svg { width: 14px; height: 14px; }
+
+    .legal h1 {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      margin-bottom: 12px;
+    }
+    .legal .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 48px;
+      font-family: "Manrope", sans-serif;
+    }
+    .legal h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 48px 0 16px;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+    .legal h3 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 28px 0 10px;
+      color: var(--ink);
+    }
+    .legal p, .legal li {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .legal p { margin: 0 0 16px; }
+    .legal ul, .legal ol { padding-left: 24px; margin: 0 0 16px; }
+    .legal li { margin-bottom: 8px; }
+    .legal strong { color: var(--ink); font-weight: 600; }
+    .legal a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: color .15s ease;
+    }
+    .legal a:hover { color: var(--accent-deep); }
+
+    .legal-footer {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .legal-footer a { color: var(--muted); text-decoration: none; }
+    .legal-footer a:hover { color: var(--primary); }
+
+    .header-mini {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <a href="/" class="logo">
-      <span class="logo-mark">P</span>
-      PagoLocal
-    </a>
+  <header class="header-mini">
+    <div class="container">
+      <a href="/" class="logo">
+        <span class="logo-mark">P</span>
+        <span>PagoLocal</span>
+      </a>
+    </div>
   </header>
 
-  <h1>Términos y Condiciones</h1>
-  <p class="meta">Versión 1.0 · Última actualización: 4 de mayo de 2026</p>
+  <article class="legal">
+    <a href="/" class="legal-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Volver al inicio
+    </a>
 
-  <h2>1. Objeto</h2>
-  <p>Los presentes términos y condiciones (en adelante, los "Términos") regulan el acceso y uso de la aplicación PagoLocal, así como sus servicios asociados (en adelante, la "Aplicación" o el "Servicio"). PagoLocal es una plataforma que conecta a usuarios consumidores con comercios locales de Ontinyent (Valencia, España) para facilitar pagos digitales y la obtención de cashback.</p>
-  <p>El acceso o uso de la Aplicación implica la aceptación expresa y sin reservas de estos Términos.</p>
+    <h1>Términos y Condiciones</h1>
+    <p class="meta">Versión 1.0 · Última actualización: 4 de mayo de 2026</p>
 
-  <h2>2. Identificación del prestador</h2>
-  <p>La Aplicación es operada por:</p>
-  <ul>
-    <li><strong>Nombre:</strong> [Pendiente de cumplimentar]</li>
-    <li><strong>Domicilio:</strong> Ontinyent, Valencia, España</li>
-    <li><strong>Contacto:</strong> <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a></li>
-  </ul>
+    <h2>1. Objeto</h2>
+    <p>Los presentes términos y condiciones (en adelante, los "Términos") regulan el acceso y uso de la aplicación PagoLocal, así como sus servicios asociados (en adelante, la "Aplicación" o el "Servicio"). PagoLocal es una plataforma que conecta a usuarios consumidores con comercios locales de Ontinyent (Valencia, España) para facilitar pagos digitales y la obtención de cashback.</p>
+    <p>El acceso o uso de la Aplicación implica la aceptación expresa y sin reservas de estos Términos.</p>
 
-  <h2>3. Registro y cuenta de usuario</h2>
-  <p>Para utilizar PagoLocal es necesario crear una cuenta personal proporcionando una dirección de correo electrónico válida. El usuario se compromete a:</p>
-  <ul>
-    <li>Proporcionar información veraz y actualizada.</li>
-    <li>Mantener la confidencialidad de sus credenciales de acceso.</li>
-    <li>Ser mayor de edad (18 años o más).</li>
-    <li>Notificar a PagoLocal cualquier uso no autorizado de su cuenta.</li>
-  </ul>
-  <p>El usuario es responsable de toda actividad realizada desde su cuenta. PagoLocal puede suspender cuentas en caso de detección de fraude, comportamiento malintencionado o uso indebido del Servicio.</p>
+    <h2>2. Identificación del prestador</h2>
+    <p>La Aplicación es operada por:</p>
+    <ul>
+      <li><strong>Nombre:</strong> [Pendiente de cumplimentar]</li>
+      <li><strong>Domicilio:</strong> Ontinyent, Valencia, España</li>
+      <li><strong>Contacto:</strong> <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a></li>
+    </ul>
 
-  <h2>4. Funcionamiento del Servicio</h2>
-  <h3>4.1 Pagos</h3>
-  <p>PagoLocal permite realizar pagos en comercios adheridos mediante:</p>
-  <ul>
-    <li><strong>Códigos QR</strong> escaneados en el establecimiento físico.</li>
-    <li><strong>Pedidos en marketplace</strong> realizados a través de la Aplicación.</li>
-  </ul>
-  <p>Los pagos se procesan a través de la pasarela de Cecabank, entidad bancaria registrada y supervisada. PagoLocal no almacena datos completos de tarjetas de pago; únicamente conserva tokens de operación cumpliendo el estándar PCI-DSS.</p>
+    <h2>3. Registro y cuenta de usuario</h2>
+    <p>Para utilizar PagoLocal es necesario crear una cuenta personal proporcionando una dirección de correo electrónico válida. El usuario se compromete a:</p>
+    <ul>
+      <li>Proporcionar información veraz y actualizada.</li>
+      <li>Mantener la confidencialidad de sus credenciales de acceso.</li>
+      <li>Ser mayor de edad (18 años o más).</li>
+      <li>Notificar a PagoLocal cualquier uso no autorizado de su cuenta.</li>
+    </ul>
+    <p>El usuario es responsable de toda actividad realizada desde su cuenta. PagoLocal puede suspender cuentas en caso de detección de fraude, comportamiento malintencionado o uso indebido del Servicio.</p>
 
-  <h3>4.2 Cashback</h3>
-  <p>El cashback es un saldo virtual generado en cada pago según el porcentaje configurado por cada comercio. Este saldo:</p>
-  <ul>
-    <li>Solo puede utilizarse en comercios adheridos a PagoLocal que acepten cashback.</li>
-    <li>No es canjeable por dinero en efectivo ni transferible entre usuarios.</li>
-    <li>Puede ajustarse en caso de devolución de la operación que lo generó.</li>
-  </ul>
+    <h2>4. Funcionamiento del Servicio</h2>
+    <h3>4.1 Pagos</h3>
+    <p>PagoLocal permite realizar pagos en comercios adheridos mediante:</p>
+    <ul>
+      <li><strong>Códigos QR</strong> escaneados en el establecimiento físico.</li>
+      <li><strong>Pedidos en marketplace</strong> realizados a través de la Aplicación.</li>
+    </ul>
+    <p>Los pagos se procesan a través de la pasarela de Cecabank, entidad bancaria registrada y supervisada. PagoLocal no almacena datos completos de tarjetas de pago; únicamente conserva tokens de operación cumpliendo el estándar PCI-DSS.</p>
 
-  <h3>4.3 Devoluciones</h3>
-  <p>El usuario puede solicitar devoluciones desde la Aplicación. La gestión recae en el comercio, que dispone de 48 horas para aceptar o rechazar la solicitud. Una vez aceptada, el reembolso se procesa contra la tarjeta de origen y, en su caso, se descuenta el cashback correspondiente.</p>
+    <h3>4.2 Cashback</h3>
+    <p>El cashback es un saldo virtual generado en cada pago según el porcentaje configurado por cada comercio. Este saldo:</p>
+    <ul>
+      <li>Solo puede utilizarse en comercios adheridos a PagoLocal que acepten cashback.</li>
+      <li>No es canjeable por dinero en efectivo ni transferible entre usuarios.</li>
+      <li>Puede ajustarse en caso de devolución de la operación que lo generó.</li>
+    </ul>
 
-  <h2>5. Obligaciones del usuario</h2>
-  <p>El usuario se compromete a:</p>
-  <ul>
-    <li>No usar la Aplicación con fines ilícitos o que vulneren derechos de terceros.</li>
-    <li>No intentar acceder a sistemas o datos a los que no esté autorizado.</li>
-    <li>No realizar ingeniería inversa, descompilar o copiar la Aplicación.</li>
-    <li>Disponer de medios técnicos adecuados (dispositivo móvil compatible, conexión a Internet).</li>
-  </ul>
+    <h3>4.3 Devoluciones</h3>
+    <p>El usuario puede solicitar devoluciones desde la Aplicación. La gestión recae en el comercio, que dispone de 48 horas para aceptar o rechazar la solicitud. Una vez aceptada, el reembolso se procesa contra la tarjeta de origen y, en su caso, se descuenta el cashback correspondiente.</p>
 
-  <h2>6. Propiedad intelectual</h2>
-  <p>Todo el contenido de la Aplicación (código, diseño, marca, textos, gráficos) es propiedad de PagoLocal o de sus licenciantes. Su uso queda limitado al funcionamiento normal del Servicio.</p>
+    <h2>5. Obligaciones del usuario</h2>
+    <p>El usuario se compromete a:</p>
+    <ul>
+      <li>No usar la Aplicación con fines ilícitos o que vulneren derechos de terceros.</li>
+      <li>No intentar acceder a sistemas o datos a los que no esté autorizado.</li>
+      <li>No realizar ingeniería inversa, descompilar o copiar la Aplicación.</li>
+      <li>Disponer de medios técnicos adecuados (dispositivo móvil compatible, conexión a Internet).</li>
+    </ul>
 
-  <h2>7. Limitación de responsabilidad</h2>
-  <p>PagoLocal pone los medios técnicos razonables para garantizar el funcionamiento del Servicio, pero no garantiza disponibilidad ininterrumpida ni ausencia de errores. PagoLocal no será responsable de:</p>
-  <ul>
-    <li>Caídas o degradaciones del Servicio causadas por terceros (proveedores de hosting, pasarela de pago, operador de telefonía, etc.).</li>
-    <li>La calidad de los productos o servicios prestados por los comercios adheridos.</li>
-    <li>Pérdidas o daños derivados del uso no autorizado de la cuenta del usuario por incumplimiento de sus obligaciones de seguridad.</li>
-  </ul>
+    <h2>6. Propiedad intelectual</h2>
+    <p>Todo el contenido de la Aplicación (código, diseño, marca, textos, gráficos) es propiedad de PagoLocal o de sus licenciantes. Su uso queda limitado al funcionamiento normal del Servicio.</p>
 
-  <h2>8. Modificación del Servicio y de los Términos</h2>
-  <p>PagoLocal se reserva el derecho a modificar el Servicio y estos Términos en cualquier momento. Los cambios se comunicarán a los usuarios con razonable antelación y entrarán en vigor en la fecha indicada. El uso continuado de la Aplicación tras la modificación supone la aceptación de los nuevos Términos.</p>
+    <h2>7. Limitación de responsabilidad</h2>
+    <p>PagoLocal pone los medios técnicos razonables para garantizar el funcionamiento del Servicio, pero no garantiza disponibilidad ininterrumpida ni ausencia de errores. PagoLocal no será responsable de:</p>
+    <ul>
+      <li>Caídas o degradaciones del Servicio causadas por terceros (proveedores de hosting, pasarela de pago, operador de telefonía, etc.).</li>
+      <li>La calidad de los productos o servicios prestados por los comercios adheridos.</li>
+      <li>Pérdidas o daños derivados del uso no autorizado de la cuenta del usuario por incumplimiento de sus obligaciones de seguridad.</li>
+    </ul>
 
-  <h2>9. Baja del usuario</h2>
-  <p>El usuario puede dar de baja su cuenta en cualquier momento contactando con <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a>. La baja conlleva la eliminación de los datos personales conforme a la <a href="/privacy.html">Política de Privacidad</a>, salvo aquellos que deban conservarse por obligación legal.</p>
+    <h2>8. Modificación del Servicio y de los Términos</h2>
+    <p>PagoLocal se reserva el derecho a modificar el Servicio y estos Términos en cualquier momento. Los cambios se comunicarán a los usuarios con razonable antelación y entrarán en vigor en la fecha indicada. El uso continuado de la Aplicación tras la modificación supone la aceptación de los nuevos Términos.</p>
 
-  <h2>10. Legislación aplicable y jurisdicción</h2>
-  <p>Estos Términos se rigen por la legislación española. Para cualquier controversia derivada de su interpretación o cumplimiento, las partes se someten a los Juzgados y Tribunales de Valencia, salvo cuando la ley aplicable establezca un fuero distinto.</p>
+    <h2>9. Baja del usuario</h2>
+    <p>El usuario puede dar de baja su cuenta en cualquier momento contactando con <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a>. La baja conlleva la eliminación de los datos personales conforme a la <a href="/privacy.html">Política de Privacidad</a>, salvo aquellos que deban conservarse por obligación legal.</p>
 
-  <h2>11. Contacto</h2>
-  <p>Si tienes cualquier duda sobre estos Términos, contáctanos en <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a>.</p>
+    <h2>10. Legislación aplicable y jurisdicción</h2>
+    <p>Estos Términos se rigen por la legislación española. Para cualquier controversia derivada de su interpretación o cumplimiento, las partes se someten a los Juzgados y Tribunales de Valencia, salvo cuando la ley aplicable establezca un fuero distinto.</p>
 
-  <footer>
-    <p>© 2026 PagoLocal · <a href="/">Inicio</a> · <a href="/privacy.html">Privacidad</a></p>
-  </footer>
-</div>
+    <h2>11. Contacto</h2>
+    <p>Si tienes cualquier duda sobre estos Términos, contáctanos en <a href="mailto:soporte@pagolocal.xyz">soporte@pagolocal.xyz</a>.</p>
 
+    <div class="legal-footer">
+      <span>© <span id="year"></span> PagoLocal</span>
+      <a href="/">Inicio</a>
+      <a href="/privacy.html">Política de Privacidad</a>
+    </div>
+  </article>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

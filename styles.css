@@ -1,0 +1,344 @@
+/* ==============================================================
+   pagolocal.xyz · Estilos compartidos
+   --------------------------------------------------------------
+   Tokens de diseño + componentes comunes (header, footer, modal,
+   botones, eyebrow, contenedor, tipografía).
+   ============================================================== */
+
+/* ============================================================
+   PALETA — para cambiar el look de toda la web, edita aquí.
+   ============================================================ */
+:root {
+  --bg:          #FAF7F2;   /* crema, fondo principal */
+  --bg-card:     #FFFFFF;   /* fondo de tarjetas */
+  --ink:         #1A1A1A;   /* texto principal */
+  --ink-soft:    #4A4A4A;   /* texto secundario */
+  --muted:       #8B8580;   /* texto auxiliar */
+  --line:        #E8E2D7;   /* líneas y bordes */
+  --primary:     #0E3B2E;   /* verde profundo (coordinado con el neón) */
+  --primary-ink: #082821;   /* primary más oscuro */
+  --accent:      #00F0A0;   /* verde menta neón (color marca) */
+  --accent-deep: #00B57A;   /* verde marca más oscuro (para texto) */
+  --accent-soft: #D8FBED;   /* verde menta muy claro */
+  --coral:       #D85F4C;   /* terracota para detalles ocasionales */
+
+  --radius:      18px;
+  --radius-lg:   28px;
+  --shadow-sm:   0 1px 2px rgba(26,26,26,0.04), 0 2px 6px rgba(26,26,26,0.04);
+  --shadow:      0 4px 12px rgba(26,26,26,0.06), 0 12px 32px rgba(26,26,26,0.08);
+  --container:   1180px;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 50;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+h1 { font-size: clamp(2.4rem, 5.5vw, 4.4rem); font-weight: 600; }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 500; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+p  { margin: 0 0 1rem; color: var(--ink-soft); }
+a  { color: inherit; text-decoration: none; }
+img, svg { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.eyebrow {
+  display: inline-block;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  padding: 6px 14px;
+  background: var(--accent-soft);
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--primary-ink);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.btn-accent {
+  background: var(--accent);
+  color: var(--ink);
+}
+.btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,240,160,0.35);
+}
+.btn-ghost {
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  background: var(--bg-card);
+}
+.btn-ghost:hover {
+  border-color: var(--ink);
+}
+.btn-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 14px;
+  transition: transform .15s ease, box-shadow .15s ease;
+  position: relative;
+}
+.btn-store:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.btn-store svg { width: 26px; height: 26px; }
+.btn-store .small { font-size: 0.7rem; opacity: 0.7; line-height: 1; display: block; margin-bottom: 2px; }
+.btn-store .big   { font-size: 1.05rem; font-weight: 600; line-height: 1; }
+.btn-store::after {
+  content: "Próximamente";
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+.btn-store.live::after { display: none; }
+
+/* ============================================================
+   HEADER (compartido)
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Fraunces", serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.logo-mark {
+  width: 34px; height: 34px;
+  background: var(--accent);
+  color: var(--ink);
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: color .15s ease;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.lang-switch { display: flex; gap: 2px; background: var(--bg-card); padding: 3px; border-radius: 999px; border: 1px solid var(--line); }
+.lang-switch button {
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transition: all .15s ease;
+}
+.lang-switch button.active { background: var(--ink); color: var(--bg); }
+.lang-switch button:disabled { opacity: 0.4; cursor: not-allowed; }
+.lang-switch button:not(:disabled):not(.active):hover { color: var(--ink); }
+
+.menu-toggle { display: none; padding: 8px; }
+.menu-toggle svg { width: 26px; height: 26px; }
+
+@media (max-width: 880px) {
+  .nav-links { display: none; }
+  .menu-toggle { display: block; }
+  .nav-links.open {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg);
+    padding: 24px;
+    gap: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* ============================================================
+   FOOTER (compartido)
+   ============================================================ */
+footer.site-footer {
+  background: var(--ink);
+  color: rgba(250,247,242,0.8);
+  padding: 70px 0 36px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+.footer-brand h3 { color: var(--bg); margin-bottom: 14px; font-size: 1.5rem; }
+.footer-brand p { color: rgba(250,247,242,0.6); font-size: 0.92rem; max-width: 280px; }
+.footer-col h4 {
+  font-family: "Manrope", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a {
+  color: rgba(250,247,242,0.7);
+  font-size: 0.95rem;
+  transition: color .15s ease;
+}
+.footer-col a:hover { color: var(--bg); }
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid rgba(250,247,242,0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: rgba(250,247,242,0.5);
+}
+
+@media (max-width: 880px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   MODAL "Próximamente"
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,26,0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  animation: fadeIn .2s ease;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 460px;
+  width: 100%;
+  position: relative;
+  animation: slideUp .25s ease;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  transition: background .15s ease;
+}
+.modal-close:hover { background: var(--line); }
+.modal h3 { font-family: "Fraunces", serif; font-size: 1.6rem; margin-bottom: 12px; font-weight: 600; }
+.modal p { color: var(--ink-soft); margin-bottom: 24px; }
+.modal a.btn-primary { width: 100%; justify-content: center; }
+.modal-icon {
+  width: 56px; height: 56px;
+  background: var(--accent-soft);
+  color: var(--primary);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+}
+.modal-icon svg { width: 28px; height: 28px; }
+
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

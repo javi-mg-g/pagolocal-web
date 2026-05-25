@@ -1,196 +1,242 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Restablecer contraseña — PagoLocal</title>
-<meta name="theme-color" content="#0D0D14">
-<meta name="robots" content="noindex,nofollow">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='65' font-size='52' font-family='system-ui,-apple-system,sans-serif' font-weight='700' text-anchor='middle' fill='%230D0D14'%3EP%3C/text%3E%3C/svg%3E">
-<style>
-  :root {
-    --bg: #0D0D14;
-    --surface: #16161F;
-    --card: #1E1E2A;
-    --border: #2A2A3C;
-    --accent: #00F0A0;
-    --accent-dim: #00F0A020;
-    --red: #FF4D6A;
-    --red-dim: #FF4D6A20;
-    --text: #F0F0FA;
-    --muted: #6060A0;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  .card {
-    width: 100%;
-    max-width: 420px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px 28px;
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-  .logo-mark {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    background: var(--accent);
-    color: var(--bg);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 28px;
-    margin-bottom: 16px;
-  }
-  h1 {
-    font-size: 22px;
-    letter-spacing: -0.01em;
-    margin-bottom: 6px;
-  }
-  .header p {
-    color: var(--muted);
-    font-size: 14px;
-  }
-  .badge-context {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 4px 10px;
-    background: var(--accent-dim);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .field { margin-bottom: 16px; }
-  label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-  input[type="password"] {
-    width: 100%;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    padding: 14px 16px;
-    font-size: 15px;
-    font-family: inherit;
-    transition: border-color 0.15s;
-  }
-  input[type="password"]:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-  .hint {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  button {
-    width: 100%;
-    background: var(--accent);
-    color: var(--bg);
-    border: none;
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: opacity 0.15s, transform 0.05s;
-    font-family: inherit;
-  }
-  button:hover:not(:disabled) { opacity: 0.9; }
-  button:active:not(:disabled) { transform: translateY(1px); }
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .alert {
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 14px;
-    margin-bottom: 16px;
-    display: none;
-  }
-  .alert.show { display: block; }
-  .alert.error {
-    background: var(--red-dim);
-    border: 1px solid var(--red);
-    color: var(--red);
-  }
-  .alert.success {
-    background: var(--accent-dim);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-  }
-  .footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-  .hidden { display: none !important; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#00F0A0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Restablecer contraseña — PagoLocal</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='62' font-weight='700' text-anchor='middle' fill='%231A1A1A'%3EP%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    /* Estilos específicos del reset */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 500px;
+      height: 500px;
+      background: var(--accent);
+      opacity: 0.18;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+    }
+    body::after {
+      content: "";
+      position: absolute;
+      bottom: -200px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
+      background: var(--primary);
+      opacity: 0.08;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+    }
+
+    .reset-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 1;
+    }
+    .reset-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .reset-logo {
+      width: 64px;
+      height: 64px;
+      background: var(--accent);
+      color: var(--ink);
+      border-radius: 16px;
+      display: inline-grid;
+      place-items: center;
+      font-family: "Fraunces", serif;
+      font-weight: 800;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .reset-card h1 {
+      font-family: "Fraunces", serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .reset-header p {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .badge-context {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 5px 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-family: "Manrope", sans-serif;
+    }
+    input[type="password"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    button[type="submit"] {
+      width: 100%;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      border-radius: 999px;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background .15s ease, transform .1s ease, box-shadow .15s ease;
+      font-family: inherit;
+    }
+    button[type="submit"]:hover:not(:disabled) {
+      background: var(--primary-ink);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    button[type="submit"]:active:not(:disabled) { transform: translateY(0); }
+    button[type="submit"]:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .alert {
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      display: none;
+      line-height: 1.5;
+    }
+    .alert.show { display: block; }
+    .alert.error {
+      background: rgba(216,95,76,0.08);
+      border: 1px solid rgba(216,95,76,0.35);
+      color: var(--coral);
+    }
+    .alert.success {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      color: var(--primary);
+    }
+
+    .reset-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .reset-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .reset-footer a:hover { text-decoration: underline; }
+
+    .hidden { display: none !important; }
+  </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="header">
-    <div class="logo-mark">P</div>
-    <h1 id="title">Restablecer contraseña</h1>
-    <p id="subtitle">Introduce tu nueva contraseña.</p>
-    <div id="badge-context" class="badge-context hidden">Cuenta de comercio</div>
-  </div>
-
-  <div id="alert" class="alert"></div>
-
-  <form id="reset-form">
-    <div class="field">
-      <label for="pwd1">Nueva contraseña</label>
-      <input type="password" id="pwd1" minlength="6" required autocomplete="new-password">
-      <div class="hint">Mínimo 6 caracteres.</div>
+  <div class="reset-card">
+    <div class="reset-header">
+      <div class="reset-logo">P</div>
+      <h1 id="title">Restablecer contraseña</h1>
+      <p id="subtitle">Introduce tu nueva contraseña.</p>
+      <div id="badge-context" class="badge-context hidden">Cuenta de comercio</div>
     </div>
 
-    <div class="field">
-      <label for="pwd2">Confirma tu nueva contraseña</label>
-      <input type="password" id="pwd2" minlength="6" required autocomplete="new-password">
+    <div id="alert" class="alert"></div>
+
+    <form id="reset-form">
+      <div class="field">
+        <label for="pwd1">Nueva contraseña</label>
+        <input type="password" id="pwd1" minlength="6" required autocomplete="new-password" />
+        <div class="hint">Mínimo 6 caracteres.</div>
+      </div>
+
+      <div class="field">
+        <label for="pwd2">Confirma tu nueva contraseña</label>
+        <input type="password" id="pwd2" minlength="6" required autocomplete="new-password" />
+      </div>
+
+      <button type="submit" id="btn-submit">Restablecer contraseña</button>
+    </form>
+
+    <div class="reset-footer">
+      <p>¿Recuerdas tu contraseña? <a href="/">Volver al inicio</a></p>
     </div>
-
-    <button type="submit" id="btn-submit">Restablecer contraseña</button>
-  </form>
-
-  <div class="footer">
-    <p>¿Recuerdas tu contraseña? <a href="/">Volver a la app</a></p>
   </div>
-</div>
 
 <script>
+/* ==============================================================
+   LÓGICA DE RESET — Conecta con el backend de Railway.
+   No tocar a menos que el endpoint del backend cambie.
+   ============================================================== */
 (function(){
   const API_BASE = 'https://localpay-backend-production.up.railway.app';
   const params = new URLSearchParams(window.location.search);

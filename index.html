@@ -1,188 +1,995 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PagoLocal — Pagos para tu barrio</title>
-<meta name="description" content="PagoLocal es la plataforma de pagos del comercio local de Ontinyent. Cashback al pagar en tus tiendas favoritas.">
-<meta name="theme-color" content="#0D0D14">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='65' font-size='52' font-family='system-ui,-apple-system,sans-serif' font-weight='700' text-anchor='middle' fill='%230D0D14'%3EP%3C/text%3E%3C/svg%3E">
-<style>
-  :root {
-    --bg: #0D0D14;
-    --surface: #16161F;
-    --card: #1E1E2A;
-    --border: #2A2A3C;
-    --accent: #00F0A0;
-    --accent-dim: #00F0A020;
-    --text: #F0F0FA;
-    --muted: #6060A0;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    flex-direction: column;
-  }
-  .container { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 24px; }
-  header {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .logo-mark {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    background: var(--accent);
-    color: var(--bg);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 18px;
-  }
-  main {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    padding: 60px 0;
-  }
-  .hero { text-align: center; }
-  .hero h1 {
-    font-size: clamp(36px, 6vw, 56px);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
-  .hero h1 .accent { color: var(--accent); }
-  .hero p {
-    font-size: clamp(16px, 2vw, 19px);
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto 40px auto;
-  }
-  .badges {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 60px;
-  }
-  .badge {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 20px;
-    color: var(--text);
-    font-size: 14px;
-    text-decoration: none;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-  .badge:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
-  }
-  .feature {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: left;
-  }
-  .feature .icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: var(--accent-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    margin-bottom: 16px;
-  }
-  .feature h3 {
-    font-size: 16px;
-    margin-bottom: 6px;
-  }
-  .feature p {
-    color: var(--muted);
-    font-size: 14px;
-  }
-  footer {
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 13px;
-    text-align: center;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#00F0A0" />
+
+  <!-- SEO -->
+  <title>PagoLocal · Paga en Ontinyent y gana en cada compra</title>
+  <meta name="description" content="PagoLocal es la app de pago del comercio local de Ontinyent. Paga con QR en tus tiendas de siempre, gana cashback en cada compra y descubre productos locales en el marketplace." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pagolocal.xyz/" />
+  <meta property="og:title" content="PagoLocal · Paga en Ontinyent y gana en cada compra" />
+  <meta property="og:description" content="La app de pago del comercio local de Ontinyent. QR, cashback y marketplace local en una sola app." />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- Favicon SVG inline -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='62' font-weight='700' text-anchor='middle' fill='%231A1A1A'%3EP%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fuentes: Fraunces (display) + Manrope (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos compartidos -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    /* ============================================================
+       Estilos específicos de la landing
+       ============================================================ */
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 60px 0 80px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero h1 { margin-bottom: 24px; }
+    .hero h1 em {
+      font-style: italic;
+      font-variation-settings: "SOFT" 100, "opsz" 144;
+      color: var(--primary);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0.08em;
+      height: 0.32em;
+      background: var(--accent);
+      z-index: -1;
+      opacity: 0.55;
+      border-radius: 4px;
+    }
+    .hero-lead {
+      font-size: 1.2rem;
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-trust {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .hero-trust-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-soft);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+    }
+    .hero-trust-icon svg { width: 18px; height: 18px; }
+
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      max-width: 480px;
+      margin-left: auto;
+    }
+    .phone-frame {
+      position: absolute;
+      inset: 0;
+      background: var(--primary);
+      border-radius: 56px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      transform: rotate(-3deg);
+    }
+    .phone-screen {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      border-radius: 44px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-screen::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 5px;
+      background: var(--line);
+      border-radius: 999px;
+    }
+    .phone-balance {
+      margin-top: 24px;
+      padding: 18px;
+      background: var(--primary);
+      color: var(--bg);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phone-balance::after {
+      content: "";
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 120px; height: 120px;
+      background: var(--accent);
+      opacity: 0.18;
+      border-radius: 50%;
+      filter: blur(20px);
+    }
+    .phone-balance-label { font-size: 0.75rem; opacity: 0.7; letter-spacing: 0.08em; text-transform: uppercase; position: relative; }
+    .phone-balance-value { font-family: "Fraunces", serif; font-size: 2rem; font-weight: 600; margin-top: 4px; color: var(--accent); position: relative; }
+    .phone-balance-value small { font-size: 1rem; opacity: 0.7; margin-left: 4px; color: var(--bg); }
+    .phone-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.85rem;
+    }
+    .phone-row:last-child { border-bottom: 0; }
+    .phone-row-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+    .phone-row-main { flex: 1; }
+    .phone-row-name { font-weight: 600; color: var(--ink); }
+    .phone-row-sub { font-size: 0.75rem; color: var(--muted); }
+    .phone-row-amount { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .phone-row-cb { color: var(--accent-deep); font-size: 0.75rem; font-weight: 700; }
+
+    .hero-decor {
+      position: absolute;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.22;
+      filter: blur(70px);
+      top: 8%;
+      left: 38%;
+      z-index: -1;
+    }
+
+    @media (max-width: 880px) {
+      .hero { padding: 40px 0 60px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+      .hero-visual { max-width: 320px; margin: 0 auto; }
+    }
+
+    /* SECCIÓN GENÉRICA */
+    section { padding: 90px 0; }
+    @media (max-width: 700px) { section { padding: 60px 0; } }
+
+    .section-head {
+      max-width: 700px;
+      margin-bottom: 60px;
+    }
+    .section-head h2 { margin-bottom: 16px; }
+    .section-head p { font-size: 1.1rem; color: var(--ink-soft); }
+
+    /* CÓMO FUNCIONA — 3 pasos */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .step:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+    .step-num {
+      position: absolute;
+      top: 24px; right: 28px;
+      font-family: "Fraunces", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--line);
+      line-height: 1;
+    }
+    .step-icon {
+      width: 56px; height: 56px;
+      background: var(--accent-soft);
+      color: var(--primary);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 28px;
+    }
+    .step-icon svg { width: 28px; height: 28px; stroke-width: 1.6; }
+    .step h3 { margin-bottom: 10px; }
+    .step p { margin: 0; color: var(--ink-soft); }
+
+    @media (max-width: 880px) {
+      .how-grid { grid-template-columns: 1fr; }
+    }
+
+    /* DÓNDE USAR — mosaico */
+    .where-bg { background: var(--bg-card); }
+    .where-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .where-card {
+      padding: 32px 24px;
+      border-radius: var(--radius);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      transition: all .2s ease;
+    }
+    .where-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    .where-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .where-card h3 { font-family: "Manrope", sans-serif; font-size: 1.05rem; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .where-card p { font-size: 0.9rem; margin: 0; color: var(--muted); }
+
+    @media (max-width: 880px) { .where-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .where-grid { grid-template-columns: 1fr; } }
+
+    /* PARA COMERCIOS */
+    .merchants {
+      background: var(--primary);
+      color: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 70px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .merchants::before {
+      content: "";
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.2;
+      filter: blur(80px);
+      top: -100px; right: -80px;
+    }
+    .merchants-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+    .merchants h2 { color: var(--bg); margin-bottom: 20px; }
+    .merchants .eyebrow {
+      background: rgba(0,240,160,0.18);
+      color: var(--accent);
+    }
+    .merchants-lead { color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 28px; }
+    .merchants-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      background: var(--accent);
+      color: var(--ink);
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .merchants-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,240,160,0.35);
+    }
+    .merchants-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .merchants-list li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .merchants-list svg {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+    .merchants-list strong { display: block; margin-bottom: 4px; }
+    .merchants-list span { color: rgba(255,255,255,0.75); font-size: 0.95rem; }
+
+    @media (max-width: 880px) {
+      .merchants { padding: 50px 32px; }
+      .merchants-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* SEGURIDAD */
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+    .security-item { text-align: left; }
+    .security-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+    }
+    .security-icon svg { width: 22px; height: 22px; stroke-width: 1.7; }
+    .security-item h3 { font-family: "Manrope", sans-serif; font-size: 1rem; margin-bottom: 6px; }
+    .security-item p { font-size: 0.92rem; margin: 0; }
+
+    @media (max-width: 880px) { .security-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+    @media (max-width: 480px) { .security-grid { grid-template-columns: 1fr; } }
+
+    /* FAQ */
+    .faq-bg { background: var(--bg-card); }
+    .faq-list { max-width: 780px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 0;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      transition: color .15s ease;
+    }
+    .faq-item summary:hover { color: var(--primary); }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: "+";
+      font-family: "Fraunces", serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      transition: transform .2s ease;
+      line-height: 1;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); color: var(--primary); }
+    .faq-answer {
+      padding: 0 0 24px;
+      color: var(--ink-soft);
+      max-width: 680px;
+    }
+    .faq-answer p { margin: 0 0 12px; }
+    .faq-answer p:last-child { margin: 0; }
+    .faq-answer a { color: var(--primary); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+    /* CTA FINAL */
+    .cta-final {
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-final h2 { max-width: 640px; margin: 0 auto 20px; }
+    .cta-final p { font-size: 1.1rem; max-width: 560px; margin: 0 auto 36px; }
+    .cta-final .hero-ctas { justify-content: center; }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <a href="/" class="logo">
-      <span class="logo-mark">P</span>
-      PagoLocal
-    </a>
-  </div>
-</header>
+  <!-- =================== HEADER =================== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a href="/" class="logo">
+        <span class="logo-mark">P</span>
+        <span>PagoLocal</span>
+      </a>
 
-<main>
-  <div class="container hero">
-    <h1>Pagos para <span class="accent">tu barrio</span></h1>
-    <p>La app de pagos del comercio local de Ontinyent. Paga con QR, gana cashback y descubre las tiendas de tu zona.</p>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#como-funciona" data-i18n="nav.how"></a></li>
+        <li><a href="#donde-usar"    data-i18n="nav.where"></a></li>
+        <li><a href="#comercios"     data-i18n="nav.merchants"></a></li>
+        <li><a href="#seguridad"     data-i18n="nav.security"></a></li>
+        <li><a href="#faq"           data-i18n="nav.faq"></a></li>
+      </ul>
 
-    <div class="badges">
-      <span class="badge">📱 Próximamente en Google Play</span>
-      <span class="badge">🍎 Próximamente en App Store</span>
-    </div>
-
-    <div class="features">
-      <div class="feature">
-        <div class="icon">💚</div>
-        <h3>Apoya a tu comercio</h3>
-        <p>Cada pago se queda en tu barrio.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">🎁</div>
-        <h3>Cashback en cada compra</h3>
-        <p>Acumula puntos para usar en futuros pagos.</p>
-      </div>
-      <div class="feature">
-        <div class="icon">📲</div>
-        <h3>Tan simple como un QR</h3>
-        <p>Paga en segundos, sin tarjetas físicas.</p>
+      <div class="nav-right">
+        <div class="lang-switch" role="tablist" aria-label="Idioma">
+          <button data-lang="es" class="active">ES</button>
+          <button data-lang="val" disabled title="Próximamente">VAL</button>
+          <button data-lang="en"  disabled title="Próximamente">EN</button>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
     </div>
-  </div>
-</main>
+  </header>
 
-<footer>
-  <div class="container">
-    <p>© 2026 PagoLocal · Ontinyent, Valencia · <a href="mailto:hola@pagolocal.xyz">hola@pagolocal.xyz</a></p>
-  </div>
-</footer>
+  <!-- =================== HERO =================== -->
+  <section class="hero">
+    <div class="hero-decor" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow" data-i18n="hero.eyebrow"></span>
+        <h1 data-i18n-html="hero.title"></h1>
+        <p class="hero-lead" data-i18n="hero.lead"></p>
+        <div class="hero-ctas">
+          <a href="#" class="btn-store" data-action="download" data-platform="ios">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.86-3.08.4-1.09-.48-2.09-.49-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            <span>
+              <span class="small" data-i18n="cta.iosSmall"></span>
+              <span class="big" data-i18n="cta.iosBig"></span>
+            </span>
+          </a>
+          <a href="#" class="btn-store" data-action="download" data-platform="android">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.18 0-.357-.072-.49-.205l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477l1.526 1.526c.273.273.273.717 0 .99-.273.273-.717.273-.99 0l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477m-7.36-2.964l1.526-1.526c.273-.273.273-.717 0-.99-.273-.273-.717-.273-.99 0L7.706 9.86c-.41.41-.41 1.067 0 1.477.41.41 1.067.41 1.477 0M5.864 6.5h12.272c.62 0 1.123.503 1.123 1.123v8.754c0 .62-.503 1.123-1.123 1.123H5.864c-.62 0-1.123-.503-1.123-1.123V7.623c0-.62.503-1.123 1.123-1.123z"/><circle cx="8.5" cy="11" r="1"/><circle cx="15.5" cy="11" r="1"/></svg>
+            <span>
+              <span class="small" data-i18n="cta.androidSmall"></span>
+              <span class="big" data-i18n="cta.androidBig"></span>
+            </span>
+          </a>
+        </div>
 
+        <div class="hero-trust">
+          <div class="hero-trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span data-i18n="hero.trust"></span>
+        </div>
+      </div>
+
+      <!-- Mockup del móvil -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-balance">
+              <div class="phone-balance-label" data-i18n="phone.balance"></div>
+              <div class="phone-balance-value">12,40<small>€</small></div>
+            </div>
+            <div>
+              <div class="phone-row">
+                <div class="phone-row-icon">☕</div>
+                <div class="phone-row-main">
+                  <div class="phone-row-name">Cafetería Central</div>
+                  <div class="phone-row-sub">Hoy · 09:14</div>
+                </div>
+                <div>
+                  <div class="phone-row-amount">−4,20 €</div>
+                  <div class="phone-row-cb">+0,21 €</div>
+                </div>
+              </div>
+              <div class="phone-row">
+                <div class="phone-row-icon">🥐</div>
+                <div class="phone-row-main">
+                  <div class="phone-row-name">Forn Pa i Coca</div>
+                  <div class="phone-row-sub">Ayer · 08:32</div>
+                </div>
+                <div>
+                  <div class="phone-row-amount">−6,80 €</div>
+                  <div class="phone-row-cb">+0,34 €</div>
+                </div>
+              </div>
+              <div class="phone-row">
+                <div class="phone-row-icon">👕</div>
+                <div class="phone-row-main">
+                  <div class="phone-row-name">Boutique Lola</div>
+                  <div class="phone-row-sub">Lun · 18:05</div>
+                </div>
+                <div>
+                  <div class="phone-row-amount">−29,90 €</div>
+                  <div class="phone-row-cb">+1,49 €</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CÓMO FUNCIONA =================== -->
+  <section id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="how.eyebrow"></span>
+        <h2 data-i18n="how.title"></h2>
+        <p data-i18n="how.lead"></p>
+      </div>
+      <div class="how-grid">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3 data-i18n="how.step1.title"></h3>
+          <p  data-i18n="how.step1.text"></p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h3 data-i18n="how.step2.title"></h3>
+          <p  data-i18n="how.step2.text"></p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 data-i18n="how.step3.title"></h3>
+          <p  data-i18n="how.step3.text"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== DÓNDE USAR =================== -->
+  <section id="donde-usar" class="where-bg">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="where.eyebrow"></span>
+        <h2 data-i18n="where.title"></h2>
+        <p data-i18n="where.lead"></p>
+      </div>
+      <div class="where-grid">
+        <div class="where-card"><span class="where-emoji">🍽️</span><h3 data-i18n="where.c1.title"></h3><p data-i18n="where.c1.text"></p></div>
+        <div class="where-card"><span class="where-emoji">👕</span><h3 data-i18n="where.c2.title"></h3><p data-i18n="where.c2.text"></p></div>
+        <div class="where-card"><span class="where-emoji">🥖</span><h3 data-i18n="where.c3.title"></h3><p data-i18n="where.c3.text"></p></div>
+        <div class="where-card"><span class="where-emoji">💆</span><h3 data-i18n="where.c4.title"></h3><p data-i18n="where.c4.text"></p></div>
+        <div class="where-card"><span class="where-emoji">📚</span><h3 data-i18n="where.c5.title"></h3><p data-i18n="where.c5.text"></p></div>
+        <div class="where-card"><span class="where-emoji">🌺</span><h3 data-i18n="where.c6.title"></h3><p data-i18n="where.c6.text"></p></div>
+        <div class="where-card"><span class="where-emoji">💍</span><h3 data-i18n="where.c7.title"></h3><p data-i18n="where.c7.text"></p></div>
+        <div class="where-card"><span class="where-emoji">✨</span><h3 data-i18n="where.c8.title"></h3><p data-i18n="where.c8.text"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PARA COMERCIOS =================== -->
+  <section id="comercios">
+    <div class="container">
+      <div class="merchants">
+        <div class="merchants-grid">
+          <div>
+            <span class="eyebrow" data-i18n="merchants.eyebrow"></span>
+            <h2 data-i18n="merchants.title"></h2>
+            <p class="merchants-lead" data-i18n="merchants.lead"></p>
+            <a href="mailto:hola@pagolocal.xyz?subject=Quiero%20unir%20mi%20negocio%20a%20PagoLocal" class="merchants-cta">
+              <span data-i18n="merchants.cta"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <ul class="merchants-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <div><strong data-i18n="merchants.b1.title"></strong><span data-i18n="merchants.b1.text"></span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <div><strong data-i18n="merchants.b2.title"></strong><span data-i18n="merchants.b2.text"></span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <div><strong data-i18n="merchants.b3.title"></strong><span data-i18n="merchants.b3.text"></span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <div><strong data-i18n="merchants.b4.title"></strong><span data-i18n="merchants.b4.text"></span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== SEGURIDAD =================== -->
+  <section id="seguridad">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="security.eyebrow"></span>
+        <h2 data-i18n="security.title"></h2>
+        <p data-i18n="security.lead"></p>
+      </div>
+      <div class="security-grid">
+        <div class="security-item">
+          <div class="security-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 data-i18n="security.s1.title"></h3>
+          <p  data-i18n="security.s1.text"></p>
+        </div>
+        <div class="security-item">
+          <div class="security-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 16v-2.4a4 4 0 0 0-1.6-3.2L12 8 8.6 10.4A4 4 0 0 0 7 13.6V16"/><circle cx="12" cy="5" r="2"/><path d="M5 21h14"/></svg>
+          </div>
+          <h3 data-i18n="security.s2.title"></h3>
+          <p  data-i18n="security.s2.text"></p>
+        </div>
+        <div class="security-item">
+          <div class="security-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 data-i18n="security.s3.title"></h3>
+          <p  data-i18n="security.s3.text"></p>
+        </div>
+        <div class="security-item">
+          <div class="security-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+          </div>
+          <h3 data-i18n="security.s4.title"></h3>
+          <p  data-i18n="security.s4.text"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FAQ =================== -->
+  <section id="faq" class="faq-bg">
+    <div class="container">
+      <div class="section-head" style="margin: 0 auto 50px; text-align: center;">
+        <span class="eyebrow" data-i18n="faq.eyebrow"></span>
+        <h2 data-i18n="faq.title"></h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary data-i18n="faq.q1.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q1.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q2.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q2.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q3.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q3.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q4.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q4.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q5.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q5.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q6.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q6.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q7.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q7.a"></p></div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q8.q"></summary>
+          <div class="faq-answer"><p data-i18n="faq.q8.a"></p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CTA FINAL =================== -->
+  <section class="cta-final">
+    <div class="container">
+      <span class="eyebrow" data-i18n="ctafinal.eyebrow"></span>
+      <h2 data-i18n="ctafinal.title"></h2>
+      <p data-i18n="ctafinal.lead"></p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-store" data-action="download" data-platform="ios">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.86-3.08.4-1.09-.48-2.09-.49-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          <span>
+            <span class="small" data-i18n="cta.iosSmall"></span>
+            <span class="big" data-i18n="cta.iosBig"></span>
+          </span>
+        </a>
+        <a href="#" class="btn-store" data-action="download" data-platform="android">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.18 0-.357-.072-.49-.205l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477l1.526 1.526c.273.273.273.717 0 .99-.273.273-.717.273-.99 0l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477m-7.36-2.964l1.526-1.526c.273-.273.273-.717 0-.99-.273-.273-.717-.273-.99 0L7.706 9.86c-.41.41-.41 1.067 0 1.477.41.41 1.067.41 1.477 0M5.864 6.5h12.272c.62 0 1.123.503 1.123 1.123v8.754c0 .62-.503 1.123-1.123 1.123H5.864c-.62 0-1.123-.503-1.123-1.123V7.623c0-.62.503-1.123 1.123-1.123z"/><circle cx="8.5" cy="11" r="1"/><circle cx="15.5" cy="11" r="1"/></svg>
+          <span>
+            <span class="small" data-i18n="cta.androidSmall"></span>
+            <span class="big" data-i18n="cta.androidBig"></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FOOTER =================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>PagoLocal</h3>
+          <p data-i18n="footer.tagline"></p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.col1.title"></h4>
+          <ul>
+            <li><a href="#como-funciona"  data-i18n="footer.col1.l1"></a></li>
+            <li><a href="#donde-usar"     data-i18n="footer.col1.l2"></a></li>
+            <li><a href="#seguridad"      data-i18n="footer.col1.l3"></a></li>
+            <li><a href="#faq"            data-i18n="footer.col1.l4"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.col2.title"></h4>
+          <ul>
+            <li><a href="#comercios"                                                       data-i18n="footer.col2.l1"></a></li>
+            <li><a href="mailto:hola@pagolocal.xyz?subject=Quiero%20unir%20mi%20negocio%20a%20PagoLocal" data-i18n="footer.col2.l2"></a></li>
+            <li><a href="mailto:hola@pagolocal.xyz"                                        data-i18n="footer.col2.l3"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.col3.title"></h4>
+          <ul>
+            <li><a href="/privacy.html" data-i18n="footer.col3.l1"></a></li>
+            <li><a href="/terms.html"   data-i18n="footer.col3.l2"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> PagoLocal · <span data-i18n="footer.madeIn"></span></span>
+        <span><a href="mailto:hola@pagolocal.xyz">hola@pagolocal.xyz</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =================== MODAL "Próximamente" =================== -->
+  <div class="modal-overlay" id="modalDownload" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" aria-label="Cerrar" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3 data-i18n="modal.title"></h3>
+      <p  data-i18n="modal.text"></p>
+      <a href="mailto:hola@pagolocal.xyz?subject=Quiero%20probar%20PagoLocal&body=Hola%2C%20me%20gustaría%20probar%20PagoLocal%20cuando%20esté%20disponible." class="btn btn-primary" data-i18n="modal.cta"></a>
+    </div>
+  </div>
+
+
+  <script>
+  /* ==============================================================
+     CONFIGURACIÓN — cuando publiques las apps, pega los enlaces.
+     Si los dejas vacíos, los botones abren el modal "Próximamente".
+     ============================================================== */
+  const APP_LINKS = {
+    ios:     '',  // ej. 'https://apps.apple.com/es/app/pagolocal/idXXXXXX'
+    android: ''   // ej. 'https://play.google.com/store/apps/details?id=xyz.pagolocal.usuario'
+  };
+
+  /* ==============================================================
+     SISTEMA DE TRADUCCIONES (i18n)
+     -------------------------------------------------------------
+     Para añadir Valencià o English: copia el bloque 'es' completo,
+     pégalo dentro de I18N.val o I18N.en, y traduce los textos.
+     Después, en el HTML del header, quita el atributo `disabled`
+     del botón correspondiente en .lang-switch.
+     ============================================================== */
+  const I18N = {
+    es: {
+      nav: { how: "Cómo funciona", where: "Dónde usar", merchants: "Comercios", security: "Seguridad", faq: "Preguntas" },
+
+      cta: {
+        iosSmall: "Descargar en", iosBig: "App Store",
+        androidSmall: "Disponible en", androidBig: "Google Play"
+      },
+
+      hero: {
+        eyebrow: "Comercio local · Ontinyent",
+        title:   "Paga en tu barrio. <em>Gana</em> en cada compra.",
+        lead:    "PagoLocal es la app de pago del comercio de Ontinyent. Compra con un QR en tus tiendas de siempre, recibe cashback en cada compra y descubre productos locales en el marketplace.",
+        trust:   "Pagos protegidos por Cecabank · 100% gratis para usuarios"
+      },
+
+      phone: { balance: "Tu cashback disponible" },
+
+      how: {
+        eyebrow: "Cómo funciona",
+        title:   "Empieza a ahorrar en tres pasos",
+        lead:    "Sin papeleos, sin tarjetas físicas, sin esperas. Solo el comercio de Ontinyent en tu móvil.",
+        step1: { title: "1. Descarga la app",     text: "Disponible para iOS y Android. El registro es gratuito y tarda menos de un minuto." },
+        step2: { title: "2. Paga con QR",         text: "Escanea el QR del comercio o muestra el tuyo. El pago se hace al instante, con verificación biométrica." },
+        step3: { title: "3. Acumula cashback",    text: "Cada compra te devuelve un porcentaje en saldo, que puedes gastar en tu próxima compra en cualquier comercio PagoLocal." }
+      },
+
+      where: {
+        eyebrow: "Comercios PagoLocal",
+        title:   "Donde compras siempre, ahora con cashback",
+        lead:    "Una red de comercios de Ontinyent crece cada semana. Estos son algunos de los sectores donde ya puedes usar PagoLocal.",
+        c1: { title: "Restaurantes y cafeterías", text: "Bares, restaurantes, panaderías y heladerías." },
+        c2: { title: "Moda y calzado",            text: "Tiendas de ropa, zapaterías y complementos." },
+        c3: { title: "Alimentación",              text: "Fruterías, carnicerías, ultramarinos y especialistas." },
+        c4: { title: "Belleza y servicios",       text: "Peluquerías, estética, fisioterapia y bienestar." },
+        c5: { title: "Librerías y papelería",     text: "Libros, regalos y material escolar." },
+        c6: { title: "Floristerías",              text: "Ramos, plantas y decoración." },
+        c7: { title: "Joyería y relojería",       text: "Joyas, relojes y arreglos." },
+        c8: { title: "Y mucho más",               text: "Descubre todos los comercios en la app." }
+      },
+
+      merchants: {
+        eyebrow: "Para comercios",
+        title:   "¿Tienes un negocio en Ontinyent?",
+        lead:    "Únete a la red de comercios de PagoLocal y empieza a recibir pagos digitales sin terminal físico, fideliza a tu clientela y aparece en el marketplace que buscan los vecinos del pueblo.",
+        cta:     "Quiero unir mi negocio",
+        b1: { title: "Cobra sin TPV físico",          text: "Solo necesitas un móvil. Sin alquileres ni instalaciones." },
+        b2: { title: "Tu propio marketplace incluido", text: "Sube tus productos y véndelos online, con recogida o entrega." },
+        b3: { title: "Fideliza con cashback",          text: "Tú decides cuánto ofreces y cuánto se puede gastar en tu negocio." },
+        b4: { title: "Gestión todo-en-uno",            text: "Pedidos, mesas, devoluciones y notificaciones desde una sola app." }
+      },
+
+      security: {
+        eyebrow: "Seguridad",
+        title:   "Tu dinero, siempre protegido",
+        lead:    "PagoLocal cumple las normativas europeas de pagos y se apoya en infraestructura bancaria de primer nivel.",
+        s1: { title: "Pagos por Cecabank",          text: "Toda transacción se procesa con la pasarela TPV Virtual de Cecabank." },
+        s2: { title: "Identificación biométrica",   text: "Face ID o huella protegen cada pago, incluso si pierdes el móvil." },
+        s3: { title: "Cifrado de extremo a extremo", text: "Tus datos viajan cifrados y no se guardan en el dispositivo." },
+        s4: { title: "Cumplimiento PSD2",           text: "Bajo la normativa europea de servicios de pago." }
+      },
+
+      faq: {
+        eyebrow: "Dudas frecuentes",
+        title:   "Preguntas más comunes",
+        q1: { q: "¿Es gratis usar PagoLocal?",                      a: "Sí, descargar y usar la app es totalmente gratis. No hay cuotas mensuales ni comisiones por pagar con PagoLocal." },
+        q2: { q: "¿Necesito una tarjeta o cuenta especial?",        a: "No. PagoLocal funciona con cualquier tarjeta de débito o crédito española que ya tengas. Se vincula a la app de forma segura y nunca se almacena en tu móvil." },
+        q3: { q: "¿Cómo me doy de alta?",                           a: "Descarga PagoLocal desde App Store o Google Play, introduce tu email, crea una contraseña y verifica tu cuenta. Es cuestión de un minuto." },
+        q4: { q: "¿Cómo gano cashback?",                            a: "Cada comercio PagoLocal decide qué porcentaje devuelve por cada compra. Al pagar, ese porcentaje se acumula automáticamente en tu saldo, listo para gastar en cualquier comercio que acepte saldo PagoLocal." },
+        q5: { q: "¿Dónde puedo gastar mi cashback?",                a: "En cualquier comercio PagoLocal que tenga activada la opción de aceptar saldo. Lo verás claramente al elegir cómo pagar." },
+        q6: { q: "¿Es seguro?",                                     a: "Sí. Los pagos se procesan a través de Cecabank, una de las pasarelas bancarias más usadas en España. Además, cada pago se confirma con huella o Face ID, y la app cumple la normativa PSD2 europea." },
+        q7: { q: "¿Qué pasa si pierdo el móvil?",                   a: "Tu dinero está a salvo. Nadie puede acceder a la app sin tu huella o Face ID, y puedes pedir la baja desde el panel de soporte escribiendo a soporte@pagolocal.xyz." },
+        q8: { q: "¿Funciona sin internet?",                         a: "PagoLocal necesita conexión a internet (datos móviles o WiFi) para realizar pagos, porque cada operación se procesa al instante con tu banco." }
+      },
+
+      ctafinal: {
+        eyebrow: "Empieza hoy",
+        title:   "Descubre el comercio de Ontinyent como nunca antes",
+        lead:    "Descarga PagoLocal, paga en tus tiendas de siempre y empieza a ganar en cada compra."
+      },
+
+      modal: {
+        title: "Estamos a punto de lanzarnos",
+        text:  "PagoLocal está en pruebas finales con un grupo seleccionado de comercios de Ontinyent. Escríbenos y te avisaremos en cuanto puedas descargarla.",
+        cta:   "Apúntame a la lista de espera"
+      },
+
+      footer: {
+        tagline: "La app de pago del comercio local de Ontinyent. Hecho aquí, para los de aquí.",
+        col1: { title: "PagoLocal",  l1: "Cómo funciona", l2: "Dónde usar",       l3: "Seguridad",      l4: "Preguntas frecuentes" },
+        col2: { title: "Comercios",  l1: "Para comercios", l2: "Únete a la red",  l3: "Contacto" },
+        col3: { title: "Legal",      l1: "Política de privacidad", l2: "Términos y condiciones" },
+        madeIn: "Hecho en Ontinyent"
+      }
+    },
+
+    /* Añade aquí las traducciones cuando estén listas */
+    val: {},
+    en:  {}
+  };
+
+  /* ==============================================================
+     APLICAR TRADUCCIONES
+     ============================================================== */
+  let currentLang = 'es';
+
+  function t(key) {
+    const path = key.split('.');
+    let val = I18N[currentLang];
+    for (const p of path) val = val && val[p];
+    if (val === undefined || val === null || val === '') {
+      val = I18N.es;
+      for (const p of path) val = val && val[p];
+    }
+    return val ?? '';
+  }
+
+  function applyLang() {
+    document.documentElement.lang = currentLang === 'val' ? 'ca' : currentLang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      el.textContent = t(el.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      el.innerHTML = t(el.dataset.i18nHtml);
+    });
+    document.querySelectorAll('.lang-switch button').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === currentLang);
+    });
+  }
+
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      currentLang = btn.dataset.lang;
+      applyLang();
+    });
+  });
+
+  applyLang();
+
+  /* ==============================================================
+     BOTONES DE DESCARGA
+     ============================================================== */
+  document.querySelectorAll('[data-action="download"]').forEach(btn => {
+    const platform = btn.dataset.platform;
+    const link = APP_LINKS[platform];
+    if (link) {
+      btn.setAttribute('href', link);
+      btn.setAttribute('target', '_blank');
+      btn.setAttribute('rel', 'noopener');
+      btn.classList.add('live');
+    } else {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    }
+  });
+
+  /* ==============================================================
+     MODAL
+     ============================================================== */
+  const modal = document.getElementById('modalDownload');
+  function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ==============================================================
+     MENÚ MÓVIL
+     ============================================================== */
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
