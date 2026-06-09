@@ -1,62 +1,97 @@
 /* ==============================================================
    pagolocal.xyz · Estilos compartidos
    --------------------------------------------------------------
-   Tokens de diseño + componentes comunes (header, footer, modal,
-   botones, eyebrow, contenedor, tipografía).
+   Tokens alineados con AppUsuario.js (Fase A rediseño).
+   Paleta DARK + acento dorado + tipografía Inter.
    ============================================================== */
 
 /* ============================================================
-   PALETA — para cambiar el look de toda la web, edita aquí.
+   TOKENS — replican PALETTE_DARK, S, R, FS, FW de la app.
    ============================================================ */
 :root {
-  --bg:          #FAF7F2;   /* crema, fondo principal */
-  --bg-card:     #FFFFFF;   /* fondo de tarjetas */
-  --ink:         #1A1A1A;   /* texto principal */
-  --ink-soft:    #4A4A4A;   /* texto secundario */
-  --muted:       #8B8580;   /* texto auxiliar */
-  --line:        #E8E2D7;   /* líneas y bordes */
-  --primary:     #0E3B2E;   /* verde profundo (coordinado con el neón) */
-  --primary-ink: #082821;   /* primary más oscuro */
-  --accent:      #00F0A0;   /* verde menta neón (color marca) */
-  --accent-deep: #00B57A;   /* verde marca más oscuro (para texto) */
-  --accent-soft: #D8FBED;   /* verde menta muy claro */
-  --coral:       #D85F4C;   /* terracota para detalles ocasionales */
+  /* Surfaces (idénticos a PALETTE_DARK en la app) */
+  --bg:          #0D0D14;
+  --surface:     #16161F;
+  --surface-2:   #1E1E2A;
+  --surface-3:   #262633;
+  --border:      #2A2A3C;
+  --border-soft: #1F1F2C;
 
-  --radius:      18px;
-  --radius-lg:   28px;
-  --shadow-sm:   0 1px 2px rgba(26,26,26,0.04), 0 2px 6px rgba(26,26,26,0.04);
-  --shadow:      0 4px 12px rgba(26,26,26,0.06), 0 12px 32px rgba(26,26,26,0.08);
-  --container:   1180px;
+  /* Brand: amarillo dorado (idéntico a accent de la app) */
+  --accent:       #F5C842;
+  --accent-hover: #FFD93D;
+  --accent-soft:  #766B1B;
+  --accent-dim:   rgba(245, 200, 66, 0.13);
+
+  /* Secondary */
+  --purple:     #8B5CF6;
+  --purple-dim: rgba(139, 92, 246, 0.13);
+  --red:        #FF4D6A;
+  --red-dim:    rgba(255, 77, 106, 0.13);
+  --blue:       #3B9EFF;
+  --green:      #10B981;
+
+  /* Text */
+  --text:     #F0F0FA;
+  --muted:    #6060A0;
+  --text-dim: #71717A;
+  --white:    #FFFFFF;
+
+  /* Espaciado S — múltiplos de 4 (idéntico a const S de la app) */
+  --s-xs:    4px;
+  --s-sm:    8px;
+  --s-md:   12px;
+  --s-lg:   16px;
+  --s-xl:   24px;
+  --s-xxl:  32px;
+  --s-huge: 48px;
+
+  /* Border radius R (idéntico a const R de la app) */
+  --r-xs:    6px;
+  --r-sm:    8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-full: 9999px;
+
+  /* Tipografía */
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --container: 1180px;
+
+  /* Sombras */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow:    0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 /* ============================================================
    RESET + BASE
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--bg); }
 body {
   margin: 0;
-  font-family: "Manrope", system-ui, sans-serif;
-  font-size: 17px;
+  font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.6;
-  color: var(--ink);
+  color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 h1, h2, h3, h4 {
-  font-family: "Fraunces", Georgia, serif;
-  font-weight: 600;
-  font-variation-settings: "SOFT" 50;
-  line-height: 1.1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0;
-  color: var(--ink);
+  color: var(--text);
 }
-h1 { font-size: clamp(2.4rem, 5.5vw, 4.4rem); font-weight: 600; }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 500; }
-h3 { font-size: 1.25rem; font-weight: 600; }
-p  { margin: 0 0 1rem; color: var(--ink-soft); }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; }
+h3 { font-size: 1.125rem; font-weight: 700; }
+p  { margin: 0 0 var(--s-lg); color: var(--muted); }
 a  { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; display: block; }
 button { font-family: inherit; cursor: pointer; border: 0; background: none; }
@@ -64,90 +99,92 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .container {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--s-xl);
 }
+
+/* Eyebrow — réplica de securityNote: fondo accent-dim + borde dorado */
 .eyebrow {
   display: inline-block;
-  font-family: "Manrope", sans-serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--accent);
   padding: 6px 14px;
-  background: var(--accent-soft);
-  border-radius: 999px;
-  margin-bottom: 18px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-soft);
+  border-radius: var(--r-full);
+  margin-bottom: var(--s-lg);
 }
 
 /* ============================================================
-   BOTONES
+   BOTONES — alineados con btnPrimary/btnSecondary de la app
    ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--s-sm);
   padding: 14px 22px;
-  border-radius: 999px;
-  font-weight: 600;
+  border-radius: var(--r-md);
+  font-weight: 700;
   font-size: 0.95rem;
+  font-family: var(--font-body);
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   white-space: nowrap;
 }
+/* Primary: fondo dorado, texto oscuro (idéntico a btnPrimary de la app) */
 .btn-primary {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--bg);
 }
 .btn-primary:hover {
-  background: var(--primary-ink);
+  background: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 24px rgba(245, 200, 66, 0.25);
 }
-.btn-accent {
-  background: var(--accent);
-  color: var(--ink);
+.btn-secondary {
+  color: var(--text);
+  border: 1px solid var(--border);
+  background: transparent;
 }
-.btn-accent:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0,240,160,0.35);
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
-.btn-ghost {
-  color: var(--ink);
-  border: 1.5px solid var(--line);
-  background: var(--bg-card);
-}
-.btn-ghost:hover {
-  border-color: var(--ink);
-}
+
+/* Botones de store: fondo surface oscuro con borde */
 .btn-store {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   padding: 12px 22px;
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: 14px;
-  transition: transform .15s ease, box-shadow .15s ease;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
   position: relative;
 }
 .btn-store:hover {
   transform: translateY(-2px);
+  border-color: var(--accent);
   box-shadow: var(--shadow);
 }
 .btn-store svg { width: 26px; height: 26px; }
 .btn-store .small { font-size: 0.7rem; opacity: 0.7; line-height: 1; display: block; margin-bottom: 2px; }
-.btn-store .big   { font-size: 1.05rem; font-weight: 600; line-height: 1; }
+.btn-store .big   { font-size: 1.05rem; font-weight: 700; line-height: 1; }
 .btn-store::after {
   content: "Próximamente";
   position: absolute;
   top: -10px;
   right: -8px;
   background: var(--accent);
-  color: var(--ink);
+  color: var(--bg);
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 3px 8px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
   letter-spacing: 0.04em;
 }
 .btn-store.live::after { display: none; }
@@ -159,36 +196,39 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(250, 247, 242, 0.85);
+  background: rgba(13, 13, 20, 0.78);
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
 }
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
-  gap: 24px;
+  padding: var(--s-lg) 0;
+  gap: var(--s-xl);
 }
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: "Fraunces", serif;
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
   letter-spacing: -0.02em;
+  color: var(--text);
 }
+/* Réplica EXACTA del logoCircle de la app: fondo #1A1A2E + borde dorado 2px + letra dorada */
 .logo-mark {
-  width: 34px; height: 34px;
-  background: var(--accent);
-  color: var(--ink);
-  border-radius: 9px;
+  width: 36px; height: 36px;
+  background: #1A1A2E;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: var(--r-full);
   display: grid;
   place-items: center;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 .nav-links {
   display: flex;
@@ -199,29 +239,36 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   padding: 0;
 }
 .nav-links a {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--ink-soft);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--muted);
   transition: color .15s ease;
 }
-.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover { color: var(--text); }
 
-.nav-right { display: flex; align-items: center; gap: 16px; }
-.lang-switch { display: flex; gap: 2px; background: var(--bg-card); padding: 3px; border-radius: 999px; border: 1px solid var(--line); }
+.nav-right { display: flex; align-items: center; gap: var(--s-lg); }
+.lang-switch {
+  display: flex;
+  gap: 2px;
+  background: var(--surface);
+  padding: 3px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--border);
+}
 .lang-switch button {
   padding: 5px 11px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  border-radius: var(--r-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--muted);
   transition: all .15s ease;
 }
-.lang-switch button.active { background: var(--ink); color: var(--bg); }
-.lang-switch button:disabled { opacity: 0.4; cursor: not-allowed; }
-.lang-switch button:not(:disabled):not(.active):hover { color: var(--ink); }
+.lang-switch button.active { background: var(--accent); color: var(--bg); }
+.lang-switch button:disabled { opacity: 0.35; cursor: not-allowed; }
+.lang-switch button:not(:disabled):not(.active):hover { color: var(--text); }
 
-.menu-toggle { display: none; padding: 8px; }
+.menu-toggle { display: none; padding: 8px; color: var(--text); }
 .menu-toggle svg { width: 26px; height: 26px; }
 
 @media (max-width: 880px) {
@@ -235,9 +282,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     right: 0;
     flex-direction: column;
     background: var(--bg);
-    padding: 24px;
+    padding: var(--s-xl);
     gap: 18px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -245,9 +292,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
    FOOTER (compartido)
    ============================================================ */
 footer.site-footer {
-  background: var(--ink);
-  color: rgba(250,247,242,0.8);
+  background: #08080F;
+  color: var(--muted);
   padding: 70px 0 36px;
+  border-top: 1px solid var(--border);
 }
 .footer-grid {
   display: grid;
@@ -255,35 +303,37 @@ footer.site-footer {
   gap: 40px;
   margin-bottom: 56px;
 }
-.footer-brand h3 { color: var(--bg); margin-bottom: 14px; font-size: 1.5rem; }
-.footer-brand p { color: rgba(250,247,242,0.6); font-size: 0.92rem; max-width: 280px; }
+.footer-brand h3 { color: var(--text); margin-bottom: var(--s-md); font-size: 1.4rem; font-weight: 800; }
+.footer-brand p { color: var(--muted); font-size: 0.92rem; max-width: 280px; }
 .footer-col h4 {
-  font-family: "Manrope", sans-serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 18px;
+  margin-bottom: var(--s-lg);
 }
 .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 .footer-col a {
-  color: rgba(250,247,242,0.7);
-  font-size: 0.95rem;
+  color: var(--muted);
+  font-size: 0.92rem;
   transition: color .15s ease;
 }
-.footer-col a:hover { color: var(--bg); }
+.footer-col a:hover { color: var(--text); }
 .footer-bottom {
-  padding-top: 32px;
-  border-top: 1px solid rgba(250,247,242,0.12);
+  padding-top: var(--s-xxl);
+  border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: var(--s-lg);
   flex-wrap: wrap;
   font-size: 0.85rem;
-  color: rgba(250,247,242,0.5);
+  color: var(--text-dim);
 }
+.footer-bottom a { color: var(--muted); }
+.footer-bottom a:hover { color: var(--accent); }
 
 @media (max-width: 880px) {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -291,12 +341,12 @@ footer.site-footer {
 }
 
 /* ============================================================
-   MODAL "Próximamente"
+   MODAL
    ============================================================ */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(26,26,26,0.55);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   display: none;
   align-items: center;
@@ -307,9 +357,10 @@ footer.site-footer {
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--bg);
-  border-radius: var(--radius-lg);
-  padding: 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--s-huge);
   max-width: 460px;
   width: 100%;
   position: relative;
@@ -317,26 +368,34 @@ footer.site-footer {
 }
 .modal-close {
   position: absolute;
-  top: 16px; right: 16px;
-  width: 36px; height: 36px;
-  border-radius: 50%;
+  top: var(--s-lg); right: var(--s-lg);
+  width: 32px; height: 32px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
   display: grid;
   place-items: center;
   color: var(--muted);
-  transition: background .15s ease;
+  transition: background .15s ease, color .15s ease;
 }
-.modal-close:hover { background: var(--line); }
-.modal h3 { font-family: "Fraunces", serif; font-size: 1.6rem; margin-bottom: 12px; font-weight: 600; }
-.modal p { color: var(--ink-soft); margin-bottom: 24px; }
+.modal-close:hover { background: var(--border); color: var(--text); }
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: var(--s-md);
+  font-weight: 700;
+  color: var(--text);
+}
+.modal p { color: var(--muted); margin-bottom: var(--s-xl); }
 .modal a.btn-primary { width: 100%; justify-content: center; }
 .modal-icon {
   width: 56px; height: 56px;
-  background: var(--accent-soft);
-  color: var(--primary);
-  border-radius: 16px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+  border-radius: var(--r-lg);
   display: grid;
   place-items: center;
-  margin-bottom: 22px;
+  margin-bottom: var(--s-xl);
 }
 .modal-icon svg { width: 28px; height: 28px; }
 

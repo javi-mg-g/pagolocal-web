@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#00F0A0" />
+  <meta name="theme-color" content="#0D0D14" />
+  <meta name="color-scheme" content="dark" />
 
   <!-- SEO -->
   <title>PagoLocal · Paga en Ontinyent y gana en cada compra</title>
@@ -16,13 +17,13 @@
   <meta property="og:description" content="La app de pago del comercio local de Ontinyent. QR, cashback y marketplace local en una sola app." />
   <meta property="og:locale" content="es_ES" />
 
-  <!-- Favicon SVG inline -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300F0A0'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='62' font-weight='700' text-anchor='middle' fill='%231A1A1A'%3EP%3C/text%3E%3C/svg%3E" />
+  <!-- Favicon: réplica del logoCircle de la app -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%231A1A2E' stroke='%23F5C842' stroke-width='6'/%3E%3Ctext x='50' y='66' font-family='Inter,Arial,sans-serif' font-size='52' font-weight='800' text-anchor='middle' fill='%23F5C842'%3EP%3C/text%3E%3C/svg%3E" />
 
-  <!-- Fuentes: Fraunces (display) + Manrope (body) -->
+  <!-- Inter (idéntica a la app: 600 semibold, 700 bold, 800 extrabold) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Estilos compartidos -->
   <link rel="stylesheet" href="/styles.css" />
@@ -38,57 +39,74 @@
       padding: 60px 0 80px;
       overflow: hidden;
     }
+    /* Glow dorado decorativo de fondo, idéntico al balanceGlow de la app */
+    .hero-decor {
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.10;
+      filter: blur(100px);
+      top: -80px;
+      right: 25%;
+      z-index: 0;
+      pointer-events: none;
+    }
     .hero-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 60px;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
-    .hero h1 { margin-bottom: 24px; }
+    .hero h1 { margin-bottom: var(--s-xl); }
+    /* "Gana" destacado en dorado (sustituye el subrayado verde anterior) */
     .hero h1 em {
-      font-style: italic;
-      font-variation-settings: "SOFT" 100, "opsz" 144;
-      color: var(--primary);
+      font-style: normal;
+      color: var(--accent);
       position: relative;
     }
     .hero h1 em::after {
       content: "";
       position: absolute;
-      left: 0; right: 0; bottom: 0.08em;
-      height: 0.32em;
+      left: -4px; right: -4px; bottom: 0.06em;
+      height: 0.18em;
       background: var(--accent);
+      opacity: 0.25;
+      border-radius: 2px;
       z-index: -1;
-      opacity: 0.55;
-      border-radius: 4px;
     }
     .hero-lead {
-      font-size: 1.2rem;
-      color: var(--ink-soft);
+      font-size: 1.15rem;
+      color: var(--muted);
       max-width: 540px;
-      margin-bottom: 32px;
+      margin-bottom: var(--s-xxl);
     }
-    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: var(--s-lg); flex-wrap: wrap; }
     .hero-trust {
-      margin-top: 36px;
+      margin-top: var(--s-xxl);
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: var(--s-md);
       font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--text-dim);
     }
     .hero-trust-icon {
       width: 36px; height: 36px;
-      background: var(--accent-soft);
-      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-soft);
+      border-radius: var(--r-full);
       display: grid;
       place-items: center;
-      color: var(--primary);
+      color: var(--accent);
     }
     .hero-trust-icon svg { width: 18px; height: 18px; }
 
+    /* Mockup del móvil */
     .hero-visual {
       position: relative;
-      width: 100%;             /* necesario para que el grid le dé ancho cuando su contenido es absoluto */
+      width: 100%;
       aspect-ratio: 1 / 1;
       max-width: 480px;
       margin-left: auto;
@@ -96,8 +114,9 @@
     .phone-frame {
       position: absolute;
       inset: 0;
-      background: var(--primary);
-      border-radius: 56px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 48px;
       padding: 14px;
       box-shadow: var(--shadow);
       transform: rotate(-3deg);
@@ -105,80 +124,111 @@
     .phone-screen {
       width: 100%; height: 100%;
       background: var(--bg);
-      border-radius: 44px;
-      padding: 28px 22px;
+      border-radius: 36px;
+      padding: 28px 18px 24px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: var(--s-lg);
       overflow: hidden;
       position: relative;
     }
+    /* Notch */
     .phone-screen::before {
       content: "";
       position: absolute;
-      top: 16px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
       width: 90px;
       height: 5px;
-      background: var(--line);
-      border-radius: 999px;
+      background: var(--border);
+      border-radius: var(--r-full);
     }
+
+    /* Balance card (réplica del balanceCard de la app) */
     .phone-balance {
-      margin-top: 24px;
+      margin-top: var(--s-xl);
       padding: 18px;
-      background: var(--primary);
-      color: var(--bg);
-      border-radius: 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
       position: relative;
       overflow: hidden;
     }
+    /* balanceGlow */
     .phone-balance::after {
       content: "";
       position: absolute;
-      right: -40px; top: -40px;
-      width: 120px; height: 120px;
-      background: var(--accent);
-      opacity: 0.18;
+      top: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      filter: blur(20px);
+      background: var(--accent-dim);
+      filter: blur(8px);
     }
-    .phone-balance-label { font-size: 0.75rem; opacity: 0.7; letter-spacing: 0.08em; text-transform: uppercase; position: relative; }
-    .phone-balance-value { font-family: "Fraunces", serif; font-size: 2rem; font-weight: 600; margin-top: 4px; color: var(--accent); position: relative; }
-    .phone-balance-value small { font-size: 1rem; opacity: 0.7; margin-left: 4px; color: var(--bg); }
+    .phone-balance-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      position: relative;
+      font-weight: 600;
+    }
+    .phone-balance-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-top: var(--s-xs);
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .phone-balance-value small {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-left: 2px;
+      font-weight: 700;
+    }
+    /* Tx items (réplica de txItem de la app) */
     .phone-row {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--line);
-      font-size: 0.85rem;
+      gap: var(--s-md);
+      padding: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      font-size: 0.82rem;
     }
-    .phone-row:last-child { border-bottom: 0; }
     .phone-row-icon {
       width: 36px; height: 36px;
-      background: var(--accent-soft);
-      border-radius: 10px;
+      background: var(--surface-2);
+      border-radius: var(--r-sm);
       display: grid;
       place-items: center;
       font-size: 1rem;
     }
-    .phone-row-main { flex: 1; }
-    .phone-row-name { font-weight: 600; color: var(--ink); }
-    .phone-row-sub { font-size: 0.75rem; color: var(--muted); }
-    .phone-row-amount { font-weight: 600; font-variant-numeric: tabular-nums; }
-    .phone-row-cb { color: var(--accent-deep); font-size: 0.75rem; font-weight: 700; }
-
-    .hero-decor {
-      position: absolute;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.22;
-      filter: blur(70px);
-      top: 8%;
-      left: 38%;
-      z-index: -1;
+    .phone-row-main { flex: 1; min-width: 0; }
+    .phone-row-name {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .phone-row-sub { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+    .phone-row-amount {
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+    .phone-row-cb {
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-top: 1px;
+      text-align: right;
     }
 
     @media (max-width: 880px) {
@@ -195,88 +245,99 @@
       max-width: 700px;
       margin-bottom: 60px;
     }
-    .section-head h2 { margin-bottom: 16px; }
-    .section-head p { font-size: 1.1rem; color: var(--ink-soft); }
+    .section-head h2 { margin-bottom: var(--s-lg); }
+    .section-head p { font-size: 1.1rem; color: var(--muted); }
 
-    /* CÓMO FUNCIONA — 3 pasos */
+    /* CÓMO FUNCIONA — 3 pasos (idéntico al patrón cardOption de la app) */
     .how-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: var(--s-xl);
     }
     .step {
-      background: var(--bg-card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--s-xxl) 28px;
       position: relative;
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
     .step:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow);
       border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(245, 200, 66, 0.08);
     }
     .step-num {
       position: absolute;
-      top: 24px; right: 28px;
-      font-family: "Fraunces", serif;
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--line);
+      top: var(--s-xl); right: 28px;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--border);
       line-height: 1;
+      letter-spacing: -0.04em;
     }
     .step-icon {
-      width: 56px; height: 56px;
-      background: var(--accent-soft);
-      color: var(--primary);
-      border-radius: 16px;
+      width: 52px; height: 52px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid var(--accent-soft);
+      border-radius: var(--r-lg);
       display: grid;
       place-items: center;
-      margin-bottom: 28px;
+      margin-bottom: var(--s-xl);
     }
-    .step-icon svg { width: 28px; height: 28px; stroke-width: 1.6; }
-    .step h3 { margin-bottom: 10px; }
-    .step p { margin: 0; color: var(--ink-soft); }
+    .step-icon svg { width: 26px; height: 26px; stroke-width: 1.7; }
+    .step h3 { margin-bottom: var(--s-sm); color: var(--text); }
+    .step p { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
     @media (max-width: 880px) {
       .how-grid { grid-template-columns: 1fr; }
     }
 
-    /* DÓNDE USAR — mosaico */
-    .where-bg { background: var(--bg-card); }
+    /* DÓNDE USAR — mosaico (réplica de comercio cards de la app) */
+    .where-bg {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
     .where-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      gap: var(--s-lg);
     }
     .where-card {
-      padding: 32px 24px;
-      border-radius: var(--radius);
+      padding: 28px 22px;
+      border-radius: var(--r-lg);
       background: var(--bg);
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       transition: all .2s ease;
     }
     .where-card:hover {
-      border-color: var(--primary);
+      border-color: var(--accent);
       transform: translateY(-3px);
     }
     .where-emoji {
-      font-size: 2.2rem;
-      margin-bottom: 14px;
+      font-size: 2rem;
+      margin-bottom: var(--s-md);
       display: block;
     }
-    .where-card h3 { font-family: "Manrope", sans-serif; font-size: 1.05rem; margin-bottom: 6px; letter-spacing: -0.01em; }
-    .where-card p { font-size: 0.9rem; margin: 0; color: var(--muted); }
+    .where-card h3 {
+      font-size: 1rem;
+      margin-bottom: var(--s-xs);
+      font-weight: 700;
+      color: var(--text);
+    }
+    .where-card p { font-size: 0.88rem; margin: 0; color: var(--muted); }
 
     @media (max-width: 880px) { .where-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 480px) { .where-grid { grid-template-columns: 1fr; } }
 
-    /* PARA COMERCIOS */
+    /* PARA COMERCIOS — card destacada con glow dorado */
     .merchants {
-      background: var(--primary);
-      color: var(--bg);
-      border-radius: var(--radius-lg);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: var(--r-xl);
       padding: 70px 60px;
       position: relative;
       overflow: hidden;
@@ -284,11 +345,11 @@
     .merchants::before {
       content: "";
       position: absolute;
-      width: 320px; height: 320px;
+      width: 360px; height: 360px;
       border-radius: 50%;
       background: var(--accent);
-      opacity: 0.2;
-      filter: blur(80px);
+      opacity: 0.10;
+      filter: blur(100px);
       top: -100px; right: -80px;
     }
     .merchants-grid {
@@ -298,47 +359,53 @@
       align-items: center;
       position: relative;
     }
-    .merchants h2 { color: var(--bg); margin-bottom: 20px; }
-    .merchants .eyebrow {
-      background: rgba(0,240,160,0.18);
-      color: var(--accent);
+    .merchants h2 { color: var(--text); margin-bottom: var(--s-lg); }
+    .merchants-lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: var(--s-xxl);
     }
-    .merchants-lead { color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 28px; }
+    /* CTA con fondo accent — réplica de btnPrimary de la app */
     .merchants-cta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--s-sm);
       padding: 14px 26px;
       background: var(--accent);
-      color: var(--ink);
-      border-radius: 999px;
+      color: var(--bg);
+      border-radius: var(--r-md);
       font-weight: 700;
       transition: transform .15s ease, box-shadow .15s ease;
     }
     .merchants-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,240,160,0.35);
+      box-shadow: 0 8px 24px rgba(245, 200, 66, 0.3);
     }
     .merchants-list {
       list-style: none;
       padding: 0; margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: var(--s-lg);
     }
     .merchants-list li {
       display: flex;
-      gap: 16px;
+      gap: var(--s-lg);
       align-items: flex-start;
     }
     .merchants-list svg {
       flex-shrink: 0;
-      width: 24px; height: 24px;
+      width: 22px; height: 22px;
       color: var(--accent);
-      margin-top: 2px;
+      margin-top: 3px;
     }
-    .merchants-list strong { display: block; margin-bottom: 4px; }
-    .merchants-list span { color: rgba(255,255,255,0.75); font-size: 0.95rem; }
+    .merchants-list strong {
+      display: block;
+      margin-bottom: var(--s-xs);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .merchants-list span { color: var(--muted); font-size: 0.92rem; }
 
     @media (max-width: 880px) {
       .merchants { padding: 50px 32px; }
@@ -354,69 +421,82 @@
     .security-item { text-align: left; }
     .security-icon {
       width: 48px; height: 48px;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--line);
-      color: var(--primary);
+      border-radius: var(--r-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--accent);
       display: grid;
       place-items: center;
-      margin-bottom: 18px;
+      margin-bottom: var(--s-lg);
     }
     .security-icon svg { width: 22px; height: 22px; stroke-width: 1.7; }
-    .security-item h3 { font-family: "Manrope", sans-serif; font-size: 1rem; margin-bottom: 6px; }
-    .security-item p { font-size: 0.92rem; margin: 0; }
+    .security-item h3 {
+      font-size: 1rem;
+      margin-bottom: var(--s-xs);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .security-item p { font-size: 0.9rem; margin: 0; color: var(--muted); }
 
     @media (max-width: 880px) { .security-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
     @media (max-width: 480px) { .security-grid { grid-template-columns: 1fr; } }
 
     /* FAQ */
-    .faq-bg { background: var(--bg-card); }
+    .faq-bg {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
     .faq-list { max-width: 780px; margin: 0 auto; }
     .faq-item {
-      border-bottom: 1px solid var(--line);
-      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      padding: var(--s-sm) 0;
     }
     .faq-item summary {
       list-style: none;
       cursor: pointer;
-      padding: 20px 0;
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: var(--ink);
+      padding: var(--s-xl) 0;
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--text);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
       transition: color .15s ease;
     }
-    .faq-item summary:hover { color: var(--primary); }
+    .faq-item summary:hover { color: var(--accent); }
     .faq-item summary::-webkit-details-marker { display: none; }
     .faq-item summary::after {
       content: "+";
-      font-family: "Fraunces", serif;
-      font-size: 1.6rem;
-      font-weight: 300;
+      font-size: 1.5rem;
+      font-weight: 400;
       color: var(--muted);
-      transition: transform .2s ease;
+      transition: transform .2s ease, color .2s ease;
       line-height: 1;
     }
-    .faq-item[open] summary::after { transform: rotate(45deg); color: var(--primary); }
+    .faq-item[open] summary::after { transform: rotate(45deg); color: var(--accent); }
     .faq-answer {
-      padding: 0 0 24px;
-      color: var(--ink-soft);
+      padding: 0 0 var(--s-xl);
+      color: var(--muted);
       max-width: 680px;
     }
-    .faq-answer p { margin: 0 0 12px; }
+    .faq-answer p { margin: 0 0 var(--s-md); color: var(--muted); }
     .faq-answer p:last-child { margin: 0; }
-    .faq-answer a { color: var(--primary); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .faq-answer a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
 
     /* CTA FINAL */
     .cta-final {
       text-align: center;
       padding: 100px 0;
     }
-    .cta-final h2 { max-width: 640px; margin: 0 auto 20px; }
-    .cta-final p { font-size: 1.1rem; max-width: 560px; margin: 0 auto 36px; }
+    .cta-final h2 { max-width: 640px; margin: 0 auto var(--s-lg); }
+    .cta-final p { font-size: 1.1rem; max-width: 560px; margin: 0 auto var(--s-xxl); color: var(--muted); }
     .cta-final .hero-ctas { justify-content: center; }
   </style>
 </head>
@@ -484,7 +564,7 @@
         </div>
       </div>
 
-      <!-- Mockup del móvil -->
+      <!-- Mockup del móvil — réplica del Home de la app -->
       <div class="hero-visual" aria-hidden="true">
         <div class="phone-frame">
           <div class="phone-screen">
@@ -492,7 +572,7 @@
               <div class="phone-balance-label" data-i18n="phone.balance"></div>
               <div class="phone-balance-value">12,40<small>€</small></div>
             </div>
-            <div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
               <div class="phone-row">
                 <div class="phone-row-icon">☕</div>
                 <div class="phone-row-main">
