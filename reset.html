@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0D0D14" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#F5F7FB" />
+  <meta name="color-scheme" content="light" />
   <meta name="robots" content="noindex,nofollow" />
   <title>Restablecer contraseña — PagoLocal</title>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%231A1A2E' stroke='%23F5C842' stroke-width='6'/%3E%3Ctext x='50' y='66' font-family='Inter,Arial,sans-serif' font-size='52' font-weight='800' text-anchor='middle' fill='%23F5C842'%3EP%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1A2E'/%3E%3Cpath d='M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z' fill='%23F5C842'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +27,7 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Glow dorado idéntico al balanceGlow de la app */
+    /* Glow dorado suave decorativo */
     body::before {
       content: "";
       position: absolute;
@@ -36,26 +36,13 @@
       width: 500px;
       height: 500px;
       background: var(--accent);
-      opacity: 0.10;
-      border-radius: 50%;
-      filter: blur(120px);
-      z-index: 0;
-    }
-    body::after {
-      content: "";
-      position: absolute;
-      bottom: -200px;
-      left: -200px;
-      width: 500px;
-      height: 500px;
-      background: var(--purple);
       opacity: 0.08;
       border-radius: 50%;
       filter: blur(120px);
       z-index: 0;
     }
 
-    /* Réplica del loginCard de la app */
+    /* Card sobre fondo claro */
     .reset-card {
       width: 100%;
       max-width: 440px;
@@ -71,19 +58,22 @@
       text-align: center;
       margin-bottom: var(--s-xxl);
     }
-    /* Réplica EXACTA del logoCircle de la app: fondo #1A1A2E + borde dorado 2px + letra dorada */
+    /* Logo grande: círculo oscuro con rayo dorado (réplica del icono Play Store) */
     .reset-logo {
       width: 72px;
       height: 72px;
-      background: #1A1A2E;
-      border: 2px solid var(--accent);
-      color: var(--accent);
+      background: var(--dark-bg);
       border-radius: var(--r-full);
       display: inline-grid;
       place-items: center;
-      font-weight: 800;
-      font-size: 2rem;
+      color: var(--accent-bright);
       margin-bottom: var(--s-xl);
+      box-shadow: 0 8px 20px rgba(26, 26, 46, 0.15);
+    }
+    .reset-logo svg {
+      width: 36px;
+      height: 36px;
+      filter: drop-shadow(0 0 8px rgba(245, 200, 66, 0.5));
     }
     .reset-card h1 {
       font-size: 1.5rem;
@@ -97,13 +87,13 @@
       font-size: 0.95rem;
       margin: 0;
     }
-    /* Badge contexto (réplica de typeBadge para comercio) */
+    /* Badge contexto */
     .badge-context {
       display: inline-block;
       margin-top: var(--s-md);
       padding: 5px 12px;
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-soft);
+      background: var(--accent-tint);
+      border: 1px solid rgba(176, 121, 8, 0.20);
       border-radius: var(--r-full);
       color: var(--accent);
       font-size: 0.7rem;
@@ -122,10 +112,9 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
-    /* Input style idéntico al input de la app */
     input[type="password"] {
       width: 100%;
-      background: var(--surface-2);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--r-md);
       color: var(--text);
@@ -144,11 +133,11 @@
       color: var(--text-dim);
       margin-top: var(--s-sm);
     }
-    /* Botón primary idéntico al btnPrimary de la app */
+    /* Botón primary */
     button[type="submit"] {
       width: 100%;
       background: var(--accent);
-      color: var(--bg);
+      color: var(--white);
       border: none;
       border-radius: var(--r-md);
       padding: 15px;
@@ -162,7 +151,7 @@
     button[type="submit"]:hover:not(:disabled) {
       background: var(--accent-hover);
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(245, 200, 66, 0.3);
+      box-shadow: 0 8px 24px rgba(176, 121, 8, 0.30);
     }
     button[type="submit"]:active:not(:disabled) { transform: translateY(0); }
     button[type="submit"]:disabled {
@@ -170,7 +159,7 @@
       cursor: not-allowed;
     }
 
-    /* Alerts: réplica de lockBox/securityBadge de la app */
+    /* Alerts */
     .alert {
       border-radius: var(--r-md);
       padding: 14px var(--s-lg);
@@ -183,12 +172,12 @@
     .alert.show { display: block; }
     .alert.error {
       background: var(--red-dim);
-      border-color: var(--red);
+      border-color: rgba(220, 38, 38, 0.4);
       color: var(--red);
     }
     .alert.success {
-      background: var(--accent-dim);
-      border-color: var(--accent);
+      background: var(--accent-tint);
+      border-color: rgba(176, 121, 8, 0.4);
       color: var(--accent);
     }
 
@@ -212,7 +201,11 @@
 
   <div class="reset-card">
     <div class="reset-header">
-      <div class="reset-logo">P</div>
+      <div class="reset-logo">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
       <h1 id="title">Restablecer contraseña</h1>
       <p id="subtitle">Introduce tu nueva contraseña.</p>
       <div id="badge-context" class="badge-context hidden">Cuenta de comercio</div>
@@ -249,11 +242,9 @@
   const API_BASE = 'https://localpay-backend-production.up.railway.app';
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
-  // [Bloque 7] tipo=comercio cambia el endpoint y el texto. Por defecto: usuario.
   const tipo  = (params.get('tipo') || 'usuario').toLowerCase();
   const esComercio = tipo === 'comercio';
 
-  // Endpoint según tipo de cuenta
   const endpoint = esComercio
     ? '/api/auth/reset-password-comercio'
     : '/api/auth/reset-password';
@@ -265,7 +256,6 @@
   const badgeCtx    = document.getElementById('badge-context');
   const btn         = document.getElementById('btn-submit');
 
-  // Adaptar UI si es comercio
   if (esComercio) {
     titleEl.textContent  = 'Contraseña de comercio';
     subtitle.textContent = 'Introduce la nueva contraseña con la que vas a iniciar sesión en la app de comercios.';
@@ -277,7 +267,6 @@
     alertBox.className = 'alert show ' + type;
   }
 
-  // Si no hay token en el URL, no se puede continuar
   if(!token){
     form.classList.add('hidden');
     subtitle.textContent = 'Enlace inválido.';

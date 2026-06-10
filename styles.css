@@ -1,40 +1,51 @@
 /* ==============================================================
    pagolocal.xyz · Estilos compartidos
    --------------------------------------------------------------
-   Tokens alineados con AppUsuario.js (Fase A rediseño).
-   Paleta DARK + acento dorado + tipografía Inter.
+   Tokens alineados con PALETTE_LIGHT de AppUsuario.js.
+   Web en modo claro · acento dorado profundo · tipografía Inter.
    ============================================================== */
 
 /* ============================================================
-   TOKENS — replican PALETTE_DARK, S, R, FS, FW de la app.
+   TOKENS — replican PALETTE_LIGHT, S, R de la app.
    ============================================================ */
 :root {
-  /* Surfaces (idénticos a PALETTE_DARK en la app) */
-  --bg:          #0D0D14;
-  --surface:     #16161F;
-  --surface-2:   #1E1E2A;
-  --surface-3:   #262633;
-  --border:      #2A2A3C;
-  --border-soft: #1F1F2C;
+  /* Surfaces — base clara, con sutil calidez */
+  --bg:          #F5F7FB;
+  --surface:     #FFFFFF;
+  --surface-2:   #FAFAFA;
+  --surface-3:   #F0F0F5;
+  --border:      #D4D8E2;
+  --border-soft: #E2E5EE;
 
-  /* Brand: amarillo dorado (idéntico a accent de la app) */
-  --accent:       #F5C842;
-  --accent-hover: #FFD93D;
-  --accent-soft:  #766B1B;
-  --accent-dim:   rgba(245, 200, 66, 0.13);
+  /* Brand: dorado profundo (idéntico a accent de PALETTE_LIGHT en la app).
+     #B07908 sobre blanco da contraste 6.2:1 (WCAG AAA). */
+  --accent:        #B07908;
+  --accent-hover:  #C8870A;
+  --accent-soft:   #8A5E06;
+  --accent-bright: #F5C842;    /* el dorado vibrante del logo/icono (sobre oscuro) */
+  --accent-dim:    rgba(176, 121, 8, 0.10);
+  --accent-tint:   #FBF6E8;    /* fondo crema dorado para chips/eyebrow */
+
+  /* Paleta oscura (para mockup móvil y sección comercios) */
+  --dark-bg:      #0D0D14;
+  --dark-surface: #16161F;
+  --dark-card:    #1E1E2A;
+  --dark-border:  #2A2A3C;
+  --dark-text:    #F0F0FA;
+  --dark-muted:   #6060A0;
 
   /* Secondary */
-  --purple:     #8B5CF6;
-  --purple-dim: rgba(139, 92, 246, 0.13);
-  --red:        #FF4D6A;
-  --red-dim:    rgba(255, 77, 106, 0.13);
-  --blue:       #3B9EFF;
-  --green:      #10B981;
+  --purple:     #7C3AED;
+  --purple-dim: rgba(124, 58, 237, 0.12);
+  --red:        #DC2626;
+  --red-dim:    rgba(220, 38, 38, 0.10);
+  --blue:       #2563EB;
+  --green:      #059669;
 
   /* Text */
-  --text:     #F0F0FA;
-  --muted:    #6060A0;
-  --text-dim: #71717A;
+  --text:     #1A1A2E;
+  --muted:    #6B7280;
+  --text-dim: #A1A1AA;
   --white:    #FFFFFF;
 
   /* Espaciado S — múltiplos de 4 (idéntico a const S de la app) */
@@ -60,9 +71,10 @@
 
   --container: 1180px;
 
-  /* Sombras */
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
-  --shadow:    0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+  /* Sombras suaves para tema claro */
+  --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.06), 0 1px 2px rgba(26, 26, 46, 0.04);
+  --shadow:    0 8px 24px rgba(26, 26, 46, 0.06), 0 2px 6px rgba(26, 26, 46, 0.04);
+  --shadow-lg: 0 20px 50px rgba(26, 26, 46, 0.08), 0 8px 16px rgba(26, 26, 46, 0.05);
 }
 
 /* ============================================================
@@ -102,7 +114,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   padding: 0 var(--s-xl);
 }
 
-/* Eyebrow — réplica de securityNote: fondo accent-dim + borde dorado */
+/* Eyebrow — chip con fondo crema-dorado, idéntico al feature graphic */
 .eyebrow {
   display: inline-block;
   font-family: var(--font-body);
@@ -112,8 +124,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   text-transform: uppercase;
   color: var(--accent);
   padding: 6px 14px;
-  background: var(--accent-dim);
-  border: 1px solid var(--accent-soft);
+  background: var(--accent-tint);
+  border: 1px solid rgba(176, 121, 8, 0.20);
   border-radius: var(--r-full);
   margin-bottom: var(--s-lg);
 }
@@ -133,46 +145,43 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   white-space: nowrap;
 }
-/* Primary: fondo dorado, texto oscuro (idéntico a btnPrimary de la app) */
 .btn-primary {
   background: var(--accent);
-  color: var(--bg);
+  color: var(--white);
 }
 .btn-primary:hover {
   background: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(245, 200, 66, 0.25);
+  box-shadow: 0 8px 20px rgba(176, 121, 8, 0.25);
 }
 .btn-secondary {
   color: var(--text);
   border: 1px solid var(--border);
-  background: transparent;
+  background: var(--surface);
 }
 .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 
-/* Botones de store: fondo surface oscuro con borde */
+/* Botones de store: fondo oscuro estilo nativo */
 .btn-store {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   padding: 12px 22px;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: var(--text);
+  color: var(--white);
   border-radius: var(--r-md);
-  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  transition: transform .15s ease, box-shadow .15s ease;
   position: relative;
 }
 .btn-store:hover {
   transform: translateY(-2px);
-  border-color: var(--accent);
   box-shadow: var(--shadow);
 }
 .btn-store svg { width: 26px; height: 26px; }
-.btn-store .small { font-size: 0.7rem; opacity: 0.7; line-height: 1; display: block; margin-bottom: 2px; }
+.btn-store .small { font-size: 0.7rem; opacity: 0.85; line-height: 1; display: block; margin-bottom: 2px; }
 .btn-store .big   { font-size: 1.05rem; font-weight: 700; line-height: 1; }
 .btn-store::after {
   content: "Próximamente";
@@ -180,7 +189,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   top: -10px;
   right: -8px;
   background: var(--accent);
-  color: var(--bg);
+  color: var(--white);
   font-size: 0.65rem;
   font-weight: 800;
   padding: 3px 8px;
@@ -196,7 +205,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(13, 13, 20, 0.78);
+  background: rgba(245, 247, 251, 0.85);
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--border);
@@ -218,18 +227,23 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   letter-spacing: -0.02em;
   color: var(--text);
 }
-/* Réplica EXACTA del logoCircle de la app: fondo #1A1A2E + borde dorado 2px + letra dorada */
+/* Logo mark: círculo oscuro con rayo dorado dentro (réplica del icono de Play Store) */
 .logo-mark {
-  width: 36px; height: 36px;
-  background: #1A1A2E;
-  border: 2px solid var(--accent);
-  color: var(--accent);
+  width: 38px; height: 38px;
+  background: var(--dark-bg);
   border-radius: var(--r-full);
   display: grid;
   place-items: center;
-  font-weight: 800;
-  font-size: 1rem;
+  color: var(--accent-bright);
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
+.logo-mark svg {
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 0 6px rgba(245, 200, 66, 0.5));
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -264,7 +278,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   color: var(--muted);
   transition: all .15s ease;
 }
-.lang-switch button.active { background: var(--accent); color: var(--bg); }
+.lang-switch button.active { background: var(--accent); color: var(--white); }
 .lang-switch button:disabled { opacity: 0.35; cursor: not-allowed; }
 .lang-switch button:not(:disabled):not(.active):hover { color: var(--text); }
 
@@ -289,13 +303,17 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 }
 
 /* ============================================================
-   FOOTER (compartido)
+   FOOTER (compartido) — oscuro, con el rayo dorado vibrante
    ============================================================ */
 footer.site-footer {
-  background: #08080F;
-  color: var(--muted);
+  background: var(--dark-bg);
+  color: var(--dark-muted);
   padding: 70px 0 36px;
-  border-top: 1px solid var(--border);
+}
+footer.site-footer .logo { color: var(--dark-text); }
+footer.site-footer .logo-mark {
+  background: var(--dark-card);
+  box-shadow: 0 0 0 1px var(--dark-border);
 }
 .footer-grid {
   display: grid;
@@ -303,37 +321,37 @@ footer.site-footer {
   gap: 40px;
   margin-bottom: 56px;
 }
-.footer-brand h3 { color: var(--text); margin-bottom: var(--s-md); font-size: 1.4rem; font-weight: 800; }
-.footer-brand p { color: var(--muted); font-size: 0.92rem; max-width: 280px; }
+.footer-brand .logo { margin-bottom: var(--s-md); }
+.footer-brand p { color: var(--dark-muted); font-size: 0.92rem; max-width: 280px; }
 .footer-col h4 {
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-bright);
   margin-bottom: var(--s-lg);
 }
 .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 .footer-col a {
-  color: var(--muted);
+  color: var(--dark-muted);
   font-size: 0.92rem;
   transition: color .15s ease;
 }
-.footer-col a:hover { color: var(--text); }
+.footer-col a:hover { color: var(--dark-text); }
 .footer-bottom {
   padding-top: var(--s-xxl);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--dark-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: var(--s-lg);
   flex-wrap: wrap;
   font-size: 0.85rem;
-  color: var(--text-dim);
+  color: var(--dark-muted);
 }
-.footer-bottom a { color: var(--muted); }
-.footer-bottom a:hover { color: var(--accent); }
+.footer-bottom a { color: var(--dark-muted); }
+.footer-bottom a:hover { color: var(--accent-bright); }
 
 @media (max-width: 880px) {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -346,7 +364,7 @@ footer.site-footer {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(26, 26, 46, 0.55);
   backdrop-filter: blur(4px);
   display: none;
   align-items: center;
@@ -364,6 +382,7 @@ footer.site-footer {
   max-width: 460px;
   width: 100%;
   position: relative;
+  box-shadow: var(--shadow-lg);
   animation: slideUp .25s ease;
 }
 .modal-close {
@@ -371,13 +390,13 @@ footer.site-footer {
   top: var(--s-lg); right: var(--s-lg);
   width: 32px; height: 32px;
   border-radius: var(--r-full);
-  background: var(--surface-2);
+  background: var(--bg);
   display: grid;
   place-items: center;
   color: var(--muted);
   transition: background .15s ease, color .15s ease;
 }
-.modal-close:hover { background: var(--border); color: var(--text); }
+.modal-close:hover { background: var(--surface-3); color: var(--text); }
 .modal h3 {
   font-family: var(--font-display);
   font-size: 1.4rem;
@@ -389,9 +408,8 @@ footer.site-footer {
 .modal a.btn-primary { width: 100%; justify-content: center; }
 .modal-icon {
   width: 56px; height: 56px;
-  background: var(--accent-dim);
+  background: var(--accent-tint);
   color: var(--accent);
-  border: 1px solid var(--accent-soft);
   border-radius: var(--r-lg);
   display: grid;
   place-items: center;

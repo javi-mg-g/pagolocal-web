@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0D0D14" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#F5F7FB" />
+  <meta name="color-scheme" content="light" />
 
   <!-- SEO -->
   <title>PagoLocal · Paga en Ontinyent y gana en cada compra</title>
@@ -17,8 +17,8 @@
   <meta property="og:description" content="La app de pago del comercio local de Ontinyent. QR, cashback y marketplace local en una sola app." />
   <meta property="og:locale" content="es_ES" />
 
-  <!-- Favicon: réplica del logoCircle de la app -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%231A1A2E' stroke='%23F5C842' stroke-width='6'/%3E%3Ctext x='50' y='66' font-family='Inter,Arial,sans-serif' font-size='52' font-weight='800' text-anchor='middle' fill='%23F5C842'%3EP%3C/text%3E%3C/svg%3E" />
+  <!-- Favicon: réplica del icono de Play Store (círculo oscuro + rayo dorado) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1A2E'/%3E%3Cpath d='M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z' fill='%23F5C842'/%3E%3C/svg%3E" />
 
   <!-- Inter (idéntica a la app: 600 semibold, 700 bold, 800 extrabold) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,19 +36,19 @@
     /* HERO */
     .hero {
       position: relative;
-      padding: 60px 0 80px;
+      padding: 60px 0 100px;
       overflow: hidden;
     }
-    /* Glow dorado decorativo de fondo, idéntico al balanceGlow de la app */
+    /* Glow dorado decorativo de fondo */
     .hero-decor {
       position: absolute;
-      width: 420px; height: 420px;
+      width: 480px; height: 480px;
       border-radius: 50%;
       background: var(--accent);
-      opacity: 0.10;
-      filter: blur(100px);
+      opacity: 0.06;
+      filter: blur(110px);
       top: -80px;
-      right: 25%;
+      right: -100px;
       z-index: 0;
       pointer-events: none;
     }
@@ -61,7 +61,7 @@
       z-index: 1;
     }
     .hero h1 { margin-bottom: var(--s-xl); }
-    /* "Gana" destacado en dorado (sustituye el subrayado verde anterior) */
+    /* "Gana" destacado en dorado */
     .hero h1 em {
       font-style: normal;
       color: var(--accent);
@@ -73,7 +73,7 @@
       left: -4px; right: -4px; bottom: 0.06em;
       height: 0.18em;
       background: var(--accent);
-      opacity: 0.25;
+      opacity: 0.18;
       border-radius: 2px;
       z-index: -1;
     }
@@ -89,13 +89,12 @@
       display: flex;
       align-items: center;
       gap: var(--s-md);
-      font-size: 0.85rem;
-      color: var(--text-dim);
+      font-size: 0.88rem;
+      color: var(--muted);
     }
     .hero-trust-icon {
       width: 36px; height: 36px;
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-soft);
+      background: var(--accent-tint);
       border-radius: var(--r-full);
       display: grid;
       place-items: center;
@@ -103,7 +102,7 @@
     }
     .hero-trust-icon svg { width: 18px; height: 18px; }
 
-    /* Mockup del móvil */
+    /* Mockup del móvil — sigue siendo OSCURO (es la app real, en su tema por defecto) */
     .hero-visual {
       position: relative;
       width: 100%;
@@ -114,16 +113,16 @@
     .phone-frame {
       position: absolute;
       inset: 0;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+      background: #1A1A2E;
       border-radius: 48px;
       padding: 14px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 30px 60px -20px rgba(26, 26, 46, 0.25),
+                  0 18px 30px -15px rgba(26, 26, 46, 0.15);
       transform: rotate(-3deg);
     }
     .phone-screen {
       width: 100%; height: 100%;
-      background: var(--bg);
+      background: var(--dark-bg);
       border-radius: 36px;
       padding: 28px 18px 24px;
       display: flex;
@@ -132,7 +131,6 @@
       overflow: hidden;
       position: relative;
     }
-    /* Notch */
     .phone-screen::before {
       content: "";
       position: absolute;
@@ -141,21 +139,20 @@
       transform: translateX(-50%);
       width: 90px;
       height: 5px;
-      background: var(--border);
+      background: var(--dark-border);
       border-radius: var(--r-full);
     }
 
-    /* Balance card (réplica del balanceCard de la app) */
+    /* Balance card oscuro (réplica del balanceCard de la app) */
     .phone-balance {
       margin-top: var(--s-xl);
       padding: 18px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
       border-radius: var(--r-xl);
       position: relative;
       overflow: hidden;
     }
-    /* balanceGlow */
     .phone-balance::after {
       content: "";
       position: absolute;
@@ -164,12 +161,12 @@
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: var(--accent-dim);
+      background: rgba(245, 200, 66, 0.18);
       filter: blur(8px);
     }
     .phone-balance-label {
       font-size: 0.72rem;
-      color: var(--muted);
+      color: var(--dark-muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       position: relative;
@@ -179,7 +176,7 @@
       font-size: 2rem;
       font-weight: 800;
       margin-top: var(--s-xs);
-      color: var(--accent);
+      color: var(--accent-bright);
       letter-spacing: -0.02em;
       position: relative;
     }
@@ -189,20 +186,19 @@
       margin-left: 2px;
       font-weight: 700;
     }
-    /* Tx items (réplica de txItem de la app) */
     .phone-row {
       display: flex;
       align-items: center;
       gap: var(--s-md);
       padding: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
       border-radius: var(--r-lg);
       font-size: 0.82rem;
     }
     .phone-row-icon {
       width: 36px; height: 36px;
-      background: var(--surface-2);
+      background: var(--dark-card);
       border-radius: var(--r-sm);
       display: grid;
       place-items: center;
@@ -211,20 +207,20 @@
     .phone-row-main { flex: 1; min-width: 0; }
     .phone-row-name {
       font-weight: 600;
-      color: var(--text);
+      color: var(--dark-text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .phone-row-sub { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+    .phone-row-sub { font-size: 0.7rem; color: var(--dark-muted); margin-top: 1px; }
     .phone-row-amount {
       font-weight: 700;
-      color: var(--text);
+      color: var(--dark-text);
       font-variant-numeric: tabular-nums;
       text-align: right;
     }
     .phone-row-cb {
-      color: var(--accent);
+      color: var(--accent-bright);
       font-size: 0.7rem;
       font-weight: 700;
       margin-top: 1px;
@@ -248,7 +244,7 @@
     .section-head h2 { margin-bottom: var(--s-lg); }
     .section-head p { font-size: 1.1rem; color: var(--muted); }
 
-    /* CÓMO FUNCIONA — 3 pasos (idéntico al patrón cardOption de la app) */
+    /* CÓMO FUNCIONA — 3 pasos sobre fondo claro */
     .how-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -265,22 +261,21 @@
     .step:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
-      box-shadow: 0 12px 32px rgba(245, 200, 66, 0.08);
+      box-shadow: var(--shadow);
     }
     .step-num {
       position: absolute;
       top: var(--s-xl); right: 28px;
       font-size: 2.5rem;
       font-weight: 800;
-      color: var(--border);
+      color: var(--surface-3);
       line-height: 1;
       letter-spacing: -0.04em;
     }
     .step-icon {
       width: 52px; height: 52px;
-      background: var(--accent-dim);
+      background: var(--accent-tint);
       color: var(--accent);
-      border: 1px solid var(--accent-soft);
       border-radius: var(--r-lg);
       display: grid;
       place-items: center;
@@ -294,7 +289,7 @@
       .how-grid { grid-template-columns: 1fr; }
     }
 
-    /* DÓNDE USAR — mosaico (réplica de comercio cards de la app) */
+    /* DÓNDE USAR — mosaico sobre fondo blanco con sutil contraste */
     .where-bg {
       background: var(--surface);
       border-top: 1px solid var(--border);
@@ -315,6 +310,7 @@
     .where-card:hover {
       border-color: var(--accent);
       transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
     }
     .where-emoji {
       font-size: 2rem;
@@ -332,11 +328,10 @@
     @media (max-width: 880px) { .where-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 480px) { .where-grid { grid-template-columns: 1fr; } }
 
-    /* PARA COMERCIOS — card destacada con glow dorado */
+    /* PARA COMERCIOS — card oscura estilo feature graphic de Play Store */
     .merchants {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: var(--dark-bg);
+      color: var(--dark-text);
       border-radius: var(--r-xl);
       padding: 70px 60px;
       position: relative;
@@ -345,11 +340,11 @@
     .merchants::before {
       content: "";
       position: absolute;
-      width: 360px; height: 360px;
+      width: 380px; height: 380px;
       border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.10;
-      filter: blur(100px);
+      background: var(--accent-bright);
+      opacity: 0.12;
+      filter: blur(110px);
       top: -100px; right: -80px;
     }
     .merchants-grid {
@@ -359,20 +354,24 @@
       align-items: center;
       position: relative;
     }
-    .merchants h2 { color: var(--text); margin-bottom: var(--s-lg); }
+    .merchants .eyebrow {
+      color: var(--accent-bright);
+      background: rgba(245, 200, 66, 0.10);
+      border-color: rgba(245, 200, 66, 0.30);
+    }
+    .merchants h2 { color: var(--dark-text); margin-bottom: var(--s-lg); }
     .merchants-lead {
-      color: var(--muted);
+      color: var(--dark-muted);
       font-size: 1.05rem;
       margin-bottom: var(--s-xxl);
     }
-    /* CTA con fondo accent — réplica de btnPrimary de la app */
     .merchants-cta {
       display: inline-flex;
       align-items: center;
       gap: var(--s-sm);
       padding: 14px 26px;
-      background: var(--accent);
-      color: var(--bg);
+      background: var(--accent-bright);
+      color: var(--dark-bg);
       border-radius: var(--r-md);
       font-weight: 700;
       transition: transform .15s ease, box-shadow .15s ease;
@@ -396,16 +395,16 @@
     .merchants-list svg {
       flex-shrink: 0;
       width: 22px; height: 22px;
-      color: var(--accent);
+      color: var(--accent-bright);
       margin-top: 3px;
     }
     .merchants-list strong {
       display: block;
       margin-bottom: var(--s-xs);
-      color: var(--text);
+      color: var(--dark-text);
       font-weight: 700;
     }
-    .merchants-list span { color: var(--muted); font-size: 0.92rem; }
+    .merchants-list span { color: var(--dark-muted); font-size: 0.92rem; }
 
     @media (max-width: 880px) {
       .merchants { padding: 50px 32px; }
@@ -506,7 +505,11 @@
   <header class="site-header">
     <div class="container nav">
       <a href="/" class="logo">
-        <span class="logo-mark">P</span>
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </span>
         <span>PagoLocal</span>
       </a>
 
@@ -564,7 +567,7 @@
         </div>
       </div>
 
-      <!-- Mockup del móvil — réplica del Home de la app -->
+      <!-- Mockup del móvil en OSCURO (es la app real, tema por defecto) -->
       <div class="hero-visual" aria-hidden="true">
         <div class="phone-frame">
           <div class="phone-screen">
@@ -671,7 +674,7 @@
     </div>
   </section>
 
-  <!-- =================== PARA COMERCIOS =================== -->
+  <!-- =================== PARA COMERCIOS (card oscura estilo feature graphic) =================== -->
   <section id="comercios">
     <div class="container">
       <div class="merchants">
@@ -823,7 +826,14 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <h3>PagoLocal</h3>
+          <a href="/" class="logo">
+            <span class="logo-mark">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </span>
+            <span>PagoLocal</span>
+          </a>
           <p data-i18n="footer.tagline"></p>
         </div>
         <div class="footer-col">
@@ -886,11 +896,6 @@
 
   /* ==============================================================
      SISTEMA DE TRADUCCIONES (i18n)
-     -------------------------------------------------------------
-     Para añadir Valencià o English: copia el bloque 'es' completo,
-     pégalo dentro de I18N.val o I18N.en, y traduce los textos.
-     Después, en el HTML del header, quita el atributo `disabled`
-     del botón correspondiente en .lang-switch.
      ============================================================== */
   const I18N = {
     es: {
@@ -988,14 +993,10 @@
       }
     },
 
-    /* Añade aquí las traducciones cuando estén listas */
     val: {},
     en:  {}
   };
 
-  /* ==============================================================
-     APLICAR TRADUCCIONES
-     ============================================================== */
   let currentLang = 'es';
 
   function t(key) {
@@ -1032,9 +1033,7 @@
 
   applyLang();
 
-  /* ==============================================================
-     BOTONES DE DESCARGA
-     ============================================================== */
+  /* BOTONES DE DESCARGA */
   document.querySelectorAll('[data-action="download"]').forEach(btn => {
     const platform = btn.dataset.platform;
     const link = APP_LINKS[platform];
@@ -1051,18 +1050,14 @@
     }
   });
 
-  /* ==============================================================
-     MODAL
-     ============================================================== */
+  /* MODAL */
   const modal = document.getElementById('modalDownload');
   function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
   function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* ==============================================================
-     MENÚ MÓVIL
-     ============================================================== */
+  /* MENÚ MÓVIL */
   document.getElementById('menuToggle').addEventListener('click', () => {
     document.getElementById('navLinks').classList.toggle('open');
   });
