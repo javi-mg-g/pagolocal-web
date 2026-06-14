@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F5F7FB" />
+  <meta name="color-scheme" content="light" />
+
+  <title>Entradas · PagoLocal — Eventos de Ontinyent</title>
+  <meta name="description" content="Compra entradas para los eventos de Ontinyent con PagoLocal y gana cashback en cada compra. Conciertos, gastronomía, deporte y más." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pagolocal.xyz/entradas.html" />
+  <meta property="og:title" content="Entradas · PagoLocal — Eventos de Ontinyent" />
+  <meta property="og:description" content="Las entradas de tu ciudad, con cashback. Pago seguro con Cecabank." />
+  <meta property="og:locale" content="es_ES" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1A2E'/%3E%3Cpath d='M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z' fill='%23F5C842'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos compartidos del sitio -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+  /* ============================================================
+     Estilos específicos de la página de Entradas
+     Tema CLARO, usando los tokens de styles.css.
+     ============================================================ */
+  .wrap{ max-width: var(--container); margin:0 auto; padding:0 var(--s-xl); }
+
+  /* Botones reutilizados del prototipo, mapeados a la marca del sitio */
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:none; border-radius:var(--r-md); padding:13px 20px; font-weight:700; font-size:0.95rem;
+    font-family:inherit; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease; }
+  .btn-amarillo{ background:var(--accent); color:var(--white); }
+  .btn-amarillo:hover{ background:var(--accent-hover); transform:translateY(-1px); box-shadow:0 8px 20px rgba(176,121,8,.25); }
+  .btn-amarillo:disabled{ background:var(--surface-3); color:var(--text-dim); cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-ghost{ background:var(--surface); color:var(--text); border:1px solid var(--border); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+  .btn-block{ width:100%; }
+  .btn-sm{ padding:9px 14px; font-size:0.82rem; border-radius:var(--r-sm); }
+
+  /* HERO */
+  .hero{ position:relative; padding:56px 0 40px; }
+  .hero .hero-lead{ font-size:1.1rem; color:var(--muted); max-width:60ch; margin:14px 0 24px; }
+  .hero h1{ max-width:16ch; }
+  .hero h1 em{ font-style:normal; color:var(--accent); }
+  .hero-ctas{ display:flex; gap:var(--s-md); flex-wrap:wrap; margin-bottom:var(--s-xxl); }
+  .hero-stats{ display:flex; gap:40px; flex-wrap:wrap; }
+  .hero-stats div b{ display:block; font-size:1.6rem; font-weight:800; letter-spacing:-.02em; color:var(--text); }
+  .hero-stats div span{ font-size:.85rem; color:var(--text-dim); }
+
+  /* SECCIONES / GRID */
+  section.bloque{ padding:32px 0 56px; }
+  .bloque-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap; }
+  .bloque-head h2{ margin:0; }
+  .bloque-head p{ margin:4px 0 0; color:var(--text-dim); font-size:.92rem; }
+  .filtros{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{ padding:8px 15px; border-radius:var(--r-full); border:1px solid var(--border); background:var(--surface);
+    color:var(--muted); font-size:.82rem; font-weight:600; cursor:pointer; transition:.14s; }
+  .chip:hover{ color:var(--text); border-color:var(--accent); }
+  .chip.on{ background:var(--accent); color:var(--white); border-color:var(--accent); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:22px; }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+    overflow:hidden; cursor:pointer; transition:.18s; display:flex; flex-direction:column; box-shadow:var(--shadow-sm); }
+  .card:hover{ transform:translateY(-4px); border-color:var(--accent); box-shadow:var(--shadow); }
+  .card-img{ aspect-ratio:16/10; position:relative; display:grid; place-items:center; font-size:46px; color:#fff; }
+  .card-fecha{ position:absolute; top:12px; left:12px; background:#fff; border-radius:var(--r-sm);
+    text-align:center; padding:7px 11px; line-height:1; box-shadow:var(--shadow-sm); }
+  .card-fecha b{ display:block; font-size:1.25rem; font-weight:800; color:var(--accent); }
+  .card-fecha span{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .card-cat{ position:absolute; top:12px; right:12px; background:rgba(255,255,255,.94); color:var(--text);
+    border-radius:var(--r-full); padding:5px 11px; font-size:11px; font-weight:700; }
+  .card-body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .card-body h3{ margin:0; font-size:1.05rem; font-weight:700; }
+  .card-meta{ font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:7px; }
+  .card-foot{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding-top:10px; }
+  .precio-desde{ font-size:.85rem; color:var(--text-dim); }
+  .precio-desde b{ font-size:1.05rem; color:var(--text); font-weight:800; }
+  .tag-tipo{ font-size:11px; font-weight:700; color:var(--accent); background:var(--accent-tint); padding:4px 10px; border-radius:var(--r-full); }
+  .tag-agotado{ color:var(--red); background:var(--red-dim); }
+
+  /* FICHA */
+  .volver{ display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:.9rem;
+    font-weight:600; margin:24px 0 18px; cursor:pointer; }
+  .volver:hover{ color:var(--accent); }
+  .ficha{ display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:30px; align-items:start; }
+  .ficha-cartel{ border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--border);
+    aspect-ratio:3/2; display:grid; place-items:center; font-size:80px; color:#fff; box-shadow:var(--shadow-sm); }
+  .ficha .cat{ color:var(--accent); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; }
+  .ficha h1{ margin:6px 0; }
+  .ficha-desc{ color:var(--muted); margin:16px 0; white-space:pre-line; line-height:1.7; }
+  .dato-linea{ display:flex; gap:11px; align-items:flex-start; padding:13px 0; border-top:1px solid var(--border); font-size:.92rem; color:var(--muted); }
+  .dato-linea .ic{ font-size:18px; width:24px; text-align:center; flex:none; }
+  .dato-linea b{ font-weight:700; color:var(--text); }
+  .mapa-emb{ border:0; width:100%; height:200px; border-radius:var(--r-md); margin-top:10px; }
+
+  .panel{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+    padding:22px; position:sticky; top:88px; box-shadow:var(--shadow-sm); }
+  .panel h3{ margin:0 0 4px; }
+  .panel .sub{ color:var(--text-dim); font-size:.85rem; margin-bottom:16px; }
+
+  .tipo-fila{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-top:1px solid var(--border); }
+  .tipo-fila:first-of-type{ border-top:none; }
+  .tipo-info b{ display:block; font-weight:700; color:var(--text); }
+  .tipo-info span{ font-size:.88rem; color:var(--muted); }
+  .tipo-info .restan{ font-size:.78rem; color:var(--text-dim); }
+  .stepper{ display:flex; align-items:center; border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; flex:none; }
+  .stepper button{ width:38px; height:38px; border:none; background:var(--surface-2); color:var(--text); font-size:20px; font-weight:700; cursor:pointer; }
+  .stepper button:hover{ background:var(--surface-3); }
+  .stepper button:disabled{ color:var(--text-dim); cursor:not-allowed; }
+  .stepper span{ min-width:38px; text-align:center; font-weight:700; }
+
+  .resumen{ border-top:1px solid var(--border); margin-top:6px; padding-top:16px; }
+  .resumen .fila{ display:flex; justify-content:space-between; font-size:.9rem; color:var(--muted); margin-bottom:7px; }
+  .resumen .total{ display:flex; justify-content:space-between; align-items:baseline; margin:10px 0 4px; }
+  .resumen .total b{ font-size:1.6rem; font-weight:800; letter-spacing:-.02em; color:var(--text); }
+  .cashback-nota{ display:flex; align-items:center; gap:9px; background:var(--accent-tint);
+    border:1px solid rgba(176,121,8,.2); border-radius:var(--r-md); padding:11px 13px; margin:14px 0; font-size:.85rem; color:var(--text); }
+  .cashback-nota b{ color:var(--accent); }
+
+  /* MAPA DE BUTACAS (elemento estrella) */
+  .escenario{ margin:6px auto 26px; max-width:560px; }
+  .escenario .pantalla{ height:34px; border-radius:6px 6px 60% 60%/6px 6px 100% 100%;
+    background:linear-gradient(180deg,#fff,var(--surface-3)); border:1px solid var(--border); border-bottom:2px solid var(--accent);
+    display:grid; place-items:center; font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--muted); font-weight:700;
+    box-shadow:0 14px 26px -18px rgba(176,121,8,.5); }
+  .leyenda{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin:18px 0 22px; font-size:.78rem; color:var(--muted); }
+  .leyenda span{ display:inline-flex; align-items:center; gap:6px; }
+  .lg{ width:16px; height:16px; border-radius:5px; flex:none; border:1px solid var(--border); }
+  .lg.disp{ background:var(--surface-3); }
+  .lg.sel{ background:var(--accent); border-color:var(--accent); }
+  .lg.ocu{ background:var(--red-dim); border-color:rgba(220,38,38,.35); }
+  .lg.sil{ background:rgba(37,99,235,.12); border-color:var(--blue); }
+
+  .zona{ margin-bottom:30px; }
+  .zona-cab{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  .zona-cab h4{ margin:0; font-size:1rem; font-weight:800; display:flex; align-items:center; gap:9px; }
+  .zona-dot{ width:11px; height:11px; border-radius:50%; flex:none; }
+  .zona-cab .pz{ font-size:.85rem; color:var(--muted); font-weight:600; }
+  .mapa-scroll{ overflow-x:auto; padding-bottom:8px; }
+  .mapa-grid{ display:inline-grid; gap:6px; margin:0 auto; }
+  .fila-mapa{ display:flex; gap:6px; align-items:center; }
+  .fila-label{ width:20px; font-size:11px; color:var(--text-dim); text-align:center; flex:none; font-weight:700; }
+  .asiento{ width:26px; height:26px; border-radius:6px 6px 4px 4px; border:1px solid var(--border);
+    background:var(--surface-3); font-size:10px; color:var(--text-dim); display:grid; place-items:center;
+    cursor:pointer; transition:.1s; flex:none; font-weight:600; }
+  .asiento:hover{ transform:scale(1.12); border-color:var(--accent); background:#fff; }
+  .asiento.sel{ background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
+  .asiento.ocu{ background:var(--red-dim); border-color:rgba(220,38,38,.3); color:#B91C1C; opacity:.65; cursor:not-allowed; }
+  .asiento.ocu:hover{ transform:none; border-color:rgba(220,38,38,.3); background:var(--red-dim); }
+  .asiento.sil{ background:rgba(37,99,235,.1); border-color:var(--blue); color:var(--blue); }
+  .asiento.sil.sel{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .asiento.hueco{ visibility:hidden; cursor:default; }
+  .asiento.hueco:hover{ transform:none; }
+
+  .seleccion-pills{ display:flex; flex-wrap:wrap; gap:7px; margin:4px 0 14px; min-height:4px; }
+  .pill{ display:inline-flex; align-items:center; gap:7px; background:var(--surface-2); border:1px solid var(--border);
+    border-radius:var(--r-full); padding:5px 6px 5px 12px; font-size:.78rem; font-weight:600; color:var(--text); }
+  .pill b{ color:var(--accent); }
+  .pill button{ border:none; background:var(--surface-3); color:var(--muted); width:20px; height:20px; border-radius:50%; cursor:pointer; font-size:13px; line-height:1; }
+  .pill button:hover{ background:var(--red); color:#fff; }
+
+  /* FORMULARIOS */
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .campo{ display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+  .campo.full{ grid-column:1/-1; }
+  .campo label{ font-size:.78rem; font-weight:600; color:var(--muted); letter-spacing:.02em; }
+  .campo input,.campo select,.campo textarea{ background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md);
+    padding:12px 13px; color:var(--text); font-size:.95rem; font-family:inherit; width:100%; }
+  .campo input:focus,.campo select:focus,.campo textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
+  .campo .ayuda{ font-size:.72rem; color:var(--text-dim); }
+  .checkout{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:28px; align-items:start; }
+
+  /* MODAL PAGO DEMO */
+  .modal-bg{ position:fixed; inset:0; background:rgba(26,26,46,.55); backdrop-filter:blur(4px);
+    display:grid; place-items:center; z-index:100; padding:20px; }
+  .modal{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-xl); max-width:440px; width:100%; box-shadow:var(--shadow-lg); overflow:hidden; }
+  .modal .cab{ padding:18px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .modal .cab b{ font-weight:800; }
+  .ceca-logo{ width:26px; height:26px; border-radius:50%; background:var(--dark-bg); color:var(--accent-bright);
+    display:grid; place-items:center; font-weight:900; font-size:13px; flex:none; }
+  .modal .cuerpo{ padding:24px 22px; }
+  .modal .pie{ padding:0 22px 22px; display:flex; gap:10px; }
+  .ceca-band{ background:#EAF2FF; border:1px solid #C7DBFF; border-radius:var(--r-md); padding:10px 13px; font-size:.78rem; color:#1E4FA3; margin-bottom:18px; display:flex; align-items:center; gap:9px; }
+  .tarjeta-demo{ background:linear-gradient(135deg,#1c1c28,#101019); border:1px solid var(--dark-border); border-radius:var(--r-lg); padding:18px; margin-bottom:6px; color:#fff; }
+  .tarjeta-demo .num{ font-size:1.1rem; letter-spacing:.12em; font-weight:600; margin-bottom:14px; }
+  .tarjeta-demo .fila{ display:flex; justify-content:space-between; font-size:.72rem; color:#9a9ab0; }
+  .spin{ width:18px; height:18px; border:2px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:gira .7s linear infinite; }
+  @keyframes gira{ to{ transform:rotate(360deg); } }
+
+  /* CONFIRMACIÓN */
+  .confirm{ max-width:560px; margin:30px auto; text-align:center; }
+  .confirm .check{ width:74px; height:74px; border-radius:50%; background:rgba(5,150,105,.12);
+    border:1px solid rgba(5,150,105,.4); color:var(--green); display:grid; place-items:center; font-size:36px; margin:0 auto 18px; }
+  .entrada-tk{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); text-align:left; margin-top:24px; overflow:hidden; box-shadow:var(--shadow-sm); }
+  .entrada-tk .top-tk{ padding:18px 22px; border-bottom:1px dashed var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .entrada-tk .top-tk b{ font-size:1.05rem; }
+  .qr-fake{ width:120px; height:120px; border-radius:var(--r-md); background:repeating-conic-gradient(#1A1A2E 0 25%, #fff 0 50%) 50%/14px 14px; margin:20px auto; border:6px solid #fff; box-shadow:0 0 0 1px var(--border); }
+  .loc-code{ font-family:monospace; font-size:1.35rem; letter-spacing:.18em; text-align:center; color:var(--accent); font-weight:700; }
+  .entrada-det{ padding:18px 22px; font-size:.9rem; color:var(--muted); }
+  .entrada-det .l{ display:flex; justify-content:space-between; padding:5px 0; }
+  .entrada-det .l b{ color:var(--text); }
+
+  /* ORGANIZADOR */
+  .org-tabs{ display:flex; gap:8px; margin:24px 0 22px; border-bottom:1px solid var(--border); }
+  .org-tabs button{ background:none; border:none; color:var(--muted); font-weight:700; font-size:.95rem; padding:12px 4px; margin-right:18px; cursor:pointer; border-bottom:2px solid transparent; }
+  .org-tabs button.on{ color:var(--accent); border-bottom-color:var(--accent); }
+  .org-evt{ display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:14px; margin-bottom:10px; box-shadow:var(--shadow-sm); }
+  .org-evt .mini{ width:54px; height:54px; border-radius:var(--r-sm); display:grid; place-items:center; font-size:22px; flex:none; color:#fff; }
+  .org-evt .info{ flex:1; min-width:0; }
+  .org-evt .info b{ display:block; color:var(--text); }
+  .org-evt .info span{ font-size:.85rem; color:var(--muted); }
+  .org-evt .barra{ height:6px; border-radius:4px; background:var(--surface-3); overflow:hidden; margin-top:7px; max-width:220px; }
+  .org-evt .barra i{ display:block; height:100%; background:var(--accent); }
+  .org-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px; margin-bottom:18px; box-shadow:var(--shadow-sm); }
+  .org-card h3{ margin:0 0 16px; display:flex; align-items:center; gap:9px; }
+  .seg{ display:inline-flex; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); padding:4px; gap:4px; }
+  .seg button{ border:none; background:none; color:var(--muted); font-weight:700; font-size:.9rem; padding:8px 16px; border-radius:var(--r-sm); cursor:pointer; }
+  .seg button.on{ background:var(--accent); color:#fff; }
+  .mini-fila{ display:grid; grid-template-columns:1.6fr 1fr 1fr auto; gap:8px; margin-bottom:8px; align-items:center; }
+  .mini-fila input{ margin:0; }
+  .mini-fila .del{ width:38px; height:42px; border:1px solid var(--border); background:var(--surface-2); border-radius:var(--r-sm); color:var(--red); cursor:pointer; font-size:16px; }
+  .add-link{ color:var(--accent); font-weight:700; font-size:.88rem; cursor:pointer; display:inline-flex; gap:6px; align-items:center; margin-top:4px; }
+  .color-pick{ display:flex; gap:7px; flex-wrap:wrap; }
+  .color-pick label{ width:30px; height:30px; border-radius:var(--r-sm); cursor:pointer; }
+  .color-pick input{ display:none; }
+  .color-pick input:checked + span{ outline:2px solid var(--text); outline-offset:2px; }
+  .color-pick span{ display:block; width:100%; height:100%; border-radius:var(--r-xs); }
+  .editor-asientos{ margin-top:10px; padding:16px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); }
+  .editor-asientos .hint{ font-size:.72rem; color:var(--text-dim); margin-bottom:12px; }
+  .aside-editor{ width:24px; height:24px; border-radius:5px; border:1px solid var(--border); background:var(--surface-3); cursor:pointer; flex:none; }
+  .aside-editor.hueco{ background:transparent; border-style:dashed; opacity:.5; }
+  .aside-editor.sil{ background:rgba(37,99,235,.16); border-color:var(--blue); }
+
+  /* TOAST */
+  #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(120px);
+    background:var(--text); color:#fff; padding:13px 20px; border-radius:var(--r-md); font-weight:600; font-size:.9rem;
+    z-index:200; transition:.3s; box-shadow:var(--shadow-lg); max-width:90vw; }
+  #toast.show{ transform:translateX(-50%) translateY(0); }
+
+  .vacio{ text-align:center; padding:60px 20px; color:var(--text-dim); }
+  .vacio .ic{ font-size:46px; margin-bottom:12px; }
+
+  /* enlace activo en el menú */
+  .nav-links a.activo{ color:var(--accent); }
+
+  @media (max-width:860px){
+    .ficha{ grid-template-columns:1fr; }
+    .checkout{ grid-template-columns:1fr; }
+    .panel{ position:static; }
+    .form-grid{ grid-template-columns:1fr; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- =================== HEADER (clonado del sitio) =================== -->
+  <header class="site-header">
+    <div class="container nav">
+      <a href="/" class="logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </span>
+        <span>PagoLocal</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/#como-funciona">Cómo funciona</a></li>
+        <li><a href="/#donde-usar">Dónde usar</a></li>
+        <li><a href="/#comercios">Comercios</a></li>
+        <li><a href="/#seguridad">Seguridad</a></li>
+        <li><a href="/#faq">Preguntas</a></li>
+        <li><a href="/entradas.html" class="activo">Entradas</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="lang-switch" role="tablist" aria-label="Idioma">
+          <button data-lang="es" class="active">ES</button>
+          <button data-lang="val" disabled title="Próximamente">VAL</button>
+          <button data-lang="en"  disabled title="Próximamente">EN</button>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================== APP DE ENTRADAS =================== -->
+  <main id="app"></main>
+
+  <!-- =================== FOOTER (clonado del sitio) =================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span class="logo-mark">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </span>
+            <span>PagoLocal</span>
+          </a>
+          <p>La app de pago del comercio local de Ontinyent. Hecho aquí, para los de aquí.</p>
+        </div>
+        <div class="footer-col">
+          <h4>PagoLocal</h4>
+          <ul>
+            <li><a href="/#como-funciona">Cómo funciona</a></li>
+            <li><a href="/#donde-usar">Dónde usar</a></li>
+            <li><a href="/entradas.html">Entradas</a></li>
+            <li><a href="/#faq">Preguntas frecuentes</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Comercios</h4>
+          <ul>
+            <li><a href="/#comercios">Para comercios</a></li>
+            <li><a href="mailto:hola@pagolocal.xyz?subject=Quiero%20unir%20mi%20negocio%20a%20PagoLocal">Únete a la red</a></li>
+            <li><a href="mailto:hola@pagolocal.xyz">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy.html">Política de privacidad</a></li>
+            <li><a href="/terms.html">Términos y condiciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> PagoLocal · Hecho en Ontinyent</span>
+        <span><a href="mailto:hola@pagolocal.xyz">hola@pagolocal.xyz</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+
+/* ==========================================================================
+   1. CONFIGURACIÓN
+   ========================================================================== */
+const CONFIG = {
+  // Cuando cableemos backend, aquí irá la URL de Railway:
+  BACKEND_URL: 'https://localpay-backend-production.up.railway.app',
+  // % de cashback PagoLocal sobre la compra de entradas (palanca de marca)
+  CASHBACK_PCT: 3,
+  // MODO DEMO: simula el pago de Cecabank sin salir de la web.
+  DEMO: true,
+  // URL real del TPV (para la fase de cableado; NO se usa en demo)
+  CECA_ACTION_TEST: 'https://tpv.ceca.es/tpvweb/tpv/compra.action',
+  CECA_ACTION_PROD: 'https://pgw.ceca.es/tpvweb/tpv/compra.action',
+};
+const LS_KEY = 'pagolocal_entradas_v1';
+
+/* ==========================================================================
+   2. UTILIDADES
+   ========================================================================== */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const eur = n => (Number(n)||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const slug = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const uid = () => Math.random().toString(36).slice(2,9);
+const MESES = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+const MESES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function fechaPartes(iso){const d=new Date(iso+'T00:00:00');return {dia:d.getDate(),mes:MESES[d.getMonth()],mesL:MESES_L[d.getMonth()],anyo:d.getFullYear()};}
+function fechaLarga(iso){const p=fechaPartes(iso);return `${p.dia} de ${p.mesL} de ${p.anyo}`;}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);}
+const GRADS = ['linear-gradient(135deg,#7C3AED,#4C1D95)','linear-gradient(135deg,#B07908,#7A5206)','linear-gradient(135deg,#2563EB,#1E3A8A)','linear-gradient(135deg,#059669,#064E3B)','linear-gradient(135deg,#DC2626,#7F1D1D)','linear-gradient(135deg,#0EA5E9,#0C4A6E)'];
+const grad = id => GRADS[(String(id).charCodeAt(1)||0)%GRADS.length];
+
+/* ==========================================================================
+   3. ALMACÉN (localStorage) + SEMILLA de 4 eventos
+   ========================================================================== */
+const Store = {
+  data:null,
+  load(){
+    try{ this.data = JSON.parse(localStorage.getItem(LS_KEY)); }catch(e){ this.data=null; }
+    if(!this.data || !this.data.eventos){ this.data = { eventos: semilla() }; this.save(); }
+    return this.data;
+  },
+  save(){ localStorage.setItem(LS_KEY, JSON.stringify(this.data)); },
+  eventos(){ return this.data.eventos; },
+  get(id){ return this.data.eventos.find(e=>String(e.id)===String(id)); },
+  add(ev){ this.data.eventos.unshift(ev); this.save(); },
+  reset(){ localStorage.removeItem(LS_KEY); this.load(); }
+};
+
+// Genera un mapa de butacas: matriz de estados ('.' disponible, 'X' ocupado, ' ' hueco, 'W' silla)
+function genMapa(filas, cols, opts={}){
+  const {ocupadasPct=0.18, sillasUltimaFila=0, pasilloCentral=false} = opts;
+  const m=[];
+  for(let r=0;r<filas;r++){
+    const fila=[];
+    for(let c=0;c<cols;c++){
+      if(pasilloCentral && (c===Math.floor(cols/2))){ fila.push(' '); continue; }
+      let estado = Math.random()<ocupadasPct ? 'X' : '.';
+      if(sillasUltimaFila && r===filas-1 && c<sillasUltimaFila){ estado = Math.random()<0.4?'X':'W'; }
+      fila.push(estado);
+    }
+    m.push(fila);
+  }
+  return m;
+}
+
+function semilla(){
+  return [
+    // ---------- 1) EVENTO GENERAL (estilo Mercat de la Carxofa) ----------
+    {
+      id:'mercat-carxofa-2026', tipo:'general',
+      titulo:"Mercat de la Carxofa 2026", categoria:'Gastronomía',
+      fecha:'2026-02-28', hora:'11:30',
+      lugar:{nombre:'Plaça Major', direccion:'Plaça Major, 46870 Ontinyent', lat:38.8222, lng:-0.6075},
+      descripcion:"Una jornada dedicada al producto estrella de la huerta local: la alcachofa de Ontinyent.\nDegustaciones, mercado de productores, show-cooking y tapas elaboradas por los bares de la villa.\nEntrada general gratuita; el bono degustación da derecho a 5 tapas + bebida en los puestos participantes.",
+      organizador:'Ajuntament d\'Ontinyent', contacto:'cultura@ontinyent.es',
+      tiposEntrada:[
+        {id:uid(), nombre:'Entrada general', precio:0, cantidad:500, vendidas:213},
+        {id:uid(), nombre:'Bono degustación (5 tapas + bebida)', precio:8, cantidad:300, vendidas:188},
+        {id:uid(), nombre:'Bono familiar (4 bonos)', precio:28, cantidad:80, vendidas:31},
+      ]
+    },
+    // ---------- 2) EVENTO GENERAL (carrera popular, varias categorías) ----------
+    {
+      id:'cursa-popular-2026', tipo:'general',
+      titulo:"Cursa Popular d'Ontinyent 2026", categoria:'Deporte',
+      fecha:'2026-05-10', hora:'09:00',
+      lugar:{nombre:'Pavelló Poliesportiu', direccion:'Av. d\'Albaida, 46870 Ontinyent', lat:38.8175, lng:-0.6018},
+      descripcion:"10K homologado por las calles del casco histórico y la zona del Pou Clar.\nIncluye dorsal con chip, bolsa del corredor, avituallamientos y camiseta técnica.\nLa categoría infantil (1,5 km) es gratuita pero requiere inscripción para el control de aforo.",
+      organizador:'Club d\'Atletisme Ontinyent', contacto:'inscripcions@cursaontinyent.es',
+      tiposEntrada:[
+        {id:uid(), nombre:'10K · Adulto', precio:12, cantidad:600, vendidas:412},
+        {id:uid(), nombre:'10K · Federado (descuento)', precio:9, cantidad:200, vendidas:96},
+        {id:uid(), nombre:'Infantil 1,5 km', precio:0, cantidad:150, vendidas:88},
+      ]
+    },
+    // ---------- 3) EVENTO BUTACAS (estilo Festival de Cors · Sala Gomis) ----------
+    {
+      id:'festival-cors-2026', tipo:'butacas',
+      titulo:"XVIII Festival de Cors d'Ontinyent", categoria:'Música',
+      fecha:'2026-06-20', hora:'19:30',
+      lugar:{nombre:'Sala Gomis', direccion:'Av. Manuel Sanchis Guarner, 46870 Ontinyent', lat:38.8250, lng:-0.5964},
+      descripcion:"El gran encuentro coral de la ciudad llega a su 18ª edición.\nCon la participación del Coro Voces de Gredos, la Coral Veles e Vents de Gandia y el Nou Orfeó d'Ontinyent.\nDuración aproximada: 60 minutos.",
+      organizador:'Nou Orfeó d\'Ontinyent', contacto:'cultura@ontinyent.es',
+      zonas:[
+        {id:uid(), nombre:'Platea', precio:6, color:'#F5C842', mapa:genMapa(8,16,{ocupadasPct:0.22, sillasUltimaFila:2, pasilloCentral:true})},
+        {id:uid(), nombre:'Amfiteatre', precio:6, color:'#3B9EFF', mapa:genMapa(5,14,{ocupadasPct:0.14, pasilloCentral:true})},
+      ]
+    },
+    // ---------- 4) EVENTO BUTACAS (Teatre Echegaray, dos precios) ----------
+    {
+      id:'banda-echegaray-2026', tipo:'butacas',
+      titulo:"Concert de Primavera · Societat Musical", categoria:'Música',
+      fecha:'2026-04-18', hora:'20:00',
+      lugar:{nombre:'Teatre Echegaray', direccion:'C/ Echegaray, 46870 Ontinyent', lat:38.8231, lng:-0.6082},
+      descripcion:"La Banda Simfònica de la Societat Musical d'Ontinyent ofrece su concierto de primavera con un programa de bandas sonoras y pasodobles.\nPlatea con visión preferente y anfiteatro a precio reducido.",
+      organizador:'Societat Musical d\'Ontinyent', contacto:'taquilla@smontinyent.es',
+      zonas:[
+        {id:uid(), nombre:'Platea', precio:8, color:'#F5C842', mapa:genMapa(10,18,{ocupadasPct:0.3, sillasUltimaFila:2, pasilloCentral:true})},
+        {id:uid(), nombre:'Amfiteatre', precio:5, color:'#3B9EFF', mapa:genMapa(6,16,{ocupadasPct:0.12, pasilloCentral:true})},
+      ]
+    },
+  ];
+}
+
+/* ==========================================================================
+   4. ROUTER (hash)
+   ========================================================================== */
+function ir(hash){ if(location.hash===hash){ render(); } else { location.hash=hash; } window.scrollTo(0,0); }
+function parseHash(){
+  const raw = location.hash.replace(/^#/,'') || '/';
+  const [path,qs] = raw.split('?');
+  const params = Object.fromEntries(new URLSearchParams(qs||''));
+  return {parts: path.split('/').filter(Boolean), params};
+}
+window.addEventListener('hashchange', render);
+
+function render(){
+  const {parts,params} = parseHash();
+  const app = $('#app');
+  let html='';
+  if(parts.length===0){ html = vistaHome(params); }
+  else if(parts[0]==='evento'){ html = vistaEvento(parts[1]); }
+  else if(parts[0]==='reservar'){ html = vistaReserva(parts[1]); }
+  else if(parts[0]==='checkout'){ html = vistaCheckout(parts[1]); }
+  else if(parts[0]==='confirmacion'){ html = vistaConfirmacion(parts[1]); }
+  else if(parts[0]==='organizador'){ html = vistaOrganizador(params); }
+  else { html = `<div class="wrap"><div class="vacio"><div class="ic">🤔</div>Página no encontrada. <a style="color:var(--accent)" onclick="ir('#/')">Volver al inicio</a></div></div>`; }
+  app.innerHTML = html;
+  if(parts[0]==='reservar') montarReserva(parts[1]);
+  if(parts[0]==='checkout') montarCheckout(parts[1]);
+  if(parts[0]==='organizador') montarOrganizador(params);
+}
+
+/* ==========================================================================
+   5. VISTA: HOME (listado de eventos)
+   ========================================================================== */
+let filtroCat = 'Todos';
+function vistaHome(params){
+  if(params.cat) filtroCat = params.cat;
+  const evs = Store.eventos();
+  const cats = ['Todos', ...new Set(evs.map(e=>e.categoria))];
+  const visibles = filtroCat==='Todos' ? evs : evs.filter(e=>e.categoria===filtroCat);
+  return `
+  <section class="hero"><div class="wrap">
+    <span class="eyebrow">Cultura y comercio local · Ontinyent</span>
+    <h1>Las entradas de tu ciudad, <em>con cashback</em>.</h1>
+    <p class="hero-lead">Compra entradas para los eventos de Ontinyent y recupera un ${CONFIG.CASHBACK_PCT}% en saldo PagoLocal para gastar en el comercio local. Pago seguro con Cecabank.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" onclick="document.getElementById('lista-eventos').scrollIntoView({behavior:'smooth'})">Ver eventos</button>
+      <button class="btn btn-secondary" onclick="ir('#/organizador')">Soy organizador</button>
+    </div>
+    <div class="hero-stats">
+      <div><b>${evs.length}</b><span>eventos activos</span></div>
+      <div><b>${CONFIG.CASHBACK_PCT}%</b><span>cashback en cada compra</span></div>
+      <div><b>100%</b><span>local · Ontinyent</span></div>
+    </div>
+  </div></section>
+
+  <section class="bloque" id="lista-eventos"><div class="wrap">
+    <div class="bloque-head">
+      <div><h2>Próximos eventos</h2><p>Conciertos, gastronomía, deporte y mucho más</p></div>
+      <div class="filtros">
+        ${cats.map(c=>`<button class="chip ${c===filtroCat?'on':''}" onclick="ir('#/?cat=${encodeURIComponent(c)}')">${esc(c)}</button>`).join('')}
+      </div>
+    </div>
+    ${visibles.length? `<div class="grid">${visibles.map(cardEvento).join('')}</div>`
+      : `<div class="vacio"><div class="ic">🎭</div>No hay eventos en esta categoría todavía.</div>`}
+  </div></section>`;
+}
+
+function precioDesde(ev){
+  if(ev.tipo==='general'){ const ps=ev.tiposEntrada.map(t=>t.precio); return Math.min(...ps); }
+  return Math.min(...ev.zonas.map(z=>z.precio));
+}
+function agotado(ev){
+  if(ev.tipo==='general'){ return ev.tiposEntrada.every(t=>t.vendidas>=t.cantidad); }
+  return ev.zonas.every(z=>z.mapa.flat().every(s=>s!=='.'&&s!=='W'));
+}
+function cardEvento(ev){
+  const p=fechaPartes(ev.fecha); const desde=precioDesde(ev); const ago=agotado(ev);
+  return `<div class="card" onclick="ir('#/evento/${ev.id}')">
+    <div class="card-img" style="background:${grad(ev.id)}">
+      <span>${iconCat(ev.categoria)}</span>
+      <div class="card-fecha"><b>${p.dia}</b><span>${p.mes}</span></div>
+      <div class="card-cat">${esc(ev.categoria)}</div>
+    </div>
+    <div class="card-body">
+      <h3>${esc(ev.titulo)}</h3>
+      <div class="card-meta">📍 ${esc(ev.lugar.nombre)} · ${ev.hora} h</div>
+      <div class="card-foot">
+        <div class="precio-desde">${desde===0?'<b>Gratis</b>':'desde <b>'+eur(desde)+'</b>'}</div>
+        ${ago? '<span class="tag-tipo tag-agotado">Agotado</span>'
+              : '<span class="tag-tipo">'+(ev.tipo==='butacas'?'Butaca numerada':'Entrada')+'</span>'}
+      </div>
+    </div>
+  </div>`;
+}
+function iconCat(c){return {'Música':'🎵','Gastronomía':'🍽️','Deporte':'🏃','Teatro':'🎭','Cine':'🎬','Infantil':'🎈','Fiesta':'🎉'}[c]||'🎫';}
+
+/* ==========================================================================
+   6. VISTA: FICHA DE EVENTO
+   ========================================================================== */
+function vistaEvento(id){
+  const ev = Store.get(id);
+  if(!ev) return `<div class="wrap"><div class="vacio"><div class="ic">🔎</div>Evento no encontrado.</div></div>`;
+  const ago=agotado(ev);
+  const mapaUrl = `https://maps.google.com/maps?q=${ev.lugar.lat},${ev.lugar.lng}&z=15&output=embed`;
+  return `<div class="wrap">
+    <div class="volver" onclick="ir('#/')">← Volver a eventos</div>
+    <div class="ficha">
+      <div>
+        <div class="ficha-cartel" style="background:${grad(ev.id)}">${iconCat(ev.categoria)}</div>
+        <div class="cat" style="margin-top:18px">${esc(ev.categoria)}</div>
+        <h1>${esc(ev.titulo)}</h1>
+        <div class="ficha-desc">${esc(ev.descripcion)}</div>
+        <div class="dato-linea"><span class="ic">📅</span><div><b>${fechaLarga(ev.fecha)}</b><br><span style="color:var(--muted)">a las ${ev.hora} h</span></div></div>
+        <div class="dato-linea"><span class="ic">📍</span><div><b>${esc(ev.lugar.nombre)}</b><br><span style="color:var(--muted)">${esc(ev.lugar.direccion)}</span>
+          <iframe class="mapa-emb" src="${mapaUrl}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div>
+        <div class="dato-linea"><span class="ic">🎟️</span><div><b>Organiza:</b> ${esc(ev.organizador)}<br><span style="color:var(--muted)">${esc(ev.contacto)}</span></div></div>
+      </div>
+      <div class="panel">
+        <h3>Entradas</h3>
+        <div class="sub">${ev.tipo==='butacas'?'Butaca numerada · elige tu sitio en el plano':'Selecciona el tipo y la cantidad'}</div>
+        ${ev.tipo==='general' ? `
+          ${ev.tiposEntrada.map(t=>{const restan=t.cantidad-t.vendidas;return `
+            <div class="tipo-fila">
+              <div class="tipo-info"><b>${esc(t.nombre)}</b><span>${t.precio===0?'Gratis':eur(t.precio)}</span>
+                <div class="restan">${restan>0?restan+' disponibles':'Agotado'}</div></div>
+            </div>`;}).join('')}
+        ` : `
+          ${ev.zonas.map(z=>{const libres=z.mapa.flat().filter(s=>s==='.'||s==='W').length;return `
+            <div class="tipo-fila">
+              <div class="tipo-info"><b><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${z.color};margin-right:7px"></span>${esc(z.nombre)}</b>
+                <span>${eur(z.precio)}</span><div class="restan">${libres} butacas libres</div></div>
+            </div>`;}).join('')}
+        `}
+        <div class="cashback-nota">💛 Pagando con PagoLocal ganas un <b>${CONFIG.CASHBACK_PCT}%</b> de cashback en saldo local.</div>
+        ${ago ? `<button class="btn btn-amarillo btn-block" disabled>Entradas agotadas</button>`
+              : `<button class="btn btn-amarillo btn-block" onclick="ir('#/reservar/${ev.id}')">${ev.tipo==='butacas'?'Elegir butacas →':'Comprar entradas →'}</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ==========================================================================
+   7. VISTA: RESERVA (general con cantidades / butacas con plano)
+   ========================================================================== */
+let carrito = null; // {eventoId, tipo, lineas:[...], total}
+
+function vistaReserva(id){
+  const ev = Store.get(id);
+  if(!ev) return `<div class="wrap"><div class="vacio">Evento no encontrado.</div></div>`;
+  return `<div class="wrap">
+    <div class="volver" onclick="ir('#/evento/${ev.id}')">← Volver a la ficha</div>
+    <div class="bloque-head"><div><h2>${esc(ev.titulo)}</h2><p>${fechaLarga(ev.fecha)} · ${ev.hora} h · ${esc(ev.lugar.nombre)}</p></div></div>
+    ${ev.tipo==='general' ? reservaGeneral(ev) : reservaButacas(ev)}
+  </div>`;
+}
+
+function reservaGeneral(ev){
+  return `<div class="checkout">
+    <div class="panel" style="position:static">
+      <h3>Tipos de entrada</h3><div class="sub">Indica cuántas quieres de cada tipo</div>
+      <div id="tipos">
+        ${ev.tiposEntrada.map(t=>{const restan=t.cantidad-t.vendidas;return `
+          <div class="tipo-fila">
+            <div class="tipo-info"><b>${esc(t.nombre)}</b><span>${t.precio===0?'Gratis':eur(t.precio)}</span>
+              <div class="restan">${restan>0?restan+' disponibles':'Agotado'}</div></div>
+            <div class="stepper" data-tipo="${t.id}" data-precio="${t.precio}" data-max="${restan}">
+              <button class="menos" ${restan<=0?'disabled':''}>−</button>
+              <span class="cant">0</span>
+              <button class="mas" ${restan<=0?'disabled':''}>+</button>
+            </div>
+          </div>`;}).join('')}
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Resumen</h3><div class="sub">Tu pedido</div>
+      <div id="resumen-lineas" class="resumen" style="border-top:none;padding-top:0"><div style="color:var(--text-dim);font-size:14px">Aún no has elegido entradas.</div></div>
+      <div class="cashback-nota" id="cb-nota" style="display:none">💛 Ganarás <b id="cb-val">0 €</b> de cashback PagoLocal.</div>
+      <div class="resumen">
+        <div class="total"><span>Total</span><b id="total-val">0,00 €</b></div>
+      </div>
+      <button class="btn btn-amarillo btn-block" id="btn-continuar" disabled onclick="continuarGeneral('${ev.id}')">Continuar</button>
+    </div>
+  </div>`;
+}
+
+function reservaButacas(ev){
+  return `<div class="checkout">
+    <div>
+      <div class="escenario"><div class="pantalla">Escenario</div></div>
+      <div class="leyenda">
+        <span><i class="lg disp"></i> Disponible</span>
+        <span><i class="lg sel"></i> Seleccionada</span>
+        <span><i class="lg ocu"></i> Ocupada</span>
+        <span><i class="lg sil"></i> Silla de ruedas</span>
+      </div>
+      <div id="zonas">
+        ${ev.zonas.map(z=>`
+          <div class="zona">
+            <div class="zona-cab">
+              <h4><span class="zona-dot" style="background:${z.color}"></span>${esc(z.nombre)}</h4>
+              <span class="pz">${eur(z.precio)} / butaca</span>
+            </div>
+            <div class="mapa-scroll"><div class="mapa-grid" data-zona="${z.id}"></div></div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Tus butacas</h3><div class="sub">Toca una butaca para seleccionarla</div>
+      <div id="pills" class="seleccion-pills"><div style="color:var(--text-dim);font-size:14px">Ninguna butaca seleccionada.</div></div>
+      <div class="cashback-nota" id="cb-nota" style="display:none">💛 Ganarás <b id="cb-val">0 €</b> de cashback PagoLocal.</div>
+      <div class="resumen">
+        <div class="fila"><span id="n-butacas">0 butacas</span><span></span></div>
+        <div class="total"><span>Total</span><b id="total-val">0,00 €</b></div>
+      </div>
+      <button class="btn btn-amarillo btn-block" id="btn-continuar" disabled onclick="continuarButacas('${ev.id}')">Continuar</button>
+    </div>
+  </div>`;
+}
+
+// ---- montaje interactivo de la reserva ----
+function montarReserva(id){
+  const ev = Store.get(id); if(!ev) return;
+  if(ev.tipo==='general') montarGeneral(ev); else montarButacas(ev);
+}
+
+function montarGeneral(ev){
+  const recalc=()=>{
+    let total=0, n=0; const lineas=[];
+    $$('.stepper').forEach(st=>{
+      const cant=+$('.cant',st).textContent; const precio=+st.dataset.precio;
+      if(cant>0){ const t=ev.tiposEntrada.find(x=>x.id===st.dataset.tipo);
+        lineas.push({label:t.nombre, precio, cantidad:cant, sub:precio*cant}); total+=precio*cant; n+=cant; }
+    });
+    const res=$('#resumen-lineas');
+    res.innerHTML = lineas.length? lineas.map(l=>`<div class="fila"><span>${l.cantidad}× ${esc(l.label)}</span><span>${l.precio===0?'Gratis':eur(l.sub)}</span></div>`).join('')
+      : `<div style="color:var(--text-dim);font-size:14px">Aún no has elegido entradas.</div>`;
+    $('#total-val').textContent=eur(total);
+    const cb=+(total*CONFIG.CASHBACK_PCT/100).toFixed(2);
+    $('#cb-nota').style.display = total>0?'flex':'none'; $('#cb-val').textContent=eur(cb);
+    $('#btn-continuar').disabled = n===0;
+    carrito = n>0 ? {eventoId:ev.id, tipo:'general', lineas, total, cashback:cb} : null;
+  };
+  $$('.stepper').forEach(st=>{
+    const cantEl=$('.cant',st), max=+st.dataset.max;
+    $('.mas',st).onclick=()=>{let v=+cantEl.textContent; if(v<max){cantEl.textContent=v+1; recalc();}};
+    $('.menos',st).onclick=()=>{let v=+cantEl.textContent; if(v>0){cantEl.textContent=v-1; recalc();}};
+  });
+  recalc();
+}
+
+function montarButacas(ev){
+  const seleccion=new Map(); // key "zonaId:r:c" -> {zona, fila, num, precio}
+  ev.zonas.forEach(z=>{
+    const cont=$(`.mapa-grid[data-zona="${z.id}"]`); if(!cont) return;
+    z.mapa.forEach((fila,r)=>{
+      const filaEl=document.createElement('div'); filaEl.className='fila-mapa';
+      const etq=String.fromCharCode(65+r);
+      filaEl.innerHTML=`<span class="fila-label">${etq}</span>`;
+      let num=0;
+      fila.forEach((estado,c)=>{
+        const a=document.createElement('div');
+        if(estado===' '){ a.className='asiento hueco'; filaEl.appendChild(a); return; }
+        num++;
+        const esSilla = estado==='W';
+        a.className='asiento'+(estado==='X'?' ocu':'')+(esSilla?' sil':'');
+        a.textContent = esSilla?'♿':num;
+        a.title=`${z.nombre} · Fila ${etq} · Butaca ${num}`+(esSilla?' (silla de ruedas)':'');
+        if(estado!=='X'){
+          const key=`${z.id}:${r}:${c}`;
+          a.onclick=()=>{
+            if(seleccion.has(key)){ seleccion.delete(key); a.classList.remove('sel'); }
+            else { seleccion.set(key,{zonaId:z.id, zona:z.nombre, fila:etq, num, precio:z.precio, color:z.color}); a.classList.add('sel'); }
+            recalc();
+          };
+        }
+        filaEl.appendChild(a);
+      });
+      cont.appendChild(filaEl);
+    });
+  });
+  const recalc=()=>{
+    const arr=[...seleccion.values()];
+    const total=arr.reduce((s,x)=>s+x.precio,0);
+    const pills=$('#pills');
+    pills.innerHTML = arr.length? arr.map(x=>`<span class="pill"><span style="width:9px;height:9px;border-radius:50%;background:${x.color}"></span>${esc(x.zona)} ${x.fila}${x.num} · <b>${eur(x.precio)}</b></span>`).join('')
+      : `<div style="color:var(--text-dim);font-size:14px">Ninguna butaca seleccionada.</div>`;
+    $('#n-butacas').textContent = arr.length+(arr.length===1?' butaca':' butacas');
+    $('#total-val').textContent=eur(total);
+    const cb=+(total*CONFIG.CASHBACK_PCT/100).toFixed(2);
+    $('#cb-nota').style.display = total>0?'flex':'none'; $('#cb-val').textContent=eur(cb);
+    $('#btn-continuar').disabled = arr.length===0;
+    carrito = arr.length? {eventoId:ev.id, tipo:'butacas', asientos:arr.map(x=>({key:[...seleccion].find(([k,v])=>v===x)[0], zonaId:x.zonaId, zona:x.zona, fila:x.fila, num:x.num, precio:x.precio})),
+      lineas:arr.map(x=>({label:`${x.zona} · Fila ${x.fila}, butaca ${x.num}`, precio:x.precio, cantidad:1, sub:x.precio})),
+      total, cashback:cb} : null;
+  };
+}
+
+function continuarGeneral(id){ if(!carrito){toast('Elige al menos una entrada');return;} ir('#/checkout/'+id); }
+function continuarButacas(id){ if(!carrito){toast('Selecciona al menos una butaca');return;} ir('#/checkout/'+id); }
+
+/* ==========================================================================
+   8. VISTA: CHECKOUT (datos del comprador + pago demo)
+   ========================================================================== */
+function vistaCheckout(id){
+  const ev=Store.get(id);
+  if(!ev || !carrito || carrito.eventoId!==id){
+    return `<div class="wrap"><div class="vacio"><div class="ic">🛒</div>Tu selección ha caducado.<br><a style="color:var(--accent)" onclick="ir('#/evento/${id}')">Volver al evento</a></div></div>`;
+  }
+  return `<div class="wrap">
+    <div class="volver" onclick="ir('#/reservar/${id}')">← Volver a la selección</div>
+    <div class="bloque-head"><div><h2>Finalizar compra</h2><p>${esc(ev.titulo)} · ${fechaLarga(ev.fecha)}</p></div></div>
+    <div class="checkout">
+      <div class="panel" style="position:static">
+        <h3>Tus datos</h3><div class="sub">Te enviaremos las entradas por email</div>
+        <div class="form-grid">
+          <div class="campo"><label>Nombre</label><input id="f-nombre" placeholder="María"></div>
+          <div class="campo"><label>Apellidos</label><input id="f-apellidos" placeholder="García"></div>
+          <div class="campo full"><label>Email</label><input id="f-email" type="email" placeholder="tu@email.com"></div>
+          <div class="campo"><label>Teléfono</label><input id="f-tel" placeholder="600 000 000"></div>
+          <div class="campo"><label>DNI/NIE</label><input id="f-dni" placeholder="12345678A"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Resumen</h3><div class="sub">${esc(ev.lugar.nombre)} · ${ev.hora} h</div>
+        <div class="resumen" style="border-top:none;padding-top:0">
+          ${carrito.lineas.map(l=>`<div class="fila"><span>${l.cantidad>1?l.cantidad+'× ':''}${esc(l.label)}</span><span>${l.precio===0?'Gratis':eur(l.sub)}</span></div>`).join('')}
+        </div>
+        <div class="cashback-nota">💛 Ganarás <b>${eur(carrito.cashback)}</b> de cashback PagoLocal.</div>
+        <div class="resumen"><div class="total"><span>Total</span><b>${eur(carrito.total)}</b></div></div>
+        <button class="btn btn-amarillo btn-block" onclick="pagar('${id}')">
+          ${carrito.total===0?'Confirmar entradas (gratis)':'Pagar '+eur(carrito.total)+' con Cecabank'}
+        </button>
+        <p style="font-size:12px;color:var(--text-dim);text-align:center;margin:12px 0 0">Pago protegido · serás redirigido al TPV seguro</p>
+      </div>
+    </div>
+  </div>`;
+}
+function montarCheckout(id){ /* nada extra por ahora */ }
+
+let compradorTmp=null;
+function pagar(id){
+  const nombre=$('#f-nombre').value.trim(), email=$('#f-email').value.trim();
+  if(!nombre){toast('Indica tu nombre');return;}
+  if(!email || !/.+@.+\..+/.test(email)){toast('Indica un email válido');return;}
+  compradorTmp={ nombre, apellidos:$('#f-apellidos').value.trim(), email, tel:$('#f-tel').value.trim(), dni:$('#f-dni').value.trim() };
+  if(carrito.total===0){ finalizarCompra(id); return; }
+  abrirModalPago(id);
+}
+
+/* ---- MODO DEMO: simula el TPV de Cecabank ---- */
+function abrirModalPago(id){
+  const total=carrito.total;
+  const m=document.createElement('div'); m.className='modal-bg'; m.id='modal-pago';
+  m.innerHTML=`<div class="modal">
+    <div class="cab"><span class="ceca-logo">P</span><b>TPV Virtual · Cecabank</b><span style="margin-left:auto;font-size:11px;color:var(--text-dim)">SSL 🔒</span></div>
+    <div class="cuerpo">
+      <div class="ceca-band">ℹ️ Modo demostración — no se realiza ningún cargo real. En producción aquí se abriría la pasarela de Cecabank.</div>
+      <div class="tarjeta-demo">
+        <div class="num">4548 81•• •••• 0003</div>
+        <div class="fila"><span>TITULAR DEMO</span><span>12 / 30</span></div>
+      </div>
+      <div class="resumen"><div class="total"><span>Importe a pagar</span><b>${eur(total)}</b></div></div>
+    </div>
+    <div class="pie">
+      <button class="btn btn-ghost" style="flex:1" onclick="cerrarModalPago()">Cancelar</button>
+      <button class="btn btn-amarillo" style="flex:1" id="btn-pagar-demo" onclick="confirmarPagoDemo('${id}')">Pagar ${eur(total)}</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click',e=>{ if(e.target===m) cerrarModalPago(); });
+}
+function cerrarModalPago(){ const m=$('#modal-pago'); if(m) m.remove(); }
+function confirmarPagoDemo(id){
+  const b=$('#btn-pagar-demo'); b.disabled=true; b.innerHTML=`<span class="spin"></span> Autorizando…`;
+  setTimeout(()=>{ cerrarModalPago(); finalizarCompra(id); }, 1400);
+}
+
+// Marca vendido en el "almacén" y navega a la confirmación
+let ultimaCompra=null;
+function finalizarCompra(id){
+  const ev=Store.get(id);
+  if(carrito.tipo==='general'){
+    carrito.lineas.forEach(l=>{ const t=ev.tiposEntrada.find(x=>x.nombre===l.label); if(t) t.vendidas=Math.min(t.cantidad, t.vendidas+l.cantidad); });
+  } else {
+    carrito.asientos.forEach(a=>{ const [zid,r,c]=a.key.split(':'); const z=ev.zonas.find(x=>String(x.id)===zid); if(z) z.mapa[+r][+c]='X'; });
+  }
+  Store.save();
+  const loc = (slug(ev.titulo).slice(0,3).toUpperCase()||'PLE')+'-'+uid().toUpperCase().slice(0,5);
+  ultimaCompra={ loc, evento:ev, comprador:compradorTmp, lineas:carrito.lineas, total:carrito.total, cashback:carrito.cashback,
+    metodo_pago:'evento', fecha:new Date().toISOString() };
+  carrito=null;
+  ir('#/confirmacion/'+id);
+}
+
+/* ==========================================================================
+   9. VISTA: CONFIRMACIÓN (entrada con localizador + QR simulado)
+   ========================================================================== */
+function vistaConfirmacion(id){
+  const c=ultimaCompra;
+  if(!c) return `<div class="wrap"><div class="vacio"><div class="ic">🎫</div>No hay ninguna compra reciente.<br><a style="color:var(--accent)" onclick="ir('#/')">Ver eventos</a></div></div>`;
+  const ev=c.evento;
+  return `<div class="wrap"><div class="confirm">
+    <div class="check">✓</div>
+    <h2 style="margin:0 0 6px">¡Compra confirmada!</h2>
+    <p style="color:var(--muted)">Hemos enviado ${c.lineas.reduce((s,l)=>s+l.cantidad,0)} entrada(s) a <b style="color:var(--text)">${esc(c.comprador.email)}</b></p>
+    <div class="entrada-tk">
+      <div class="top-tk"><div><div style="font-size:11px;color:var(--text-dim);letter-spacing:.1em">${esc(ev.categoria).toUpperCase()}</div><b>${esc(ev.titulo)}</b></div>
+        <span class="tag-tipo">${ev.tipo==='butacas'?'Numerada':'Entrada'}</span></div>
+      <div class="qr-fake"></div>
+      <div class="loc-code">${c.loc}</div>
+      <div class="entrada-det">
+        <div class="l"><span>Fecha</span><b>${fechaLarga(ev.fecha)} · ${ev.hora} h</b></div>
+        <div class="l"><span>Lugar</span><b>${esc(ev.lugar.nombre)}</b></div>
+        ${c.lineas.map(l=>`<div class="l"><span>${l.cantidad>1?l.cantidad+'× ':''}${esc(l.label)}</span><b>${l.precio===0?'Gratis':eur(l.sub)}</b></div>`).join('')}
+        <div class="l" style="border-top:1px solid var(--border);margin-top:6px;padding-top:10px"><span>Total pagado</span><b>${eur(c.total)}</b></div>
+        <div class="l"><span>Cashback PagoLocal</span><b style="color:var(--accent)">+${eur(c.cashback)}</b></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:22px">
+      <button class="btn btn-ghost btn-block" onclick="ir('#/evento/${ev.id}')">Ver evento</button>
+      <button class="btn btn-amarillo btn-block" onclick="ir('#/')">Más eventos</button>
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:20px">Tu cashback se abonará en tu saldo PagoLocal tras el evento.</p>
+  </div></div>`;
+}
+
+/* ==========================================================================
+   10. VISTA: ORGANIZADOR (listado + crear evento)
+   ========================================================================== */
+let orgTab='lista';
+function vistaOrganizador(params){
+  if(params.nuevo) orgTab='nuevo';
+  const evs=Store.eventos();
+  return `<div class="wrap">
+    <div class="bloque-head" style="margin-top:24px"><div><h2>Panel de organizador</h2><p>Crea y gestiona los eventos de tu entidad</p></div>
+      <button class="btn btn-ghost btn-sm" onclick="if(confirm('Esto borra todos los eventos y restaura los 4 de ejemplo. ¿Continuar?')){Store.reset();render();toast('Datos restaurados');}">↺ Restaurar demo</button>
+    </div>
+    <div class="org-tabs">
+      <button class="${orgTab==='lista'?'on':''}" onclick="orgTab='lista';render()">Mis eventos (${evs.length})</button>
+      <button class="${orgTab==='nuevo'?'on':''}" onclick="orgTab='nuevo';render()">+ Crear evento</button>
+    </div>
+    ${orgTab==='lista'? orgLista(evs) : orgFormulario()}
+  </div>`;
+}
+
+function orgLista(evs){
+  if(!evs.length) return `<div class="vacio"><div class="ic">📭</div>Todavía no hay eventos.</div>`;
+  return evs.map(ev=>{
+    let vend,tot;
+    if(ev.tipo==='general'){ vend=ev.tiposEntrada.reduce((s,t)=>s+t.vendidas,0); tot=ev.tiposEntrada.reduce((s,t)=>s+t.cantidad,0); }
+    else { const f=ev.zonas.flatMap(z=>z.mapa.flat()).filter(s=>s!==' '); tot=f.length; vend=f.filter(s=>s==='X').length; }
+    const pct=tot?Math.round(vend/tot*100):0; const p=fechaPartes(ev.fecha);
+    return `<div class="org-evt">
+      <div class="mini" style="background:${grad(ev.id)}">${iconCat(ev.categoria)}</div>
+      <div class="info">
+        <b>${esc(ev.titulo)}</b>
+        <span>${p.dia} ${p.mes} ${p.anyo} · ${ev.hora} h · ${ev.tipo==='butacas'?'Butaca numerada':'Entrada general'}</span>
+        <div class="barra"><i style="width:${pct}%"></i></div>
+        <span style="font-size:12px">${vend} / ${tot} vendidas (${pct}%)</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="ir('#/evento/${ev.id}')">Ver</button>
+    </div>`;
+  }).join('');
+}
+
+// ---- formulario de creación ----
+let nuevoTipo='general';
+let filasTipos=[{nombre:'Entrada general',precio:'',cantidad:''}];
+let filasZonas=[{nombre:'Platea',precio:'',color:'#F5C842',filas:8,cols:14}];
+const COLORES=['#F5C842','#3B9EFF','#34D399','#F26D6D','#A78BFA','#FB923C'];
+
+function orgFormulario(){
+  return `<div class="org-card">
+    <h3>📋 Datos del evento</h3>
+    <div class="form-grid">
+      <div class="campo full"><label>Título del evento</label><input id="o-titulo" placeholder="Concierto de primavera"></div>
+      <div class="campo"><label>Categoría</label>
+        <select id="o-cat"><option>Música</option><option>Gastronomía</option><option>Deporte</option><option>Teatro</option><option>Cine</option><option>Infantil</option><option>Fiesta</option></select></div>
+      <div class="campo"><label>Fecha</label><input id="o-fecha" type="date"></div>
+      <div class="campo"><label>Hora</label><input id="o-hora" type="time" value="20:00"></div>
+      <div class="campo"><label>Organizador</label><input id="o-org" placeholder="Tu entidad"></div>
+      <div class="campo full"><label>Descripción</label><textarea id="o-desc" rows="3" placeholder="Describe el evento…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="org-card">
+    <h3>📍 Ubicación</h3>
+    <div class="form-grid">
+      <div class="campo full"><label>Nombre del recinto</label><input id="o-lugar" placeholder="Teatre Echegaray"></div>
+      <div class="campo full"><label>Dirección</label><input id="o-dir" placeholder="C/ Echegaray, 46870 Ontinyent"></div>
+      <div class="campo"><label>Latitud</label><input id="o-lat" value="38.8222"><div class="ayuda">Centro de Ontinyent por defecto</div></div>
+      <div class="campo"><label>Longitud</label><input id="o-lng" value="-0.6075"></div>
+    </div>
+  </div>
+
+  <div class="org-card">
+    <h3>🎟️ Tipo de aforo y precios</h3>
+    <div class="seg" style="margin-bottom:18px">
+      <button class="${nuevoTipo==='general'?'on':''}" onclick="nuevoTipo='general';render()">Entrada general</button>
+      <button class="${nuevoTipo==='butacas'?'on':''}" onclick="nuevoTipo='butacas';render()">Butaca numerada</button>
+    </div>
+    ${nuevoTipo==='general'? orgTiposGeneral() : orgZonasButacas()}
+  </div>
+
+  <div style="display:flex;gap:12px;margin-bottom:40px">
+    <button class="btn btn-ghost" onclick="orgTab='lista';render()">Cancelar</button>
+    <button class="btn btn-amarillo" style="flex:1" onclick="guardarEvento()">Publicar evento</button>
+  </div>`;
+}
+
+function orgTiposGeneral(){
+  return `<div id="tipos-list">
+    <div class="mini-fila" style="font-size:12px;color:var(--text-dim);font-weight:600"><span>Nombre del tipo</span><span>Precio (€)</span><span>Cantidad</span><span></span></div>
+    ${filasTipos.map((f,i)=>`<div class="mini-fila">
+      <input value="${esc(f.nombre)}" oninput="filasTipos[${i}].nombre=this.value" placeholder="Entrada general">
+      <input value="${f.precio}" type="number" min="0" step="0.5" oninput="filasTipos[${i}].precio=this.value" placeholder="0">
+      <input value="${f.cantidad}" type="number" min="1" oninput="filasTipos[${i}].cantidad=this.value" placeholder="100">
+      <button class="del" onclick="filasTipos.splice(${i},1);render()" ${filasTipos.length<=1?'style="visibility:hidden"':''}>🗑</button>
+    </div>`).join('')}
+    <span class="add-link" onclick="filasTipos.push({nombre:'',precio:'',cantidad:''});render()">+ Añadir tipo de entrada</span>
+  </div>`;
+}
+
+function orgZonasButacas(){
+  return `<div id="zonas-list">
+    ${filasZonas.map((z,i)=>`
+      <div class="editor-asientos">
+        <div class="form-grid" style="margin-bottom:6px">
+          <div class="campo" style="margin:0"><label>Nombre de la zona</label><input value="${esc(z.nombre)}" oninput="filasZonas[${i}].nombre=this.value" placeholder="Platea"></div>
+          <div class="campo" style="margin:0"><label>Precio (€)</label><input type="number" min="0" step="0.5" value="${z.precio}" oninput="filasZonas[${i}].precio=this.value" placeholder="8"></div>
+          <div class="campo" style="margin:0"><label>Filas</label><input type="number" min="1" max="26" value="${z.filas}" oninput="filasZonas[${i}].filas=+this.value;render()"></div>
+          <div class="campo" style="margin:0"><label>Butacas por fila</label><input type="number" min="1" max="40" value="${z.cols}" oninput="filasZonas[${i}].cols=+this.value;render()"></div>
+        </div>
+        <div class="campo" style="margin:8px 0"><label>Color en el plano</label>
+          <div class="color-pick">${COLORES.map(c=>`<label><input type="radio" name="color-${i}" ${z.color===c?'checked':''} onchange="filasZonas[${i}].color='${c}';render()"><span style="background:${c}"></span></label>`).join('')}</div>
+        </div>
+        <div class="hint">Vista previa del plano · toca una butaca para marcarla como hueco/pasillo (gris→vacío→♿).</div>
+        <div class="mapa-scroll"><div class="mapa-grid" id="ed-zona-${i}"></div></div>
+        ${filasZonas.length>1?`<span class="add-link" style="color:var(--red)" onclick="filasZonas.splice(${i},1);render()">🗑 Quitar esta zona</span>`:''}
+      </div>`).join('')}
+    <span class="add-link" onclick="filasZonas.push({nombre:'',precio:'',color:COLORES[filasZonas.length%COLORES.length],filas:5,cols:12});render()">+ Añadir zona (anfiteatro, palco…)</span>
+  </div>`;
+}
+
+// estado del editor de butacas (matrices en memoria mientras se edita)
+let edMatrices=[];
+function montarOrganizador(params){
+  if(orgTab!=='nuevo' || nuevoTipo!=='butacas') return;
+  // sincroniza matrices con el nº de filas/cols actuales
+  filasZonas.forEach((z,i)=>{
+    if(!edMatrices[i]) edMatrices[i]=[];
+    const m=[];
+    for(let r=0;r<z.filas;r++){ const fila=[]; for(let c=0;c<z.cols;c++){ fila.push(edMatrices[i]?.[r]?.[c] ?? '.'); } m.push(fila); }
+    edMatrices[i]=m;
+    const cont=$('#ed-zona-'+i); if(!cont) return;
+    cont.innerHTML='';
+    m.forEach((fila,r)=>{
+      const fEl=document.createElement('div'); fEl.className='fila-mapa';
+      fEl.innerHTML=`<span class="fila-label">${String.fromCharCode(65+r)}</span>`;
+      fila.forEach((est,c)=>{
+        const a=document.createElement('div');
+        a.className='aside-editor'+(est===' '?' hueco':'')+(est==='W'?' sil':'');
+        if(est==='W') a.textContent='♿', a.style.color='var(--blue)', a.style.fontSize='11px', a.style.display='grid', a.style.placeItems='center';
+        a.onclick=()=>{ const cur=edMatrices[i][r][c]; edMatrices[i][r][c] = cur==='.'?' ':(cur===' '?'W':'.'); montarOrganizador(params); };
+        fEl.appendChild(a);
+      });
+      cont.appendChild(fEl);
+    });
+  });
+  edMatrices=edMatrices.slice(0,filasZonas.length);
+}
+
+function guardarEvento(){
+  const titulo=$('#o-titulo').value.trim();
+  const fecha=$('#o-fecha').value, hora=$('#o-hora').value;
+  if(!titulo){toast('Pon un título al evento');return;}
+  if(!fecha){toast('Indica la fecha');return;}
+  const base={
+    id: slug(titulo)+'-'+uid().slice(0,4), tipo:nuevoTipo,
+    titulo, categoria:$('#o-cat').value, fecha, hora:hora||'20:00',
+    lugar:{nombre:$('#o-lugar').value.trim()||'Por determinar', direccion:$('#o-dir').value.trim()||'Ontinyent',
+      lat:parseFloat($('#o-lat').value)||38.8222, lng:parseFloat($('#o-lng').value)||-0.6075},
+    descripcion:$('#o-desc').value.trim()||'Más información próximamente.',
+    organizador:$('#o-org').value.trim()||'Organizador', contacto:'info@pagolocal.xyz',
+  };
+  if(nuevoTipo==='general'){
+    const tipos=filasTipos.filter(f=>f.nombre.trim()).map(f=>({id:uid(), nombre:f.nombre.trim(), precio:+f.precio||0, cantidad:+f.cantidad||0, vendidas:0}));
+    if(!tipos.length){toast('Añade al menos un tipo de entrada');return;}
+    base.tiposEntrada=tipos;
+  } else {
+    const zonas=filasZonas.map((z,i)=>({id:uid(), nombre:z.nombre.trim()||'Zona', precio:+z.precio||0, color:z.color,
+      mapa: edMatrices[i] || genMapa(z.filas,z.cols,{ocupadasPct:0})}));
+    if(!zonas.length){toast('Define al menos una zona');return;}
+    base.zonas=zonas;
+  }
+  Store.add(base);
+  // reset del formulario
+  nuevoTipo='general'; filasTipos=[{nombre:'Entrada general',precio:'',cantidad:''}];
+  filasZonas=[{nombre:'Platea',precio:'',color:'#F5C842',filas:8,cols:14}]; edMatrices=[];
+  orgTab='lista';
+  toast('✅ Evento publicado');
+  ir('#/evento/'+base.id);
+}
+
+/* ==========================================================================
+   11. ARRANQUE
+   ========================================================================== */
+Store.load();
+if(!location.hash) location.hash='#/';
+render();
+
+  /* ============================================================
+     Comportamiento de la cabecera del sitio (menú móvil, año)
+     ============================================================ */
+  (function(){
+    var year=document.getElementById('year'); if(year) year.textContent=new Date().getFullYear();
+    var mt=document.getElementById('menuToggle'), nl=document.getElementById('navLinks');
+    if(mt&&nl){
+      mt.addEventListener('click',function(){ nl.classList.toggle('open'); });
+      nl.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ nl.classList.remove('open'); }); });
+    }
+    // Selector de idioma: ES activo; VAL/EN se activarán cuando se rellenen en index.html
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.addEventListener('click',function(){ if(b.disabled) return; });
+    });
+  })();
+  </script>
+</body>
+</html>
