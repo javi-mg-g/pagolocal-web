@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F5F7FB" />
+  <meta name="robots" content="noindex" />
+  <title>PagoLocal</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1A2E'/%3E%3Cpath d='M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z' fill='%23F5C842'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{ --bg:#F5F7FB; --card:#FFFFFF; --text:#1A1A2E; --muted:#6B7280; --border:#E2E5EE;
+           --accent:#B07908; --green:#0E9F6E; --red:#DC2626; --amber:#B45309; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:'Inter',-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text);
+          min-height:100vh; display:flex; align-items:flex-start; justify-content:center; padding:24px 16px; }
+    .wrap{ width:100%; max-width:440px; }
+    .brand{ display:flex; align-items:center; gap:8px; justify-content:center; margin-bottom:16px; color:var(--text); font-weight:800; }
+    .brand .bolt{ width:26px; height:26px; }
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:18px; overflow:hidden; box-shadow:0 8px 28px rgba(20,20,40,.08); }
+    .poster{ width:100%; height:160px; object-fit:cover; background:#EEF1F7; display:block; }
+    .status{ padding:16px 22px; text-align:center; font-weight:800; font-size:1.05rem; color:#fff; }
+    .s-valida{ background:var(--green); } .s-usada{ background:var(--amber); } .s-anulada{ background:var(--red); }
+    .body{ padding:22px; }
+    .ev-name{ font-size:1.35rem; font-weight:800; margin:0 0 4px; }
+    .ev-sub{ color:var(--muted); font-size:.92rem; margin:2px 0; }
+    .qrbox{ display:flex; justify-content:center; margin:20px 0 8px; }
+    #qr{ padding:12px; background:#fff; border:1px solid var(--border); border-radius:14px; }
+    .det{ border-top:1px dashed var(--border); margin-top:16px; padding-top:14px; }
+    .row{ display:flex; justify-content:space-between; gap:12px; padding:5px 0; font-size:.92rem; }
+    .row .k{ color:var(--muted); } .row .v{ font-weight:700; text-align:right; }
+    .loc{ text-align:center; margin-top:14px; font-size:.8rem; color:var(--muted); letter-spacing:1px; }
+    .msg{ text-align:center; padding:40px 20px; color:var(--muted); }
+    .nf{ text-align:center; padding:48px 24px; }
+    .nf h1{ font-size:3rem; margin:0; color:var(--accent); }
+    .nf p{ color:var(--muted); }
+    .nf a{ color:var(--accent); font-weight:700; text-decoration:none; }
+    .foot{ text-align:center; color:var(--muted); font-size:.78rem; margin-top:18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="bolt" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#1A1A2E"/><path d="M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z" fill="#F5C842"/></svg>
+      <span>PagoLocal</span>
+    </div>
+    <div id="app"></div>
+    <div class="foot" id="foot"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    var BACKEND = 'https://localpay-backend-production.up.railway.app';
+    function qs(n){ return new URLSearchParams(location.search).get(n); }
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+    function fechaLarga(iso){ if(!iso) return ''; try{ var d=new Date(iso); return d.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' · '+d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}); }catch(e){ return iso; } }
+
+    // Token desde ruta /v/{token} o desde ?t={token}
+    function getToken(){
+      var m = location.pathname.match(/\/v\/([0-9a-fA-F-]{8,})/);
+      if(m) return m[1];
+      return qs('t');
+    }
+
+    function notFound(){
+      document.getElementById('app').innerHTML =
+        '<div class="card"><div class="nf"><h1>404</h1><p>Página no encontrada.</p>' +
+        '<p><a href="/">Volver a PagoLocal →</a></p></div></div>';
+    }
+
+    function render(en){
+      document.getElementById('foot').textContent = 'Entrada verificada en tiempo real · PagoLocal';
+      var estado = (en.estado||'valida');
+      var stCfg = estado==='usada' ? {cls:'s-usada', txt:'⛔ Entrada ya utilizada'} :
+                  estado==='anulada' ? {cls:'s-anulada', txt:'❌ Entrada anulada'} :
+                  {cls:'s-valida', txt:'✅ Entrada válida'};
+      var poster = en.imagen_url ? '<img class="poster" src="'+esc(en.imagen_url)+'" alt="">' : '';
+      var html =
+        '<div class="card">' + poster +
+        '<div class="status '+stCfg.cls+'">'+stCfg.txt+'</div>' +
+        '<div class="body">' +
+          '<div class="ev-name">'+esc(en.evento_nombre)+'</div>' +
+          (en.comercio_nombre?'<div class="ev-sub">'+esc(en.comercio_nombre)+'</div>':'') +
+          (en.inicia_en?'<div class="ev-sub">🗓 '+esc(fechaLarga(en.inicia_en))+'</div>':'') +
+          (en.lugar_nombre?'<div class="ev-sub">📍 '+esc(en.lugar_nombre)+(en.direccion?' · '+esc(en.direccion):'')+'</div>':'') +
+          '<div class="qrbox"><div id="qr"></div></div>' +
+          '<div class="det">' +
+            '<div class="row"><span class="k">Entrada</span><span class="v">'+esc(en.descripcion||'General')+'</span></div>' +
+            (en.sesion_nombre?'<div class="row"><span class="k">Sesión</span><span class="v">'+esc(en.sesion_nombre)+'</span></div>':'') +
+            (en.usada_en?'<div class="row"><span class="k">Usada</span><span class="v">'+esc(fechaLarga(en.usada_en))+'</span></div>':'') +
+          '</div>' +
+          '<div class="loc">'+esc(en.localizador||'')+'</div>' +
+        '</div></div>';
+      document.getElementById('app').innerHTML = html;
+      var tok = getToken();
+      try { new QRCode(document.getElementById('qr'), { text: 'https://pagolocal.xyz/v/'+tok, width:170, height:170, correctLevel: QRCode.CorrectLevel.M }); } catch(e){}
+    }
+
+    (function(){
+      var isTicketPath = /^\/v\//.test(location.pathname) || !!qs('t');
+      var tok = getToken();
+      if(!isTicketPath || !tok){ notFound(); return; }
+      document.getElementById('app').innerHTML = '<div class="card"><div class="msg">Cargando entrada…</div></div>';
+      fetch(BACKEND + '/api/entradas/' + encodeURIComponent(tok))
+        .then(function(r){ if(!r.ok) throw new Error('nf'); return r.json(); })
+        .then(function(d){ if(d && d.ok && d.entrada) render(d.entrada); else throw new Error('nf'); })
+        .catch(function(){ document.getElementById('app').innerHTML = '<div class="card"><div class="msg">No hemos encontrado esta entrada.<br>Comprueba el enlace o el código QR.</div></div>'; });
+    })();
+  </script>
+</body>
+</html>
