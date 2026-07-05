@@ -1,1080 +1,2339 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#F5F7FB" />
-  <meta name="color-scheme" content="light" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Panel de Comercio · LocalPay</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 2L3 14h9l-1 8 10-12h-9l1-8z' fill='%233B9EFF'/%3E%3C/svg%3E" />
+<style>
+  :root{
+    --base:#0D0D14; --surface:#16161F; --surface2:#1E1E2A;
+    --accent:#3B9EFF; --accent-dim:#2b7fd1;
+    --text:#EAEAF0; --muted:#8A8A9A; --line:#2A2A38;
+    --green:#3ECF8E; --yellow:#F5C842; --red:#FF5C6C;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--base); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit;cursor:pointer}
+  a{color:var(--accent);text-decoration:none}
+  .hidden{display:none !important}
 
-  <!-- SEO -->
-  <title>PagoLocal · Paga en Ontinyent y gana en cada compra</title>
-  <meta name="description" content="PagoLocal es la app de pago del comercio local de Ontinyent. Paga con QR en tus tiendas de siempre, gana cashback en cada compra y descubre productos locales en el marketplace." />
+  /* ── LOGIN ───────────────────────────────── */
+  #view-login{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+    background:radial-gradient(1200px 600px at 50% -10%, rgba(59,158,255,.12), transparent 60%);
+  }
+  .login-card{
+    width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,.4);
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .brand .bolt{width:34px;height:34px;display:grid;place-items:center;background:rgba(59,158,255,.14);border-radius:10px}
+  .brand .bolt svg{width:20px;height:20px}
+  .brand .name{font-weight:700;font-size:18px;letter-spacing:.2px}
+  .brand .sub{font-size:12px;color:var(--muted);margin-top:1px}
+  .login-card h1{font-size:16px;margin:0 0 4px}
+  .login-card p.lead{font-size:13px;color:var(--muted);margin:0 0 20px}
+  label{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px}
+  input{
+    width:100%;padding:12px 14px;background:var(--surface2);border:1px solid var(--line);
+    border-radius:10px;color:var(--text);font-size:14px;outline:none;
+  }
+  input:focus{border-color:var(--accent)}
+  .btn{
+    width:100%;margin-top:20px;padding:12px 14px;border:none;border-radius:10px;
+    background:var(--accent);color:#06121f;font-weight:700;font-size:14px;
+    transition:background .15s,opacity .15s;
+  }
+  .btn:hover{background:var(--accent-dim)}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .login-err{margin-top:14px;font-size:13px;color:var(--red);min-height:18px}
+  .login-foot{margin-top:18px;font-size:11px;color:var(--muted);text-align:center;line-height:1.5}
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pagolocal.xyz/" />
-  <meta property="og:title" content="PagoLocal · Paga en Ontinyent y gana en cada compra" />
-  <meta property="og:description" content="La app de pago del comercio local de Ontinyent. QR, cashback y marketplace local en una sola app." />
-  <meta property="og:locale" content="es_ES" />
+  /* ── APP SHELL ───────────────────────────── */
+  #view-app{min-height:100vh;display:grid;grid-template-columns:240px 1fr;grid-template-rows:auto 1fr}
+  .topbar{
+    grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 22px;border-bottom:1px solid var(--line);background:var(--surface);
+  }
+  .topbar .who{font-size:13px;color:var(--muted)}
+  .topbar .who b{color:var(--text)}
+  .btn-ghost{
+    background:transparent;border:1px solid var(--line);color:var(--text);
+    padding:8px 14px;border-radius:9px;font-size:13px;
+  }
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
+  .sidebar{border-right:1px solid var(--line);background:var(--surface);padding:14px 10px;overflow:auto}
+  .navitem{
+    display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:transparent;
+    border:none;color:var(--muted);padding:11px 12px;border-radius:10px;font-size:14px;margin-bottom:2px;
+  }
+  .navitem .ic{width:20px;text-align:center}
+  .navitem:hover{background:var(--surface2);color:var(--text)}
+  .navitem.active{background:rgba(59,158,255,.14);color:var(--accent);font-weight:600}
+  .content{padding:26px 30px;overflow:auto}
+  .page-title{font-size:20px;font-weight:700;margin:0 0 4px}
+  .page-sub{font-size:13px;color:var(--muted);margin:0 0 22px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;max-width:640px;
+  }
+  .badge{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+    color:var(--accent);background:rgba(59,158,255,.12);padding:4px 9px;border-radius:999px;margin-bottom:12px;
+  }
+  .card h3{margin:0 0 8px;font-size:16px}
+  .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
 
-  <!-- Favicon: réplica del icono de Play Store (círculo oscuro + rayo dorado) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1A2E'/%3E%3Cpath d='M55 18 L29 56 h17 l-5 26 27-42 H51 l4-22 z' fill='%23F5C842'/%3E%3C/svg%3E" />
+  /* ── TABLA / CATÁLOGO ────────────────────── */
+  .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .search{position:relative;flex:1;min-width:220px;max-width:420px}
+  .search input{padding-left:36px}
+  .search .mag{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+  .table-wrap{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead th{
+    text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+    padding:13px 16px;border-bottom:1px solid var(--line);background:var(--surface2);font-weight:600;
+  }
+  tbody td{padding:13px 16px;border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--surface2)}
+  .col-r{text-align:right}
+  .col-c{text-align:center}
+  .prod-name{font-weight:600}
+  .prod-cat{font-size:12px;color:var(--muted);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .pill.on{color:var(--green);background:rgba(62,207,142,.13)}
+  .pill.off{color:var(--muted);background:rgba(138,138,154,.15)}
+  .thumb{width:38px;height:38px;border-radius:8px;object-fit:cover;background:var(--surface2);border:1px solid var(--line)}
+  .thumb-ph{width:38px;height:38px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);font-size:14px}
+  .pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap}
+  .pager .info{font-size:13px;color:var(--muted)}
+  .pager .btns{display:flex;gap:8px}
+  .state{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px}
+  .spinner{
+    width:22px;height:22px;border:2px solid var(--line);border-top-color:var(--accent);
+    border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-  <!-- Inter (idéntica a la app: 600 semibold, 700 bold, 800 extrabold) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  /* ── COBROS (KPIs / condiciones) ─────────── */
+  .kpis{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .kpi{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .kpi .k-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .kpi .k-val{font-size:22px;font-weight:700}
+  .cond{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;font-size:13px;color:var(--muted);display:flex;gap:22px;flex-wrap:wrap}
+  .cond b{color:var(--text)}
 
-  <!-- Estilos compartidos -->
-  <link rel="stylesheet" href="/styles.css" />
+  /* ── MODAL EDICIÓN ───────────────────────── */
+  #modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  .modal{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
+  .modal-head{padding:18px 22px;border-bottom:1px solid var(--line)}
+  .modal-head h3{margin:0;font-size:16px}
+  .modal-head .sub{margin-top:3px;font-size:12px;color:var(--muted)}
+  .modal-body{padding:20px 22px;max-height:60vh;overflow:auto}
+  .modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
+  .field{margin-bottom:16px}
+  .field:last-child{margin-bottom:0}
+  .field > label{margin:0 0 7px}
+  .input-eur{position:relative}
+  .input-eur input{padding-right:30px}
+  .input-eur .eur{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+  .toggle{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+  .toggle input{display:none}
+  .toggle .track{width:42px;height:24px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);position:relative;transition:background .15s;flex:none}
+  .toggle .track::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .15s,background .15s}
+  .toggle input:checked + .track{background:rgba(59,158,255,.3);border-color:var(--accent)}
+  .toggle input:checked + .track::after{transform:translateX(18px);background:var(--accent)}
+  .toggle .txt{font-size:14px}
+  .tallas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px}
+  .talla-cell label{margin:0 0 5px;text-align:center}
+  .talla-cell input{text-align:center}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .btn-edit{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 14px;border-radius:8px;font-size:13px}
+  .btn-edit:hover{border-color:var(--accent);color:var(--accent)}
+  #import-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  #ped-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  #gestor-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  #sala-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  #form-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9000}
+  .subtabs{display:flex;gap:8px;margin-bottom:16px}
+  .subtab{background:transparent;border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:9px;font-size:14px}
+  .subtab.active{border-color:var(--accent);color:var(--accent);background:rgba(59,158,255,.1);font-weight:600}
+  .ped-item{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .ped-item:last-child{border-bottom:none}
+  .ped-item .q{color:var(--muted)}  .imp-stats{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+  .imp-stat{font-size:13px;color:var(--muted)}
+  .imp-stat .n{font-size:22px;font-weight:700;margin-right:6px;color:var(--text)}
+  .imp-errs{margin-top:6px;border:1px solid var(--line);border-radius:10px;max-height:200px;overflow:auto}
+  .imp-errs-h{font-size:12px;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line);background:var(--surface2)}
+  .imp-err{font-size:13px;padding:7px 12px;border-bottom:1px solid var(--line);color:#ffd6da}
+  .imp-err:last-child{border-bottom:none}
 
-  <style>
-    /* ============================================================
-       Estilos específicos de la landing
-       ============================================================ */
+  /* ── TOAST ───────────────────────────────── */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--surface2);border:1px solid var(--line);color:var(--text);
+    padding:12px 18px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #toast.err{border-color:var(--red);color:#ffd6da}
 
-    /* HERO */
-    .hero {
-      position: relative;
-      padding: 60px 0 100px;
-      overflow: hidden;
-    }
-    /* Glow dorado decorativo de fondo */
-    .hero-decor {
-      position: absolute;
-      width: 480px; height: 480px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.06;
-      filter: blur(110px);
-      top: -80px;
-      right: -100px;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    .hero h1 { margin-bottom: var(--s-xl); }
-    /* "Gana" destacado en dorado */
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-      position: relative;
-    }
-    .hero h1 em::after {
-      content: "";
-      position: absolute;
-      left: -4px; right: -4px; bottom: 0.06em;
-      height: 0.18em;
-      background: var(--accent);
-      opacity: 0.18;
-      border-radius: 2px;
-      z-index: -1;
-    }
-    .hero-lead {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 540px;
-      margin-bottom: var(--s-xxl);
-    }
-    .hero-ctas { display: flex; gap: var(--s-lg); flex-wrap: wrap; }
-    .hero-trust {
-      margin-top: var(--s-xxl);
-      display: flex;
-      align-items: center;
-      gap: var(--s-md);
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .hero-trust-icon {
-      width: 36px; height: 36px;
-      background: var(--accent-tint);
-      border-radius: var(--r-full);
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-    }
-    .hero-trust-icon svg { width: 18px; height: 18px; }
-
-    /* Mockup del móvil — sigue siendo OSCURO (es la app real, en su tema por defecto) */
-    .hero-visual {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      max-width: 480px;
-      margin-left: auto;
-    }
-    .phone-frame {
-      position: absolute;
-      inset: 0;
-      background: #1A1A2E;
-      border-radius: 48px;
-      padding: 14px;
-      box-shadow: 0 30px 60px -20px rgba(26, 26, 46, 0.25),
-                  0 18px 30px -15px rgba(26, 26, 46, 0.15);
-      transform: rotate(-3deg);
-    }
-    .phone-screen {
-      width: 100%; height: 100%;
-      background: var(--dark-bg);
-      border-radius: 36px;
-      padding: 28px 18px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: var(--s-lg);
-      overflow: hidden;
-      position: relative;
-    }
-    .phone-screen::before {
-      content: "";
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 5px;
-      background: var(--dark-border);
-      border-radius: var(--r-full);
-    }
-
-    /* Balance card oscuro (réplica del balanceCard de la app) */
-    .phone-balance {
-      margin-top: var(--s-xl);
-      padding: 18px;
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--r-xl);
-      position: relative;
-      overflow: hidden;
-    }
-    .phone-balance::after {
-      content: "";
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(245, 200, 66, 0.18);
-      filter: blur(8px);
-    }
-    .phone-balance-label {
-      font-size: 0.72rem;
-      color: var(--dark-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      position: relative;
-      font-weight: 600;
-    }
-    .phone-balance-value {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-top: var(--s-xs);
-      color: var(--accent-bright);
-      letter-spacing: -0.02em;
-      position: relative;
-    }
-    .phone-balance-value small {
-      font-size: 1rem;
-      opacity: 0.85;
-      margin-left: 2px;
-      font-weight: 700;
-    }
-    .phone-row {
-      display: flex;
-      align-items: center;
-      gap: var(--s-md);
-      padding: 10px;
-      background: var(--dark-surface);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--r-lg);
-      font-size: 0.82rem;
-    }
-    .phone-row-icon {
-      width: 36px; height: 36px;
-      background: var(--dark-card);
-      border-radius: var(--r-sm);
-      display: grid;
-      place-items: center;
-      font-size: 1rem;
-    }
-    .phone-row-main { flex: 1; min-width: 0; }
-    .phone-row-name {
-      font-weight: 600;
-      color: var(--dark-text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .phone-row-sub { font-size: 0.7rem; color: var(--dark-muted); margin-top: 1px; }
-    .phone-row-amount {
-      font-weight: 700;
-      color: var(--dark-text);
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-    }
-    .phone-row-cb {
-      color: var(--accent-bright);
-      font-size: 0.7rem;
-      font-weight: 700;
-      margin-top: 1px;
-      text-align: right;
-    }
-
-    @media (max-width: 880px) {
-      .hero { padding: 40px 0 60px; }
-      .hero-grid { grid-template-columns: 1fr; gap: 50px; }
-      .hero-visual { max-width: 320px; margin: 0 auto; }
-    }
-
-    /* SECCIÓN GENÉRICA */
-    section { padding: 90px 0; }
-    @media (max-width: 700px) { section { padding: 60px 0; } }
-
-    .section-head {
-      max-width: 700px;
-      margin-bottom: 60px;
-    }
-    .section-head h2 { margin-bottom: var(--s-lg); }
-    .section-head p { font-size: 1.1rem; color: var(--muted); }
-
-    /* CÓMO FUNCIONA — 3 pasos sobre fondo claro */
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--s-xl);
-    }
-    .step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: var(--s-xxl) 28px;
-      position: relative;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .step:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: var(--shadow);
-    }
-    .step-num {
-      position: absolute;
-      top: var(--s-xl); right: 28px;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--surface-3);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-    .step-icon {
-      width: 52px; height: 52px;
-      background: var(--accent-tint);
-      color: var(--accent);
-      border-radius: var(--r-lg);
-      display: grid;
-      place-items: center;
-      margin-bottom: var(--s-xl);
-    }
-    .step-icon svg { width: 26px; height: 26px; stroke-width: 1.7; }
-    .step h3 { margin-bottom: var(--s-sm); color: var(--text); }
-    .step p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-
-    @media (max-width: 880px) {
-      .how-grid { grid-template-columns: 1fr; }
-    }
-
-    /* DÓNDE USAR — mosaico sobre fondo blanco con sutil contraste */
-    .where-bg {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .where-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--s-lg);
-    }
-    .where-card {
-      padding: 28px 22px;
-      border-radius: var(--r-lg);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      transition: all .2s ease;
-    }
-    .where-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-sm);
-    }
-    .where-emoji {
-      font-size: 2rem;
-      margin-bottom: var(--s-md);
-      display: block;
-    }
-    .where-card h3 {
-      font-size: 1rem;
-      margin-bottom: var(--s-xs);
-      font-weight: 700;
-      color: var(--text);
-    }
-    .where-card p { font-size: 0.88rem; margin: 0; color: var(--muted); }
-
-    @media (max-width: 880px) { .where-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .where-grid { grid-template-columns: 1fr; } }
-
-    /* PARA COMERCIOS — card oscura estilo feature graphic de Play Store */
-    .merchants {
-      background: var(--dark-bg);
-      color: var(--dark-text);
-      border-radius: var(--r-xl);
-      padding: 70px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-    .merchants::before {
-      content: "";
-      position: absolute;
-      width: 380px; height: 380px;
-      border-radius: 50%;
-      background: var(--accent-bright);
-      opacity: 0.12;
-      filter: blur(110px);
-      top: -100px; right: -80px;
-    }
-    .merchants-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-    }
-    .merchants .eyebrow {
-      color: var(--accent-bright);
-      background: rgba(245, 200, 66, 0.10);
-      border-color: rgba(245, 200, 66, 0.30);
-    }
-    .merchants h2 { color: var(--dark-text); margin-bottom: var(--s-lg); }
-    .merchants-lead {
-      color: var(--dark-muted);
-      font-size: 1.05rem;
-      margin-bottom: var(--s-xxl);
-    }
-    .merchants-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--s-sm);
-      padding: 14px 26px;
-      background: var(--accent-bright);
-      color: var(--dark-bg);
-      border-radius: var(--r-md);
-      font-weight: 700;
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-    .merchants-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(245, 200, 66, 0.3);
-    }
-    .merchants-list {
-      list-style: none;
-      padding: 0; margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--s-lg);
-    }
-    .merchants-list li {
-      display: flex;
-      gap: var(--s-lg);
-      align-items: flex-start;
-    }
-    .merchants-list svg {
-      flex-shrink: 0;
-      width: 22px; height: 22px;
-      color: var(--accent-bright);
-      margin-top: 3px;
-    }
-    .merchants-list strong {
-      display: block;
-      margin-bottom: var(--s-xs);
-      color: var(--dark-text);
-      font-weight: 700;
-    }
-    .merchants-list span { color: var(--dark-muted); font-size: 0.92rem; }
-
-    @media (max-width: 880px) {
-      .merchants { padding: 50px 32px; }
-      .merchants-grid { grid-template-columns: 1fr; gap: 40px; }
-    }
-
-    /* SEGURIDAD */
-    .security-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 28px;
-    }
-    .security-item { text-align: left; }
-    .security-icon {
-      width: 48px; height: 48px;
-      border-radius: var(--r-md);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--accent);
-      display: grid;
-      place-items: center;
-      margin-bottom: var(--s-lg);
-    }
-    .security-icon svg { width: 22px; height: 22px; stroke-width: 1.7; }
-    .security-item h3 {
-      font-size: 1rem;
-      margin-bottom: var(--s-xs);
-      color: var(--text);
-      font-weight: 700;
-    }
-    .security-item p { font-size: 0.9rem; margin: 0; color: var(--muted); }
-
-    @media (max-width: 880px) { .security-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
-    @media (max-width: 480px) { .security-grid { grid-template-columns: 1fr; } }
-
-    /* FAQ */
-    .faq-bg {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .faq-list { max-width: 780px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: var(--s-sm) 0;
-    }
-    .faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: var(--s-xl) 0;
-      font-weight: 700;
-      font-size: 1.02rem;
-      color: var(--text);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      transition: color .15s ease;
-    }
-    .faq-item summary:hover { color: var(--accent); }
-    .faq-item summary::-webkit-details-marker { display: none; }
-    .faq-item summary::after {
-      content: "+";
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: var(--muted);
-      transition: transform .2s ease, color .2s ease;
-      line-height: 1;
-    }
-    .faq-item[open] summary::after { transform: rotate(45deg); color: var(--accent); }
-    .faq-answer {
-      padding: 0 0 var(--s-xl);
-      color: var(--muted);
-      max-width: 680px;
-    }
-    .faq-answer p { margin: 0 0 var(--s-md); color: var(--muted); }
-    .faq-answer p:last-child { margin: 0; }
-    .faq-answer a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    /* CTA FINAL */
-    .cta-final {
-      text-align: center;
-      padding: 100px 0;
-    }
-    .cta-final h2 { max-width: 640px; margin: 0 auto var(--s-lg); }
-    .cta-final p { font-size: 1.1rem; max-width: 560px; margin: 0 auto var(--s-xxl); color: var(--muted); }
-    .cta-final .hero-ctas { justify-content: center; }
-  </style>
+  @media (max-width:760px){
+    #view-app{grid-template-columns:1fr}
+    .sidebar{display:none}
+  }  /* ── Cocina (KDS) ─────────────────────────────────────────────── */
+  .kds-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+  .kds-bar .sp{flex:1}
+  .kds-meta{font-size:12px;color:var(--muted)}
+  .kds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .kds-card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:var(--radius);padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px}
+  .kds-card.g{border-left-color:var(--green)}
+  .kds-card.y{border-left-color:var(--yellow)}
+  .kds-card.r{border-left-color:var(--red)}
+  .kds-card.ready{border-left-color:var(--green);background:rgba(62,207,142,.08)}
+  .kds-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .kds-mesa{font-size:18px;font-weight:800}
+  .kds-mesa .zona{display:block;font-size:11px;color:var(--muted);font-weight:600}
+  .kds-timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:18px}
+  .kds-timer.g{color:var(--green)} .kds-timer.y{color:var(--yellow)} .kds-timer.r{color:var(--red)}
+  .kds-ready-tag{font-size:12px;font-weight:800;color:var(--green);letter-spacing:.5px}
+  .kds-item{display:flex;align-items:flex-start;gap:10px;padding:9px 8px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);cursor:pointer;user-select:none}
+  .kds-item .qty{font-weight:800;min-width:26px}
+  .kds-item .nm{flex:1;font-size:15px;line-height:1.25}
+  .kds-item .notas{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+  .kds-item .st{font-size:18px;min-width:22px;text-align:center}
+  .kds-item.s-preparando{border-color:var(--yellow)}
+  .kds-item.s-listo{opacity:.55}
+  .kds-item.s-listo .nm{text-decoration:line-through}
+  .kds-origin{font-size:11px;color:var(--accent)}
+  .kds-foot{display:flex;gap:8px;margin-top:2px}
+  .kds-btn{flex:1;border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:10px;padding:9px;font-weight:700;font-size:13px;cursor:pointer}
+  .kds-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .kds-empty{padding:40px 0;text-align:center;color:var(--muted)}
+  body.kds-fs .topbar,body.kds-fs .sidebar{display:none}
+  body.kds-fs #view-app{grid-template-columns:1fr;grid-template-rows:1fr}
+  body.kds-fs .content{padding:14px 16px}
+</style>
 </head>
 <body>
 
-  <!-- =================== HEADER =================== -->
-  <header class="site-header">
-    <div class="container nav">
-      <a href="/" class="logo">
-        <span class="logo-mark">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-        </span>
-        <span>PagoLocal</span>
-      </a>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#como-funciona" data-i18n="nav.how"></a></li>
-        <li><a href="#donde-usar"    data-i18n="nav.where"></a></li>
-        <li><a href="#comercios"     data-i18n="nav.merchants"></a></li>
-        <li><a href="#seguridad"     data-i18n="nav.security"></a></li>
-        <li><a href="#faq"           data-i18n="nav.faq"></a></li>
-        <li><a href="/entradas.html" data-i18n="nav.entradas"></a></li>
-      </ul>
-
-      <div class="nav-right">
-        <div class="lang-switch" role="tablist" aria-label="Idioma">
-          <button data-lang="es" class="active">ES</button>
-          <button data-lang="val" disabled title="Próximamente">VAL</button>
-          <button data-lang="en"  disabled title="Próximamente">EN</button>
-        </div>
-        <button class="menu-toggle" id="menuToggle" aria-label="Menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- =================== HERO =================== -->
-  <section class="hero">
-    <div class="hero-decor" aria-hidden="true"></div>
-    <div class="container hero-grid">
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="view-login">
+  <div class="login-card">
+    <div class="brand">
+      <div class="bolt"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#3B9EFF"/></svg></div>
       <div>
-        <span class="eyebrow" data-i18n="hero.eyebrow"></span>
-        <h1 data-i18n-html="hero.title"></h1>
-        <p class="hero-lead" data-i18n="hero.lead"></p>
-        <div class="hero-ctas">
-          <a href="#" class="btn-store" data-action="download" data-platform="ios">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.86-3.08.4-1.09-.48-2.09-.49-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-            <span>
-              <span class="small" data-i18n="cta.iosSmall"></span>
-              <span class="big" data-i18n="cta.iosBig"></span>
-            </span>
-          </a>
-          <a href="#" class="btn-store" data-action="download" data-platform="android">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.18 0-.357-.072-.49-.205l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477l1.526 1.526c.273.273.273.717 0 .99-.273.273-.717.273-.99 0l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477m-7.36-2.964l1.526-1.526c.273-.273.273-.717 0-.99-.273-.273-.717-.273-.99 0L7.706 9.86c-.41.41-.41 1.067 0 1.477.41.41 1.067.41 1.477 0M5.864 6.5h12.272c.62 0 1.123.503 1.123 1.123v8.754c0 .62-.503 1.123-1.123 1.123H5.864c-.62 0-1.123-.503-1.123-1.123V7.623c0-.62.503-1.123 1.123-1.123z"/><circle cx="8.5" cy="11" r="1"/><circle cx="15.5" cy="11" r="1"/></svg>
-            <span>
-              <span class="small" data-i18n="cta.androidSmall"></span>
-              <span class="big" data-i18n="cta.androidBig"></span>
-            </span>
-          </a>
-        </div>
-
-        <div class="hero-trust">
-          <div class="hero-trust-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <span data-i18n="hero.trust"></span>
-        </div>
-      </div>
-
-      <!-- Mockup del móvil en OSCURO (es la app real, tema por defecto) -->
-      <div class="hero-visual" aria-hidden="true">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-balance">
-              <div class="phone-balance-label" data-i18n="phone.balance"></div>
-              <div class="phone-balance-value">12,40<small>€</small></div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div class="phone-row">
-                <div class="phone-row-icon">☕</div>
-                <div class="phone-row-main">
-                  <div class="phone-row-name">Cafetería Central</div>
-                  <div class="phone-row-sub">Hoy · 09:14</div>
-                </div>
-                <div>
-                  <div class="phone-row-amount">−4,20 €</div>
-                  <div class="phone-row-cb">+0,21 €</div>
-                </div>
-              </div>
-              <div class="phone-row">
-                <div class="phone-row-icon">🥐</div>
-                <div class="phone-row-main">
-                  <div class="phone-row-name">Forn Pa i Coca</div>
-                  <div class="phone-row-sub">Ayer · 08:32</div>
-                </div>
-                <div>
-                  <div class="phone-row-amount">−6,80 €</div>
-                  <div class="phone-row-cb">+0,34 €</div>
-                </div>
-              </div>
-              <div class="phone-row">
-                <div class="phone-row-icon">👕</div>
-                <div class="phone-row-main">
-                  <div class="phone-row-name">Boutique Lola</div>
-                  <div class="phone-row-sub">Lun · 18:05</div>
-                </div>
-                <div>
-                  <div class="phone-row-amount">−29,90 €</div>
-                  <div class="phone-row-cb">+1,49 €</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="name">LocalPay</div>
+        <div class="sub">Panel de comercio</div>
       </div>
     </div>
-  </section>
+    <h1>Acceso para comercios</h1>
+    <p class="lead">Usa el mismo correo y contraseña que en la app de comercio.</p>
 
-  <!-- =================== CÓMO FUNCIONA =================== -->
-  <section id="como-funciona">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="how.eyebrow"></span>
-        <h2 data-i18n="how.title"></h2>
-        <p data-i18n="how.lead"></p>
-      </div>
-      <div class="how-grid">
-        <div class="step">
-          <div class="step-num">01</div>
-          <div class="step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          </div>
-          <h3 data-i18n="how.step1.title"></h3>
-          <p  data-i18n="how.step1.text"></p>
-        </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <div class="step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          </div>
-          <h3 data-i18n="how.step2.title"></h3>
-          <p  data-i18n="how.step2.text"></p>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <div class="step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <h3 data-i18n="how.step3.title"></h3>
-          <p  data-i18n="how.step3.text"></p>
-        </div>
-      </div>
+    <label for="email">Correo electrónico</label>
+    <input id="email" type="email" autocomplete="username" placeholder="tucomercio@ejemplo.com" />
+
+    <label for="password">Contraseña</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" />
+
+    <button class="btn" id="btn-login">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+
+    <div class="login-foot">
+      Acceso reservado a administradores del comercio.<br>
+      Los empleados (gestores) operan desde la app móvil.
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- =================== DÓNDE USAR =================== -->
-  <section id="donde-usar" class="where-bg">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="where.eyebrow"></span>
-        <h2 data-i18n="where.title"></h2>
-        <p data-i18n="where.lead"></p>
-      </div>
-      <div class="where-grid">
-        <div class="where-card"><span class="where-emoji">🍽️</span><h3 data-i18n="where.c1.title"></h3><p data-i18n="where.c1.text"></p></div>
-        <div class="where-card"><span class="where-emoji">👕</span><h3 data-i18n="where.c2.title"></h3><p data-i18n="where.c2.text"></p></div>
-        <div class="where-card"><span class="where-emoji">🥖</span><h3 data-i18n="where.c3.title"></h3><p data-i18n="where.c3.text"></p></div>
-        <div class="where-card"><span class="where-emoji">💆</span><h3 data-i18n="where.c4.title"></h3><p data-i18n="where.c4.text"></p></div>
-        <div class="where-card"><span class="where-emoji">📚</span><h3 data-i18n="where.c5.title"></h3><p data-i18n="where.c5.text"></p></div>
-        <div class="where-card"><span class="where-emoji">🌺</span><h3 data-i18n="where.c6.title"></h3><p data-i18n="where.c6.text"></p></div>
-        <div class="where-card"><span class="where-emoji">💍</span><h3 data-i18n="where.c7.title"></h3><p data-i18n="where.c7.text"></p></div>
-        <div class="where-card"><span class="where-emoji">✨</span><h3 data-i18n="where.c8.title"></h3><p data-i18n="where.c8.text"></p></div>
-      </div>
+<!-- ══════════════ APP ══════════════ -->
+<div id="view-app" class="hidden">
+  <div class="topbar">
+    <div class="brand" style="margin:0">
+      <div class="bolt"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#3B9EFF"/></svg></div>
+      <div><div class="name" style="font-size:16px">LocalPay</div></div>
     </div>
-  </section>
-
-  <!-- =================== PARA COMERCIOS (card oscura estilo feature graphic) =================== -->
-  <section id="comercios">
-    <div class="container">
-      <div class="merchants">
-        <div class="merchants-grid">
-          <div>
-            <span class="eyebrow" data-i18n="merchants.eyebrow"></span>
-            <h2 data-i18n="merchants.title"></h2>
-            <p class="merchants-lead" data-i18n="merchants.lead"></p>
-            <a href="mailto:hola@pagolocal.xyz?subject=Quiero%20unir%20mi%20negocio%20a%20PagoLocal" class="merchants-cta">
-              <span data-i18n="merchants.cta"></span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-          <ul class="merchants-list">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <div><strong data-i18n="merchants.b1.title"></strong><span data-i18n="merchants.b1.text"></span></div>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <div><strong data-i18n="merchants.b2.title"></strong><span data-i18n="merchants.b2.text"></span></div>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <div><strong data-i18n="merchants.b3.title"></strong><span data-i18n="merchants.b3.text"></span></div>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              <div><strong data-i18n="merchants.b4.title"></strong><span data-i18n="merchants.b4.text"></span></div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =================== SEGURIDAD =================== -->
-  <section id="seguridad">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="security.eyebrow"></span>
-        <h2 data-i18n="security.title"></h2>
-        <p data-i18n="security.lead"></p>
-      </div>
-      <div class="security-grid">
-        <div class="security-item">
-          <div class="security-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <h3 data-i18n="security.s1.title"></h3>
-          <p  data-i18n="security.s1.text"></p>
-        </div>
-        <div class="security-item">
-          <div class="security-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 16v-2.4a4 4 0 0 0-1.6-3.2L12 8 8.6 10.4A4 4 0 0 0 7 13.6V16"/><circle cx="12" cy="5" r="2"/><path d="M5 21h14"/></svg>
-          </div>
-          <h3 data-i18n="security.s2.title"></h3>
-          <p  data-i18n="security.s2.text"></p>
-        </div>
-        <div class="security-item">
-          <div class="security-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3 data-i18n="security.s3.title"></h3>
-          <p  data-i18n="security.s3.text"></p>
-        </div>
-        <div class="security-item">
-          <div class="security-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
-          </div>
-          <h3 data-i18n="security.s4.title"></h3>
-          <p  data-i18n="security.s4.text"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =================== FAQ =================== -->
-  <section id="faq" class="faq-bg">
-    <div class="container">
-      <div class="section-head" style="margin: 0 auto 50px; text-align: center;">
-        <span class="eyebrow" data-i18n="faq.eyebrow"></span>
-        <h2 data-i18n="faq.title"></h2>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary data-i18n="faq.q1.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q1.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q2.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q2.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q3.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q3.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q4.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q4.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q5.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q5.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q6.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q6.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q7.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q7.a"></p></div>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q8.q"></summary>
-          <div class="faq-answer"><p data-i18n="faq.q8.a"></p></div>
-        </details>
-      </div>
-      <p style="text-align:center; margin: 40px 0 0; color: var(--muted);">
-        <span data-i18n="faq.moreText"></span>
-        <a href="/ayuda.html" style="color: var(--accent); font-weight:700; text-decoration:underline; text-underline-offset:3px; margin-left:6px;" data-i18n="faq.moreLink"></a>
-      </p>
-    </div>
-  </section>
-
-  <!-- =================== CTA FINAL =================== -->
-  <section class="cta-final">
-    <div class="container">
-      <span class="eyebrow" data-i18n="ctafinal.eyebrow"></span>
-      <h2 data-i18n="ctafinal.title"></h2>
-      <p data-i18n="ctafinal.lead"></p>
-      <div class="hero-ctas">
-        <a href="#" class="btn-store" data-action="download" data-platform="ios">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.86-3.08.4-1.09-.48-2.09-.49-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-          <span>
-            <span class="small" data-i18n="cta.iosSmall"></span>
-            <span class="big" data-i18n="cta.iosBig"></span>
-          </span>
-        </a>
-        <a href="#" class="btn-store" data-action="download" data-platform="android">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.18 0-.357-.072-.49-.205l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477l1.526 1.526c.273.273.273.717 0 .99-.273.273-.717.273-.99 0l-1.526-1.526c-.41-.41-1.067-.41-1.477 0-.41.41-.41 1.067 0 1.477m-7.36-2.964l1.526-1.526c.273-.273.273-.717 0-.99-.273-.273-.717-.273-.99 0L7.706 9.86c-.41.41-.41 1.067 0 1.477.41.41 1.067.41 1.477 0M5.864 6.5h12.272c.62 0 1.123.503 1.123 1.123v8.754c0 .62-.503 1.123-1.123 1.123H5.864c-.62 0-1.123-.503-1.123-1.123V7.623c0-.62.503-1.123 1.123-1.123z"/><circle cx="8.5" cy="11" r="1"/><circle cx="15.5" cy="11" r="1"/></svg>
-          <span>
-            <span class="small" data-i18n="cta.androidSmall"></span>
-            <span class="big" data-i18n="cta.androidBig"></span>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- =================== FOOTER =================== -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="/" class="logo">
-            <span class="logo-mark">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-            </span>
-            <span>PagoLocal</span>
-          </a>
-          <p data-i18n="footer.tagline"></p>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer.col1.title"></h4>
-          <ul>
-            <li><a href="#como-funciona"  data-i18n="footer.col1.l1"></a></li>
-            <li><a href="#donde-usar"     data-i18n="footer.col1.l2"></a></li>
-            <li><a href="#seguridad"      data-i18n="footer.col1.l3"></a></li>
-            <li><a href="#faq"            data-i18n="footer.col1.l4"></a></li>
-            <li><a href="/entradas.html"  data-i18n="footer.col1.l5"></a></li>
-            <li><a href="/ayuda.html"     data-i18n="footer.col1.l6"></a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer.col2.title"></h4>
-          <ul>
-            <li><a href="#comercios"                                                       data-i18n="footer.col2.l1"></a></li>
-            <li><a href="mailto:hola@pagolocal.xyz?subject=Quiero%20unir%20mi%20negocio%20a%20PagoLocal" data-i18n="footer.col2.l2"></a></li>
-            <li><a href="mailto:hola@pagolocal.xyz"                                        data-i18n="footer.col2.l3"></a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer.col3.title"></h4>
-          <ul>
-            <li><a href="/privacy.html" data-i18n="footer.col3.l1"></a></li>
-            <li><a href="/terms.html"   data-i18n="footer.col3.l2"></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span id="year"></span> PagoLocal · <span data-i18n="footer.madeIn"></span></span>
-        <span><a href="mailto:hola@pagolocal.xyz">hola@pagolocal.xyz</a></span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- =================== MODAL "Próximamente" =================== -->
-  <div class="modal-overlay" id="modalDownload" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" aria-label="Cerrar" onclick="closeModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-      </button>
-      <div class="modal-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <h3 data-i18n="modal.title"></h3>
-      <p  data-i18n="modal.text"></p>
-      <a href="mailto:hola@pagolocal.xyz?subject=Quiero%20probar%20PagoLocal&body=Hola%2C%20me%20gustaría%20probar%20PagoLocal%20cuando%20esté%20disponible." class="btn btn-primary" data-i18n="modal.cta"></a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="who">Conectado como <b id="who-name">—</b></div>
+      <button class="btn-ghost" id="btn-logout">Cerrar sesión</button>
     </div>
   </div>
 
+  <nav class="sidebar" id="sidebar"></nav>
 
-  <script>
-  /* ==============================================================
-     CONFIGURACIÓN — cuando publiques las apps, pega los enlaces.
-     Si los dejas vacíos, los botones abren el modal "Próximamente".
-     ============================================================== */
-  const APP_LINKS = {
-    ios:     '',  // ej. 'https://apps.apple.com/es/app/pagolocal/idXXXXXX'
-    android: ''   // ej. 'https://play.google.com/store/apps/details?id=xyz.pagolocal.usuario'
-  };
+  <main class="content" id="content"></main>
+</div>
 
-  /* ==============================================================
-     SISTEMA DE TRADUCCIONES (i18n)
-     ============================================================== */
-  const I18N = {
-    es: {
-      nav: { how: "Cómo funciona", where: "Dónde usar", merchants: "Comercios", security: "Seguridad", faq: "Preguntas", entradas: "Entradas" },
+<div id="modal-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Editar producto</h3>
+      <div class="sub" id="modal-sub"></div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn-ghost" id="modal-cancel">Cancelar</button>
+      <button class="btn" id="modal-save" style="width:auto;margin:0;padding:11px 22px">Guardar</button>
+    </div>
+  </div>
+</div>
 
-      cta: {
-        iosSmall: "Descargar en", iosBig: "App Store",
-        androidSmall: "Disponible en", androidBig: "Google Play"
-      },
+<div id="import-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Importar catálogo (CSV)</h3>
+      <div class="sub">Previsualiza antes de aplicar los cambios</div>
+    </div>
+    <div class="modal-body" id="import-body"></div>
+    <div class="modal-foot">
+      <button class="btn-ghost" id="imp-cancel">Cancelar</button>
+      <button class="btn" id="imp-confirm" style="width:auto;margin:0;padding:11px 22px">Confirmar importación</button>
+    </div>
+  </div>
+</div>
 
-      hero: {
-        eyebrow: "Comercio local · Ontinyent",
-        title:   "Paga en tu barrio. <em>Gana</em> en cada compra.",
-        lead:    "PagoLocal es la app de pago del comercio de Ontinyent. Compra con un QR en tus tiendas de siempre, recibe cashback en cada compra y descubre productos locales en el marketplace.",
-        trust:   "Pagos protegidos por Cecabank · 100% gratis para usuarios"
-      },
+<div id="ped-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="ped-title">Pedido</h3>
+      <div class="sub" id="ped-sub"></div>
+    </div>
+    <div class="modal-body" id="ped-body"></div>
+    <div class="modal-foot">
+      <button class="btn-ghost" id="ped-close">Cerrar</button>
+    </div>
+  </div>
+</div>
 
-      phone: { balance: "Tu cashback disponible" },
+<div id="gestor-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="gestor-title">Gestor</h3>
+      <div class="sub">Empleado con acceso limitado a la app de comercio</div>
+    </div>
+    <div class="modal-body" id="gestor-body"></div>
+    <div class="modal-foot">
+      <button class="btn-ghost" id="gestor-cancel">Cancelar</button>
+      <button class="btn" id="gestor-save" style="width:auto;margin:0;padding:11px 22px">Guardar</button>
+    </div>
+  </div>
+</div>
 
-      how: {
-        eyebrow: "Cómo funciona",
-        title:   "Empieza a ahorrar en tres pasos",
-        lead:    "Sin papeleos, sin tarjetas físicas, sin esperas. Solo el comercio de Ontinyent en tu móvil.",
-        step1: { title: "1. Descarga la app",     text: "Disponible para iOS y Android. El registro es gratuito y tarda menos de un minuto." },
-        step2: { title: "2. Paga con QR",         text: "Escanea el QR del comercio o muestra el tuyo. El pago se hace al instante, con verificación biométrica." },
-        step3: { title: "3. Acumula cashback",    text: "Cada compra te devuelve un porcentaje en saldo, que puedes gastar en tu próxima compra en cualquier comercio PagoLocal." }
-      },
+<div id="sala-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head"><h3 id="sala-title">Sala</h3><div class="sub">Datos básicos de la sala</div></div>
+    <div class="modal-body" id="sala-body-modal"></div>
+    <div class="modal-foot"><button class="btn-ghost" id="sala-cancel">Cancelar</button><button class="btn" id="sala-save" style="width:auto;margin:0;padding:11px 22px">Guardar</button></div>
+  </div>
+</div>
 
-      where: {
-        eyebrow: "Comercios PagoLocal",
-        title:   "Donde compras siempre, ahora con cashback",
-        lead:    "Una red de comercios de Ontinyent crece cada semana. Estos son algunos de los sectores donde ya puedes usar PagoLocal.",
-        c1: { title: "Restaurantes y cafeterías", text: "Bares, restaurantes, panaderías y heladerías." },
-        c2: { title: "Moda y calzado",            text: "Tiendas de ropa, zapaterías y complementos." },
-        c3: { title: "Alimentación",              text: "Fruterías, carnicerías, ultramarinos y especialistas." },
-        c4: { title: "Belleza y servicios",       text: "Peluquerías, estética, fisioterapia y bienestar." },
-        c5: { title: "Librerías y papelería",     text: "Libros, regalos y material escolar." },
-        c6: { title: "Floristerías",              text: "Ramos, plantas y decoración." },
-        c7: { title: "Joyería y relojería",       text: "Joyas, relojes y arreglos." },
-        c8: { title: "Y mucho más",               text: "Descubre todos los comercios en la app." }
-      },
+<div id="form-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-head"><h3 id="form-title">Editar</h3></div>
+    <div class="modal-body" id="form-body"></div>
+    <div class="modal-foot"><button class="btn-ghost" id="form-cancel">Cancelar</button><button class="btn" id="form-save" style="width:auto;margin:0;padding:11px 22px">Guardar</button></div>
+  </div>
+</div>
 
-      merchants: {
-        eyebrow: "Para comercios",
-        title:   "¿Tienes un negocio en Ontinyent?",
-        lead:    "Únete a la red de comercios de PagoLocal y empieza a recibir pagos digitales sin terminal físico, fideliza a tu clientela y aparece en el marketplace que buscan los vecinos del pueblo.",
-        cta:     "Quiero unir mi negocio",
-        b1: { title: "Cobra sin TPV físico",          text: "Solo necesitas un móvil. Sin alquileres ni instalaciones." },
-        b2: { title: "Tu propio marketplace incluido", text: "Sube tus productos y véndelos online, con recogida o entrega." },
-        b3: { title: "Fideliza con cashback",          text: "Tú decides cuánto ofreces y cuánto se puede gastar en tu negocio." },
-        b4: { title: "Gestión todo-en-uno",            text: "Pedidos, mesas, devoluciones y notificaciones desde una sola app." }
-      },
+<div id="toast"></div>
 
-      security: {
-        eyebrow: "Seguridad",
-        title:   "Tu dinero, siempre protegido",
-        lead:    "PagoLocal cumple las normativas europeas de pagos y se apoya en infraestructura bancaria de primer nivel.",
-        s1: { title: "Pagos por Cecabank",          text: "Toda transacción se procesa con la pasarela TPV Virtual de Cecabank." },
-        s2: { title: "Identificación biométrica",   text: "Face ID o huella protegen cada pago, incluso si pierdes el móvil." },
-        s3: { title: "Cifrado de extremo a extremo", text: "Tus datos viajan cifrados y no se guardan en el dispositivo." },
-        s4: { title: "Cumplimiento PSD2",           text: "Bajo la normativa europea de servicios de pago." }
-      },
+<script>
+(function(){
+  'use strict';
 
-      faq: {
-        eyebrow: "Dudas frecuentes",
-        title:   "Preguntas más comunes",
-        q1: { q: "¿Es gratis usar PagoLocal?",                      a: "Sí, descargar y usar la app es totalmente gratis. No hay cuotas mensuales ni comisiones por pagar con PagoLocal." },
-        q2: { q: "¿Necesito una tarjeta o cuenta especial?",        a: "No. PagoLocal funciona con cualquier tarjeta de débito o crédito española que ya tengas. Se vincula a la app de forma segura y nunca se almacena en tu móvil." },
-        q3: { q: "¿Cómo me doy de alta?",                           a: "Descarga PagoLocal desde App Store o Google Play, introduce tu email, crea una contraseña y verifica tu cuenta. Es cuestión de un minuto." },
-        q4: { q: "¿Cómo gano cashback?",                            a: "Cada comercio PagoLocal decide qué porcentaje devuelve por cada compra. Al pagar, ese porcentaje se acumula automáticamente en tu saldo, listo para gastar en cualquier comercio que acepte saldo PagoLocal." },
-        q5: { q: "¿Dónde puedo gastar mi cashback?",                a: "En cualquier comercio PagoLocal que tenga activada la opción de aceptar saldo. Lo verás claramente al elegir cómo pagar." },
-        q6: { q: "¿Es seguro?",                                     a: "Sí. Los pagos se procesan a través de Cecabank, una de las pasarelas bancarias más usadas en España. Además, cada pago se confirma con huella o Face ID, y la app cumple la normativa PSD2 europea." },
-        q7: { q: "¿Qué pasa si pierdo el móvil?",                   a: "Tu dinero está a salvo. Nadie puede acceder a la app sin tu huella o Face ID, y puedes pedir la baja desde el panel de soporte escribiendo a soporte@pagolocal.xyz." },
-        q8: { q: "¿Funciona sin internet?",                         a: "PagoLocal necesita conexión a internet (datos móviles o WiFi) para realizar pagos, porque cada operación se procesa al instante con tu banco." },
-        moreText: "¿No encuentras tu respuesta?",
-        moreLink: "Visita nuestro centro de ayuda"
-      },
-
-      ctafinal: {
-        eyebrow: "Empieza hoy",
-        title:   "Descubre el comercio de Ontinyent como nunca antes",
-        lead:    "Descarga PagoLocal, paga en tus tiendas de siempre y empieza a ganar en cada compra."
-      },
-
-      modal: {
-        title: "Estamos a punto de lanzarnos",
-        text:  "PagoLocal está en pruebas finales con un grupo seleccionado de comercios de Ontinyent. Escríbenos y te avisaremos en cuanto puedas descargarla.",
-        cta:   "Apúntame a la lista de espera"
-      },
-
-      footer: {
-        tagline: "La app de pago del comercio local de Ontinyent. Hecho aquí, para los de aquí.",
-        col1: { title: "PagoLocal",  l1: "Cómo funciona", l2: "Dónde usar",       l3: "Seguridad",      l4: "Preguntas frecuentes", l5: "Entradas", l6: "Centro de ayuda" },
-        col2: { title: "Comercios",  l1: "Para comercios", l2: "Únete a la red",  l3: "Contacto" },
-        col3: { title: "Legal",      l1: "Política de privacidad", l2: "Términos y condiciones" },
-        madeIn: "Hecho en Ontinyent"
-      }
-    },
-
-    val: {},
-    en:  {}
-  };
-
-  let currentLang = 'es';
-
-  function t(key) {
-    const path = key.split('.');
-    let val = I18N[currentLang];
-    for (const p of path) val = val && val[p];
-    if (val === undefined || val === null || val === '') {
-      val = I18N.es;
-      for (const p of path) val = val && val[p];
+  // ── Helpers de red (cookie HttpOnly → no gestionamos token a mano) ──────────
+  async function api(path, opts){
+    opts = opts || {};
+    const res = await fetch(path, Object.assign({
+      credentials:'same-origin',
+      headers: Object.assign({'Content-Type':'application/json'}, opts.headers || {}),
+    }, opts));
+    if (res.status === 401){            // sesión caducada o ausente → volver a login
+      mostrarLogin();
+      throw new Error('no-session');
     }
-    return val ?? '';
+    let data = null;
+    try { data = await res.json(); } catch(_){}
+    if (!res.ok) throw new Error((data && data.error) || ('HTTP ' + res.status));
+    return data;
   }
 
-  function applyLang() {
-    document.documentElement.lang = currentLang === 'val' ? 'ca' : currentLang;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      el.textContent = t(el.dataset.i18n);
-    });
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      el.innerHTML = t(el.dataset.i18nHtml);
-    });
-    document.querySelectorAll('.lang-switch button').forEach(b => {
-      b.classList.toggle('active', b.dataset.lang === currentLang);
+  // ── Formato / parseo ─────────────────────────────────────────────────────────
+  function fmtEur(n){
+    const v = Number(n) || 0;
+    return v.toLocaleString('es-ES', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €';
+  }
+  function parseAtributos(raw){
+    if (!raw) return {};
+    if (typeof raw === 'object') return raw;
+    try { return JSON.parse(raw) || {}; } catch(_){ return {}; }
+  }
+  // Resumen de stock para la tabla (variantes → stockPorTalla → stock plano → ∞)
+  function resumenStock(p){
+    if (Array.isArray(p.variantes) && p.variantes.length){
+      let tot = 0, ilim = false;
+      p.variantes.forEach(v => { if (v.stock == null) ilim = true; else tot += Number(v.stock) || 0; });
+      return ilim ? (tot > 0 ? (tot + ' +∞') : '∞') : String(tot);
+    }
+    const at = parseAtributos(p.atributos);
+    if (at && at.stockPorTalla && typeof at.stockPorTalla === 'object'){
+      const vals = Object.values(at.stockPorTalla);
+      if (vals.length) return String(vals.reduce((a,b)=>a + (Number(b)||0), 0));
+    }
+    if (p.stock != null && p.stock !== '') return String(p.stock);
+    return '∞';
+  }
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ── Toast ───────────────────────────────────────────────────────────────────
+  let _toastT = null;
+  function toast(msg, tipo){
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = (tipo === 'err' ? 'err ' : '') + 'show';
+    clearTimeout(_toastT);
+    _toastT = setTimeout(()=>{ el.className = el.className.replace('show','').trim(); }, 2600);
+  }
+
+  // ── Secciones (Catálogo real; el resto, placeholder por fase) ────────────────
+  const SECCIONES = [
+    { id:'inicio',      ic:'🏠', label:'Inicio',       real:true },
+    { id:'catalogo',    ic:'📦', label:'Catálogo',     real:true },
+    { id:'cashback',    ic:'⚡', label:'Cashback',      real:true },
+    { id:'facturacion', ic:'🧾', label:'Facturación',   real:true },
+    { id:'cobros',      ic:'💶', label:'Cobros',        real:true },
+    { id:'analitica',   ic:'📈', label:'Analítica',     real:true },
+    { id:'pedidos',     ic:'🛍️', label:'Pedidos',       real:true },
+    { id:'eventos',     ic:'🎟️', label:'Eventos',       real:true, cond:(c)=>c && (c.tiene_eventos || c.template_tipo==='eventos') },
+    { id:'salas',       ic:'🏛️', label:'Salas',         real:true, cond:(c)=>c && (c.tiene_espacios || c.template_tipo==='espacios') },
+    { id:'citas',       ic:'📅', label:'Agenda',        real:true, cond:(c)=>c && (c.tiene_profesionales || c.template_tipo==='citas') },
+    { id:'mesas',       ic:'🍽️', label:'Mesas',         real:true, cond:(c)=>c && (c.tiene_mesas || c.template_tipo==='restaurante') },
+    { id:'cocina',      ic:'🍳', label:'Cocina (KDS)',  real:true, cond:(c)=>c && (c.tiene_mesas || c.template_tipo==='restaurante') },
+    { id:'usuarios',    ic:'👥', label:'Usuarios',      real:true },
+  ];
+
+  let _com = {};
+  function pintarNav(){
+    const nav = document.getElementById('sidebar');
+    nav.innerHTML = '';
+    SECCIONES.filter(s => !s.cond || s.cond(_com)).forEach((s, i) => {
+      const b = document.createElement('button');
+      b.className = 'navitem' + (i === 0 ? ' active' : '');
+      b.dataset.sec = s.id;
+      b.innerHTML = '<span class="ic">'+s.ic+'</span><span>'+s.label+'</span>';
+      b.addEventListener('click', () => navTo(s.id));
+      nav.appendChild(b);
     });
   }
 
-  document.querySelectorAll('.lang-switch button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.disabled) return;
-      currentLang = btn.dataset.lang;
-      applyLang();
+  function navTo(secId){
+    pararCocina();
+    document.querySelectorAll('.navitem').forEach(n => n.classList.toggle('active', n.dataset.sec === secId));
+    const s = SECCIONES.find(x => x.id === secId);
+    if (!s) return;
+    if (s.real && s.id === 'inicio') return renderInicio();
+    if (s.real && s.id === 'catalogo') return renderCatalogo();
+    if (s.real && s.id === 'cashback') return renderCashback();
+    if (s.real && s.id === 'facturacion') return renderFacturacion();
+    if (s.real && s.id === 'cobros') return renderCobros();
+    if (s.real && s.id === 'analitica') return renderAnalitica();
+    if (s.real && s.id === 'pedidos') return renderPedidos();
+    if (s.real && s.id === 'eventos') return renderEventos();
+    if (s.real && s.id === 'salas') return renderSalas();
+    if (s.real && s.id === 'citas') return renderCitas();
+    if (s.real && s.id === 'mesas') return renderMesas();
+    if (s.real && s.id === 'cocina') return renderCocina();
+    if (s.real && s.id === 'usuarios') return renderUsuarios();
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">'+s.label+'</h1>'+
+      '<p class="page-sub">Sección del panel de comercio</p>'+
+      '<div class="card">'+
+        '<span class="badge">'+s.fase+' · en construcción</span>'+
+        '<h3>'+s.label+'</h3>'+
+        '<p>'+s.desc+'</p>'+
+      '</div>';
+  }
+
+  // ── Inicio (Centro de acciones del comercio) ─────────────────────────────────
+  async function renderInicio(){
+    const cont = document.getElementById('content');
+    cont.innerHTML =
+      '<h1 class="page-title">Inicio</h1>'+
+      '<p class="page-sub">Lo que tienes que atender hoy.</p>'+
+      '<div id="inicio-body"><div class="state">Cargando…</div></div>';
+    try {
+      const { acciones: a } = await api('/api/comercio/centro-acciones');
+      const tile = (icon, valor, label, sec, onclick) => {
+        const action = onclick || (sec ? "navTo('"+sec+"')" : null);
+        const clickAttr = action ? ' onclick="'+action+'" style="cursor:pointer;' : ' style="';
+        return '<div'+clickAttr+
+          'background:var(--surface2);border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:12px;padding:14px 16px">'+
+          '<div style="font-size:22px;font-weight:800;color:var(--accent)">'+icon+' '+valor+'</div>'+
+          '<div style="font-size:12px;color:var(--muted);margin-top:2px">'+label+'</div>'+
+        '</div>';
+      };
+      const cbT = a.cashback_por_transferir || { debe:false, importe:0 };
+      const fcT = a.facturas_por_pagar || { n:0, total:0 };
+      const secReservas = (_com && (_com.tiene_profesionales || _com.template_tipo==='citas')) ? 'citas' : 'salas';
+      const tiles = [];
+      if (a.pedidos_pendientes>0)        tiles.push(tile('🛍️', a.pedidos_pendientes, 'Pedidos por preparar', null, "irAPedidos('pedidos','pendiente')"));
+      if (a.devoluciones_pendientes>0)   tiles.push(tile('↩', a.devoluciones_pendientes, 'Devoluciones por resolver', null, "irADevolucionesComercio()"));
+      if (a.comandas_por_cobrar>0)       tiles.push(tile('🍽️', a.comandas_por_cobrar, 'Cuentas de mesa por cobrar', 'mesas'));
+      if (a.reservas_hoy>0)              tiles.push(tile('📅', a.reservas_hoy, 'Reservas y citas de hoy', secReservas));
+      if (a.notificaciones_pendientes>0) tiles.push(tile('📢', a.notificaciones_pendientes, 'Notificaciones pendientes', null));
+      if (cbT.debe)                      tiles.push(tile('🔁', fmtEur(cbT.importe), 'Cashback por transferir', 'cashback'));
+      if (fcT.n>0)                       tiles.push(tile('💶', fmtEur(fcT.total), 'Facturas por pagar ('+fcT.n+')', 'facturacion'));
+      document.getElementById('inicio-body').innerHTML = tiles.length
+        ? '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">'+tiles.join('')+'</div>'
+        : '<div class="card"><h3>Todo al día 🎉</h3><p>No tienes acciones pendientes ahora mismo.</p></div>';
+    } catch(e) {
+      document.getElementById('inicio-body').innerHTML = '<div class="state">No se pudo cargar el inicio. '+(e && e.message ? e.message : '')+'</div>';
+    }
+  }
+
+  function irAPedidos(sub, ep){ if(sub) ped.sub = sub; ped.estadoPedido = ep || ''; ped.page = 1; navTo('pedidos'); }
+  function irADevolucionesComercio(){ ped.sub = 'devoluciones'; dev.estado = 'pendiente'; dev.page = 1; navTo('pedidos'); }
+
+  // ── Catálogo (Fase 2): listado paginado + búsqueda ───────────────────────────
+  const cat = { page:1, limit:50, q:'', pages:1, total:0, buscarT:null, items:[] };
+
+  function renderCatalogo(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Catálogo</h1>'+
+      '<p class="page-sub">Tus productos: edita precio, imágenes, tallas, variantes y todos los detalles. Exporta o importa en bloque con CSV.</p>'+
+      '<div class="toolbar">'+
+        '<div class="search"><span class="mag">🔍</span>'+
+          '<input id="cat-q" type="text" placeholder="Buscar por nombre o descripción…" autocomplete="off" />'+
+        '</div>'+
+        '<button class="btn-ghost" id="cat-export">⬇ Exportar CSV</button>'+
+        '<button class="btn-ghost" id="cat-import">⬆ Importar CSV</button>'+
+        '<input id="cat-file" type="file" accept=".csv,text/csv" style="display:none">'+
+      '</div>'+
+      '<div id="cat-body"></div>';
+
+    const input = document.getElementById('cat-q');
+    input.value = cat.q;
+    input.addEventListener('input', () => {
+      clearTimeout(cat.buscarT);
+      cat.buscarT = setTimeout(() => { cat.q = input.value.trim(); cat.page = 1; cargarCatalogo(); }, 300);
     });
-  });
+    document.getElementById('cat-export').addEventListener('click', exportarCsv);
+    document.getElementById('cat-import').addEventListener('click', abrirImport);
+    document.getElementById('cat-file').addEventListener('change', onArchivoCsv);
+    cargarCatalogo();
+  }
 
-  applyLang();
+  async function cargarCatalogo(){
+    const body = document.getElementById('cat-body');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      const qs = '?page='+cat.page+'&limit='+cat.limit+(cat.q ? '&q='+encodeURIComponent(cat.q) : '');
+      const data = await api('/api/comercio/panel/productos' + qs);
+      cat.pages = data.pages || 1;
+      cat.total = data.total || 0;
+      pintarTablaCatalogo(data.productos || []);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar el catálogo: '+escapeHtml(e.message)+'</div>';
+    }
+  }
 
-  /* BOTONES DE DESCARGA */
-  document.querySelectorAll('[data-action="download"]').forEach(btn => {
-    const platform = btn.dataset.platform;
-    const link = APP_LINKS[platform];
-    if (link) {
-      btn.setAttribute('href', link);
-      btn.setAttribute('target', '_blank');
-      btn.setAttribute('rel', 'noopener');
-      btn.classList.add('live');
+  function pintarTablaCatalogo(productos){
+    const body = document.getElementById('cat-body');
+    cat.items = productos;
+    if (!productos.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">'+
+        (cat.q ? 'Sin productos que coincidan con la búsqueda.' : 'Aún no tienes productos en el catálogo.')+
+        '</div></div>' + pagerHtml();
+      cablearPager();
+      return;
+    }
+    let filas = '';
+    productos.forEach(p => {
+      const img = imagenesDe(p)[0] || '';
+      const thumb = img
+        ? '<img class="thumb" src="'+escapeHtml(img)+'" alt="" onerror="this.style.display=\'none\'">'
+        : '<div class="thumb-ph">📦</div>';
+      const visible = (p.visible_usuario !== false)
+        ? '<span class="pill on">Visible</span>'
+        : '<span class="pill off">Oculto</span>';
+      filas +=
+        '<tr>'+
+          '<td style="width:54px">'+thumb+'</td>'+
+          '<td><div class="prod-name">'+escapeHtml(p.nombre || '—')+'</div>'+
+            (p.categoria ? '<div class="prod-cat">'+escapeHtml(p.categoria)+'</div>' : '')+'</td>'+
+          '<td class="col-r">'+fmtEur(p.precio)+'</td>'+
+          '<td class="col-c">'+escapeHtml(resumenStock(p))+'</td>'+
+          '<td class="col-c">'+visible+'</td>'+
+          '<td class="col-r"><button class="btn-edit" data-edit="'+escapeHtml(p.id)+'">Editar</button></td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table>'+
+        '<thead><tr>'+
+          '<th></th><th>Producto</th><th class="col-r">Precio</th>'+
+          '<th class="col-c">Stock</th><th class="col-c">Estado</th><th></th>'+
+        '</tr></thead>'+
+        '<tbody>'+filas+'</tbody>'+
+      '</table></div>' + pagerHtml();
+    cablearPager();
+    cablearEditar();
+  }
+
+  function pagerHtml(){
+    const desde = cat.total === 0 ? 0 : ((cat.page - 1) * cat.limit + 1);
+    const hasta = Math.min(cat.page * cat.limit, cat.total);
+    return '<div class="pager">'+
+      '<div class="info">'+desde+'–'+hasta+' de '+cat.total+' productos · página '+cat.page+' de '+cat.pages+'</div>'+
+      '<div class="btns">'+
+        '<button class="btn-ghost" id="cat-prev"'+(cat.page<=1?' disabled':'')+'>← Anterior</button>'+
+        '<button class="btn-ghost" id="cat-next"'+(cat.page>=cat.pages?' disabled':'')+'>Siguiente →</button>'+
+      '</div>'+
+    '</div>';
+  }
+  function cablearPager(){
+    const prev = document.getElementById('cat-prev');
+    const next = document.getElementById('cat-next');
+    if (prev) prev.addEventListener('click', () => { if (cat.page > 1){ cat.page--; cargarCatalogo(); } });
+    if (next) next.addEventListener('click', () => { if (cat.page < cat.pages){ cat.page++; cargarCatalogo(); } });
+  }
+
+  // ── Navegación de vistas ─────────────────────────────────────────────────────
+  function mostrarLogin(){
+    try { pararCocina(); } catch(_){}
+    document.getElementById('view-app').classList.add('hidden');
+    document.getElementById('view-login').classList.remove('hidden');
+    document.getElementById('password').value = '';
+  }
+  function mostrarApp(comercio){
+    _com = comercio || {};
+    document.getElementById('who-name').textContent = comercio && comercio.nombre ? comercio.nombre : '—';
+    document.getElementById('view-login').classList.add('hidden');
+    document.getElementById('view-app').classList.remove('hidden');
+    cat.page = 1; cat.q = '';
+    pintarNav();
+    navTo(SECCIONES[0].id);
+  }
+
+  // ── Login / logout ───────────────────────────────────────────────────────────
+  async function hacerLogin(){
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const err = document.getElementById('login-err');
+    const btn = document.getElementById('btn-login');
+    err.textContent = '';
+    if (!email || !password){ err.textContent = 'Introduce correo y contraseña.'; return; }
+    btn.disabled = true; btn.textContent = 'Entrando…';
+    try {
+      const data = await api('/api/comercio/web-login', { method:'POST', body: JSON.stringify({ email, password }) });
+      mostrarApp(data.comercio);
+    } catch(e){
+      err.textContent = e.message === 'no-session' ? 'Sesión no válida.' : (e.message || 'No se pudo iniciar sesión.');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Entrar';
+    }
+  }
+
+  async function hacerLogout(){
+    try { await api('/api/comercio/web-logout', { method:'POST' }); } catch(_){}
+    mostrarLogin();
+    toast('Sesión cerrada');
+  }
+
+  // ── Usuarios / gestores (Fase 10) ────────────────────────────────────────────
+  const usr = { items:[] };
+  let _gestorId = null;
+
+  function renderUsuarios(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Usuarios</h1>'+
+      '<p class="page-sub">Empleados (gestores) con acceso a la app de comercio. Pueden operar (ventas, stock, reservas) pero no configurar el comercio.</p>'+
+      '<div class="toolbar"><button class="btn" id="usr-add" style="width:auto;margin:0;padding:10px 18px">+ Añadir gestor</button></div>'+
+      '<div id="usr-body"></div>';
+    document.getElementById('usr-add').addEventListener('click', () => abrirGestor(null));
+    cargarUsuarios();
+  }
+
+  async function cargarUsuarios(){
+    const body = document.getElementById('usr-body');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      const data = await api('/api/comercio/panel/gestores');
+      usr.items = data.gestores || [];
+      pintarTablaUsuarios(usr.items);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarTablaUsuarios(items){
+    const body = document.getElementById('usr-body');
+    if (!items.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">Aún no tienes gestores. Añade el primero con el botón de arriba.</div></div>';
+      return;
+    }
+    let filas = '';
+    items.forEach(g => {
+      const estado = g.activo !== false
+        ? '<span class="pill on">Activo</span>'
+        : '<span class="pill off">Inactivo</span>';
+      const acceso = g.ultimo_acceso ? fmtFecha(g.ultimo_acceso) : 'Nunca';
+      filas +=
+        '<tr>'+
+          '<td><span class="prod-name">'+escapeHtml(g.nombre || '—')+'</span></td>'+
+          '<td>'+escapeHtml(g.email || '—')+'</td>'+
+          '<td class="col-c">'+estado+'</td>'+
+          '<td>'+acceso+'</td>'+
+          '<td class="col-r" style="white-space:nowrap">'+
+            '<button class="btn-edit" data-edit-g="'+escapeHtml(g.id)+'">Editar</button> '+
+            '<button class="btn-edit" data-del-g="'+escapeHtml(g.id)+'" style="border-color:var(--red);color:var(--red)">Eliminar</button>'+
+          '</td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Email</th>'+
+      '<th class="col-c">Estado</th><th>Último acceso</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-edit-g]').forEach(b => b.addEventListener('click', () => abrirGestor(b.dataset.editG)));
+    body.querySelectorAll('[data-del-g]').forEach(b => b.addEventListener('click', () => eliminarGestor(b.dataset.delG)));
+  }
+
+  function abrirGestor(id){
+    _gestorId = id || null;
+    const g = id ? (usr.items || []).find(x => String(x.id) === String(id)) : null;
+    document.getElementById('gestor-title').textContent = g ? 'Editar gestor' : 'Nuevo gestor';
+    document.getElementById('gestor-body').innerHTML =
+      '<div class="field"><label>Nombre</label><input id="g-nombre" type="text" value="'+escapeHtml(g ? (g.nombre||'') : '')+'"></div>'+
+      '<div class="field"><label>Email</label><input id="g-email" type="email" autocomplete="off" value="'+escapeHtml(g ? (g.email||'') : '')+'"></div>'+
+      '<div class="field"><label>Contraseña'+(g ? ' (dejar vacío para no cambiarla)' : '')+'</label>'+
+        '<input id="g-pass" type="password" autocomplete="new-password" placeholder="'+(g ? '••••••••' : 'Mínimo 6 caracteres')+'"></div>'+
+      (g ? '<div class="field"><label>Estado</label>'+
+        '<label class="toggle"><input id="g-activo" type="checkbox" '+(g.activo !== false ? 'checked' : '')+'>'+
+        '<span class="track"></span><span class="txt">Activo (puede iniciar sesión)</span></label></div>' : '');
+    document.getElementById('gestor-overlay').classList.remove('hidden');
+  }
+  function cerrarGestor(){ document.getElementById('gestor-overlay').classList.add('hidden'); _gestorId = null; }
+
+  async function guardarGestor(){
+    const btn = document.getElementById('gestor-save');
+    const nombre = document.getElementById('g-nombre').value.trim();
+    const email = document.getElementById('g-email').value.trim();
+    const pass = document.getElementById('g-pass').value;
+    const activoEl = document.getElementById('g-activo');
+    if (!nombre || !email){ toast('Nombre y email son obligatorios', 'err'); return; }
+    if (!_gestorId && !pass){ toast('La contraseña es obligatoria', 'err'); return; }
+    if (pass && pass.length < 6){ toast('La contraseña debe tener al menos 6 caracteres', 'err'); return; }
+
+    const body = { nombre, email };
+    if (pass) body.password = pass;
+    if (_gestorId && activoEl) body.activo = activoEl.checked;
+
+    btn.disabled = true; btn.textContent = 'Guardando…';
+    try {
+      if (_gestorId) await api('/api/comercio/panel/gestores/' + _gestorId, { method:'PUT', body: JSON.stringify(body) });
+      else await api('/api/comercio/panel/gestores', { method:'POST', body: JSON.stringify(body) });
+      cerrarGestor();
+      toast('Gestor guardado');
+      cargarUsuarios();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo guardar', 'err');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Guardar';
+    }
+  }
+
+  async function eliminarGestor(id){
+    const g = (usr.items || []).find(x => String(x.id) === String(id));
+    const nombre = g ? (g.nombre || 'este gestor') : 'este gestor';
+    if (!window.confirm('¿Eliminar a ' + nombre + '? Perderá el acceso a la app de comercio.')) return;
+    try {
+      await api('/api/comercio/panel/gestores/' + id, { method:'DELETE' });
+      toast('Gestor eliminado');
+      cargarUsuarios();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo eliminar', 'err');
+    }
+  }
+
+  // ── Modal genérico de edición (reutilizable) ─────────────────────────────────
+  let _formSave = null;
+  function abrirForm(title, html, onSave){
+    document.getElementById('form-title').textContent = title;
+    document.getElementById('form-body').innerHTML = html;
+    _formSave = onSave;
+    document.getElementById('form-overlay').classList.remove('hidden');
+  }
+  function cerrarForm(){ document.getElementById('form-overlay').classList.add('hidden'); _formSave = null; }
+  async function guardarForm(){
+    if (!_formSave) return;
+    const btn = document.getElementById('form-save');
+    btn.disabled = true; btn.textContent = 'Guardando…';
+    try { await _formSave(); }
+    catch(e){ if (e.message !== 'no-session') toast(e.message || 'No se pudo guardar', 'err'); }
+    finally { btn.disabled = false; btn.textContent = 'Guardar'; }
+  }
+
+  // ═══════════════ Agenda / Citas ═══════════════
+  const cit = { sub:'agenda', citas:[], profs:[] };
+  const ESTADO_CITA = {
+    pendiente:{t:'Pendiente',c:'var(--yellow)'}, confirmada:{t:'Confirmada',c:'var(--accent)'},
+    completada:{t:'Completada',c:'var(--green)'}, no_show:{t:'No-show',c:'var(--red)'}, cancelada:{t:'Cancelada',c:'var(--red)'}
+  };
+  function renderCitas(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Agenda</h1>'+
+      '<p class="page-sub">Tus citas y profesionales. Confirma, completa o cancela citas; edita los datos de cada profesional. Horarios y servicios se gestionan en la app.</p>'+
+      '<div class="subtabs"><button class="subtab" data-csub="agenda">Citas</button><button class="subtab" data-csub="profesionales">Profesionales</button></div>'+
+      '<div id="cit-area"></div>';
+    document.querySelectorAll('[data-csub]').forEach(b=>b.addEventListener('click',()=>mostrarCitSub(b.dataset.csub)));
+    mostrarCitSub(cit.sub);
+  }
+  function mostrarCitSub(sub){
+    cit.sub = sub;
+    document.querySelectorAll('[data-csub]').forEach(b=>b.classList.toggle('active', b.dataset.csub===sub));
+    if (sub==='profesionales') return renderProfesionales();
+    renderAgenda();
+  }
+  function renderAgenda(){
+    document.getElementById('cit-area').innerHTML = '<div id="cit-list"></div>';
+    cargarCitas();
+  }
+  async function cargarCitas(){
+    const body=document.getElementById('cit-list'); if(!body)return;
+    body.innerHTML='<div class="state"><span class="spinner"></span></div>';
+    try{ const d=await api('/api/comercio/panel/citas'); cit.citas=d.citas||[]; pintarCitas(cit.citas); }
+    catch(e){ if(e.message==='no-session')return; body.innerHTML='<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>'; }
+  }
+  function pintarCitas(items){
+    const body=document.getElementById('cit-list');
+    if(!items.length){ body.innerHTML='<div class="table-wrap"><div class="state">No hay citas.</div></div>'; return; }
+    let filas='';
+    items.forEach(c=>{
+      const est=ESTADO_CITA[c.estado]||{t:(c.estado||'—'),c:'var(--muted)'};
+      const activa = (c.estado==='pendiente' || c.estado==='confirmada');
+      let acc='';
+      if(activa){
+        if(c.estado==='pendiente') acc+='<button class="btn-edit" data-cita-acc="confirmada" data-cita="'+escapeHtml(c.id)+'" style="border-color:var(--accent);color:var(--accent)">Confirmar</button> ';
+        acc+='<button class="btn-edit" data-cita-acc="completada" data-cita="'+escapeHtml(c.id)+'" style="border-color:var(--green);color:var(--green)">Completar</button> ';
+        acc+='<button class="btn-edit" data-cita-acc="no_show" data-cita="'+escapeHtml(c.id)+'">No-show</button> ';
+        acc+='<button class="btn-edit" data-cita-acc="cancelada" data-cita="'+escapeHtml(c.id)+'" style="border-color:var(--red);color:var(--red)">Cancelar</button>';
+      }
+      filas+='<tr>'+
+        '<td>'+fmtFechaHora(c.fecha_inicio)+'</td>'+
+        '<td><span class="prod-name">'+escapeHtml(c.servicio_nombre||'—')+'</span>'+(c.profesional_nombre?'<div class="prod-cat">'+escapeHtml(c.profesional_nombre)+'</div>':'')+'</td>'+
+        '<td>'+escapeHtml(c.usuario_nombre||'—')+'</td>'+
+        '<td class="col-r">'+fmtEur(c.importe)+'</td>'+
+        '<td class="col-c"><span class="pill" style="color:'+est.c+';background:rgba(138,138,154,.12)">'+escapeHtml(est.t)+'</span></td>'+
+        '<td class="col-r" style="white-space:nowrap">'+acc+'</td>'+
+        '</tr>';
+    });
+    body.innerHTML='<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Servicio</th><th>Cliente</th><th class="col-r">Importe</th><th class="col-c">Estado</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-cita-acc]').forEach(b=>b.addEventListener('click',()=>gestionarCita(b.dataset.cita, b.dataset.citaAcc)));
+  }
+  async function gestionarCita(id, estado){
+    const msgs={ confirmada:'¿Confirmar esta cita?', completada:'¿Marcar la cita como completada? Se registrará la venta y el cashback.', no_show:'¿Marcar como no presentado?', cancelada:'¿Cancelar esta cita?' };
+    if(!window.confirm(msgs[estado]||'¿Cambiar el estado?')) return;
+    try{
+      await api('/api/reservas/'+id+'/estado', { method:'PUT', body: JSON.stringify({ estado }) });
+      toast('Cita actualizada'); cargarCitas();
+    }catch(e){ if(e.message!=='no-session') toast(e.message||'No se pudo actualizar','err'); }
+  }
+
+  function renderProfesionales(){
+    document.getElementById('cit-area').innerHTML = '<div id="prof-list"></div>';
+    cargarProfesionales();
+  }
+  async function cargarProfesionales(){
+    const body=document.getElementById('prof-list'); if(!body)return;
+    body.innerHTML='<div class="state"><span class="spinner"></span></div>';
+    try{ const d=await api('/api/comercio/panel/profesionales'); cit.profs=d.profesionales||[]; pintarProfesionales(cit.profs); }
+    catch(e){ if(e.message==='no-session')return; body.innerHTML='<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>'; }
+  }
+  function pintarProfesionales(items){
+    const body=document.getElementById('prof-list');
+    if(!items.length){ body.innerHTML='<div class="table-wrap"><div class="state">No tienes profesionales.</div></div>'; return; }
+    let filas='';
+    items.forEach(p=>{
+      const estado = p.activo!==false ? '<span class="pill on">Activo</span>' : '<span class="pill off">Inactivo</span>';
+      filas+='<tr>'+
+        '<td><span class="prod-name">'+escapeHtml(p.nombre||'—')+'</span>'+(p.especialidad?'<div class="prod-cat">'+escapeHtml(p.especialidad)+'</div>':'')+'</td>'+
+        '<td class="col-c">'+(p.servicios||0)+'</td>'+
+        '<td class="col-c">'+(p.tramos_horario||0)+'</td>'+
+        '<td class="col-c">'+estado+'</td>'+
+        '<td class="col-r"><button class="btn-edit" data-edit-prof="'+escapeHtml(p.id)+'">Editar</button></td>'+
+        '</tr>';
+    });
+    body.innerHTML='<div class="table-wrap"><table><thead><tr><th>Profesional</th><th class="col-c">Servicios</th><th class="col-c">Horarios</th><th class="col-c">Estado</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-edit-prof]').forEach(b=>b.addEventListener('click',()=>editarProfesional(b.dataset.editProf)));
+  }
+  function editarProfesional(id){
+    const p=cit.profs.find(x=>String(x.id)===String(id)); if(!p)return;
+    abrirForm('Editar profesional',
+      '<div class="field"><label>Nombre</label><input id="pf-nombre" type="text" value="'+escapeHtml(p.nombre||'')+'"></div>'+
+      '<div class="field"><label>Especialidad</label><input id="pf-esp" type="text" value="'+escapeHtml(p.especialidad||'')+'"></div>'+
+      '<div class="field"><label>Color de agenda</label><input id="pf-color" type="color" value="'+escapeHtml(p.color_agenda||'#3B9EFF')+'" style="width:60px;height:38px;padding:2px;background:var(--surface2);border:1px solid var(--line);border-radius:8px"></div>'+
+      '<div class="field"><label>Bio</label><textarea id="pf-bio" rows="2" style="width:100%;resize:vertical;font-family:inherit">'+escapeHtml(p.bio||'')+'</textarea></div>'+
+      '<div class="field"><label>Estado</label><label class="toggle"><input id="pf-activo" type="checkbox" '+(p.activo!==false?'checked':'')+'><span class="track"></span><span class="txt">Activo</span></label></div>',
+      async () => {
+        const nombre=document.getElementById('pf-nombre').value.trim();
+        if(!nombre){ toast('El nombre no puede estar vacío','err'); return; }
+        await api('/api/comercio/panel/profesionales/'+id, { method:'PUT', body: JSON.stringify({
+          nombre, especialidad:document.getElementById('pf-esp').value,
+          color_agenda:document.getElementById('pf-color').value,
+          bio:document.getElementById('pf-bio').value,
+          activo:document.getElementById('pf-activo').checked
+        })});
+        cerrarForm(); toast('Profesional actualizado'); cargarProfesionales();
+      });
+  }
+
+  // ═══════════════ Mesas ═══════════════
+  let _mesas=[];
+  function renderMesas(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Mesas</h1>'+
+      '<p class="page-sub">Tus mesas y su estado. Consulta la comanda de cada mesa y edita sus datos. El cobro y la toma de comandas se hacen en la app.</p>'+
+      '<div id="mesa-list"></div>';
+    cargarMesas();
+  }
+  async function cargarMesas(){
+    const body=document.getElementById('mesa-list'); if(!body)return;
+    body.innerHTML='<div class="state"><span class="spinner"></span></div>';
+    try{ const d=await api('/api/comercio/panel/mesas'); _mesas=d.mesas||[]; pintarMesas(_mesas); }
+    catch(e){ if(e.message==='no-session')return; body.innerHTML='<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>'; }
+  }
+  function pintarMesas(items){
+    const body=document.getElementById('mesa-list');
+    if(!items.length){ body.innerHTML='<div class="table-wrap"><div class="state">No tienes mesas creadas.</div></div>'; return; }
+    let filas='';
+    items.forEach(m=>{
+      const ocupada = !!m.comanda_id;
+      const pend = ocupada ? ((Number(m.comanda_total)||0) - (Number(m.comanda_pagado)||0)) : 0;
+      const estado = ocupada
+        ? '<span class="pill" style="color:var(--yellow);background:rgba(245,200,66,.12)">Ocupada</span>'
+        : '<span class="pill on">Libre</span>';
+      const pendTxt = ocupada ? (fmtEur(pend)+' pendiente') : '—';
+      const verCom = ocupada ? '<button class="btn-edit" data-com-mesa="'+escapeHtml(m.id)+'">Ver comanda</button> ' : '';
+      filas+='<tr>'+
+        '<td><span class="prod-name">'+escapeHtml(m.nombre||'—')+'</span>'+(m.zona?'<div class="prod-cat">'+escapeHtml(m.zona)+'</div>':'')+(m.activa===false?' <span class="pill off">Inactiva</span>':'')+'</td>'+
+        '<td class="col-c">'+estado+'</td>'+
+        '<td class="col-r">'+escapeHtml(pendTxt)+'</td>'+
+        '<td class="col-r" style="white-space:nowrap">'+verCom+'<button class="btn-edit" data-edit-mesa="'+escapeHtml(m.id)+'">Editar</button></td>'+
+        '</tr>';
+    });
+    body.innerHTML='<div class="table-wrap"><table><thead><tr><th>Mesa</th><th class="col-c">Estado</th><th class="col-r">Cuenta</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-edit-mesa]').forEach(b=>b.addEventListener('click',()=>editarMesa(b.dataset.editMesa)));
+    body.querySelectorAll('[data-com-mesa]').forEach(b=>b.addEventListener('click',()=>verComanda(b.dataset.comMesa)));
+  }
+  function editarMesa(id){
+    const m=_mesas.find(x=>String(x.id)===String(id)); if(!m)return;
+    abrirForm('Editar mesa',
+      '<div class="field"><label>Nombre</label><input id="me-nombre" type="text" value="'+escapeHtml(m.nombre||'')+'"></div>'+
+      '<div class="field"><label>Zona</label><input id="me-zona" type="text" value="'+escapeHtml(m.zona||'')+'" placeholder="Ej.: Terraza, Interior"></div>'+
+      '<div class="field"><label>Orden</label><input id="me-orden" type="number" step="1" value="'+escapeHtml(m.orden==null?'0':m.orden)+'"></div>'+
+      '<div class="field"><label>Estado</label><label class="toggle"><input id="me-activa" type="checkbox" '+(m.activa!==false?'checked':'')+'><span class="track"></span><span class="txt">Mesa activa</span></label></div>',
+      async () => {
+        const nombre=document.getElementById('me-nombre').value.trim();
+        if(!nombre){ toast('El nombre no puede estar vacío','err'); return; }
+        await api('/api/comercio/panel/mesas/'+id, { method:'PUT', body: JSON.stringify({
+          nombre, zona:document.getElementById('me-zona').value,
+          orden:document.getElementById('me-orden').value,
+          activa:document.getElementById('me-activa').checked
+        })});
+        cerrarForm(); toast('Mesa actualizada'); cargarMesas();
+      });
+  }
+  async function verComanda(id){
+    document.getElementById('ped-title').textContent='Comanda';
+    document.getElementById('ped-sub').textContent='';
+    document.getElementById('ped-body').innerHTML='<div class="state"><span class="spinner"></span></div>';
+    document.getElementById('ped-overlay').classList.remove('hidden');
+    try{
+      const d=await api('/api/comercio/panel/mesas/'+id+'/comanda');
+      document.getElementById('ped-title').textContent='Comanda · '+(d.mesa?d.mesa.nombre:'Mesa');
+      if(!d.comanda){ document.getElementById('ped-body').innerHTML='<p class="hint">Esta mesa no tiene comanda abierta.</p>'; return; }
+      const items=d.items||[];
+      let html='';
+      items.forEach(it=>{
+        const cant=Number(it.cantidad)||1; const precio=Number(it.precio)||0;
+        html+='<div class="ped-item"><div>'+escapeHtml(it.nombre||'—')+' <span class="q">× '+cant+'</span>'+(it.notas?'<div style="font-size:11px;color:var(--muted)">'+escapeHtml(it.notas)+'</div>':'')+'</div><div>'+fmtEur(precio*cant)+'</div></div>';
+      });
+      const total=Number(d.comanda.total)||0, pagado=Number(d.comanda.pagado)||0;
+      html+='<div class="ped-item" style="border-top:1px solid var(--line)"><div>Total</div><div>'+fmtEur(total)+'</div></div>';
+      html+='<div class="ped-item"><div>Pagado</div><div style="color:var(--green)">'+fmtEur(pagado)+'</div></div>';
+      html+='<div class="ped-item" style="border-top:2px solid var(--line);font-weight:700"><div>Pendiente</div><div>'+fmtEur(total-pagado)+'</div></div>';
+      document.getElementById('ped-body').innerHTML=html;
+    }catch(e){ if(e.message!=='no-session') document.getElementById('ped-body').innerHTML='<div class="state">'+escapeHtml(e.message||'Error')+'</div>'; }
+  }
+
+  // ── Cocina (KDS) — tablero de cocina en tiempo real (solo restaurantes) ──────
+  // Vista web sobre las comandas existentes. Cada línea tiene su estado de cocina
+  // (en_cola → preparando → listo) que se cambia con un toque. El "listo" de cocina
+  // NO cierra ni sirve la comanda: eso se sigue haciendo en la app / sección Mesas.
+  // El cronómetro se calcula contra `server_now` (no depende del reloj del equipo).
+  // Auth por cookie de panel (mismos endpoints que la app: autenticarComercioOPanel).
+  let _kdsPoll=null, _kdsTick=null, _kdsData=[], _kdsOffset=0, _kdsUmbral={ambar:8,rojo:15};
+  const _KDS_ICON = { en_cola:'⬜', preparando:'🔸', listo:'✅' };
+  const _KDS_NEXT = { en_cola:'preparando', preparando:'listo', listo:'en_cola' };
+
+  function pararCocina(){
+    if(_kdsPoll){ clearInterval(_kdsPoll); _kdsPoll=null; }
+    if(_kdsTick){ clearInterval(_kdsTick); _kdsTick=null; }
+    document.body.classList.remove('kds-fs');
+  }
+
+  function renderCocina(){
+    document.getElementById('content').innerHTML =
+      '<div class="kds-bar">'+
+        '<h1 class="page-title" style="margin:0">Cocina</h1>'+
+        '<span id="kds-meta" class="kds-meta">Cargando…</span>'+
+        '<span class="sp"></span>'+
+        '<button class="kds-btn" style="flex:0 0 auto;padding:9px 14px" id="kds-fs">⛶ Pantalla completa</button>'+
+      '</div>'+
+      '<div id="kds-grid" class="kds-grid"></div>';
+    document.getElementById('kds-fs').addEventListener('click', toggleKdsFs);
+    cargarCocina();
+    _kdsPoll = setInterval(cargarCocina, 4000);   // refresco de datos
+    _kdsTick = setInterval(pintarTimersKds, 1000); // solo cronómetros
+  }
+
+  function toggleKdsFs(){
+    const on = document.body.classList.toggle('kds-fs');
+    try{
+      if(on && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
+      else if(!on && document.exitFullscreen && document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+    }catch(_){}
+  }
+
+  async function cargarCocina(){
+    try{
+      const id = (_com && _com.id) ? _com.id : 'self';   // el backend deriva el comercio del token
+      const d = await api('/api/comercios/'+id+'/kds');
+      _kdsData = d.comandas || [];
+      _kdsUmbral = { ambar: Number(d.umbral_ambar_min)||8, rojo: Number(d.umbral_rojo_min)||15 };
+      _kdsOffset = d.server_now ? (Date.parse(d.server_now) - Date.now()) : 0;
+      pintarCocina();
+    }catch(e){
+      if(e.message==='no-session'){ pararCocina(); return; }
+      const meta=document.getElementById('kds-meta'); if(meta) meta.textContent='Error al actualizar';
+    }
+  }
+
+  function _kdsElapsedSeg(refTs){
+    if(!refTs) return 0;
+    return Math.max(0, Math.floor(((Date.now()+_kdsOffset) - Date.parse(refTs))/1000));
+  }
+  function _kdsSemaforo(seg){
+    const min = seg/60;
+    if(min >= _kdsUmbral.rojo) return 'r';
+    if(min >= _kdsUmbral.ambar) return 'y';
+    return 'g';
+  }
+  function _mmss(seg){
+    const m=Math.floor(seg/60), s=seg%60;
+    return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  }
+
+  function pintarCocina(){
+    const grid=document.getElementById('kds-grid'); if(!grid) return;
+    if(!_kdsData.length){ grid.innerHTML='<div class="kds-empty">No hay comandas activas en cocina.</div>'; actualizarMetaKds(); return; }
+    let html='';
+    _kdsData.forEach(c=>{
+      const mesa = c.mesa_nombre || 'Mesa';
+      const zona = c.mesa_zona ? '<span class="zona">'+escapeHtml(c.mesa_zona)+'</span>' : '';
+      const listo = !!c.kds_todos_listos;
+      const seg = listo ? 0 : _kdsElapsedSeg(c.kds_ref_creado_en);
+      const sem = listo ? 'g' : _kdsSemaforo(seg);
+      let items='';
+      (c.items||[]).forEach(it=>{
+        const est = it.estado_kds || 'en_cola';
+        const cant = Number(it.cantidad)||1;
+        const org = it.origen==='usuario_qr' ? ' <span class="kds-origin">📱 cliente</span>' : '';
+        items+='<div class="kds-item s-'+est+'" data-item="'+escapeHtml(it.id)+'" data-com="'+escapeHtml(c.id)+'">'+
+          '<span class="qty">×'+cant+'</span>'+
+          '<span class="nm">'+escapeHtml(it.nombre||'—')+org+
+            (it.notas?'<span class="notas">'+escapeHtml(it.notas)+'</span>':'')+'</span>'+
+          '<span class="st">'+(_KDS_ICON[est]||'⬜')+'</span>'+
+        '</div>';
+      });
+      html+='<div class="kds-card '+(listo?'ready':sem)+'" data-card="'+escapeHtml(c.id)+'">'+
+        '<div class="kds-head"><span class="kds-mesa">'+escapeHtml(mesa)+zona+'</span>'+
+          (listo?'<span class="kds-ready-tag">LISTO PARA SERVIR</span>'
+                :'<span class="kds-timer '+sem+'" data-ref="'+escapeHtml(c.kds_ref_creado_en||'')+'">'+_mmss(seg)+'</span>')+
+        '</div>'+
+        items+
+        '<div class="kds-foot"><button class="kds-btn" data-listo="'+escapeHtml(c.id)+'">✅ Todo listo</button></div>'+
+      '</div>';
+    });
+    grid.innerHTML=html;
+    grid.querySelectorAll('.kds-item').forEach(el=>el.addEventListener('click',()=>avanzarItemKds(el.dataset.item, el.dataset.com)));
+    grid.querySelectorAll('[data-listo]').forEach(b=>b.addEventListener('click',()=>marcarComandaLista(b.dataset.listo)));
+    actualizarMetaKds();
+  }
+
+  function actualizarMetaKds(){
+    const meta=document.getElementById('kds-meta'); if(!meta) return;
+    const n=_kdsData.length;
+    const pend=_kdsData.filter(c=>!c.kds_todos_listos).length;
+    meta.textContent = n ? (pend+' en preparación · '+n+' comanda'+(n===1?'':'s')) : 'Sin comandas';
+  }
+
+  // Refresca solo los cronómetros (sin pedir datos), 1×/s, y reajusta el semáforo.
+  function pintarTimersKds(){
+    document.querySelectorAll('.kds-timer[data-ref]').forEach(t=>{
+      const seg=_kdsElapsedSeg(t.dataset.ref);
+      const sem=_kdsSemaforo(seg);
+      t.textContent=_mmss(seg);
+      t.className='kds-timer '+sem;
+      const card=t.closest('.kds-card');
+      if(card && !card.classList.contains('ready')) card.className='kds-card '+sem;
+    });
+  }
+
+  async function avanzarItemKds(itemId, comId){
+    const c=_kdsData.find(x=>String(x.id)===String(comId)); if(!c) return;
+    const it=(c.items||[]).find(x=>String(x.id)===String(itemId)); if(!it) return;
+    const next=_KDS_NEXT[it.estado_kds||'en_cola']||'preparando';
+    it.estado_kds=next;                                                    // pintado optimista
+    c.kds_todos_listos=(c.items||[]).every(x=>x.estado_kds==='listo');
+    pintarCocina();
+    try{ await api('/api/comanda-items/'+itemId+'/kds',{method:'PUT',body:JSON.stringify({estado_kds:next})}); }
+    catch(e){ if(e.message!=='no-session'){ toast('No se pudo actualizar','err'); cargarCocina(); } }
+  }
+
+  async function marcarComandaLista(comId){
+    try{ await api('/api/comandas/'+comId+'/kds-listo',{method:'PUT'}); cargarCocina(); }
+    catch(e){ if(e.message!=='no-session') toast('No se pudo marcar','err'); }
+  }
+
+  // ── Eventos y Salas (gestión desde el panel) ─────────────────────────────────
+  function fmtFechaHora(f){ if(!f) return '—'; const d=new Date(f); if(isNaN(d.getTime())) return '—'; return d.toLocaleString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+  function renderEventos(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Eventos</h1>'+
+      '<p class="page-sub">Tus eventos con venta de entradas: sesiones, aforo y recaudación. Para crear o editar sesiones y entradas, usa la app de comercio.</p>'+
+      '<div id="ev-body"></div>';
+    cargarEventos();
+  }
+  async function cargarEventos(){
+    const body=document.getElementById('ev-body'); if(!body) return;
+    body.innerHTML='<div class="state"><span class="spinner"></span></div>';
+    try{ const data=await api('/api/comercio/panel/eventos'); pintarEventos(data.eventos||[]); }
+    catch(e){ if(e.message==='no-session')return; body.innerHTML='<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>'; }
+  }
+  function pintarEventos(items){
+    const body=document.getElementById('ev-body');
+    if(!items.length){ body.innerHTML='<div class="table-wrap"><div class="state">No tienes eventos todavía.</div></div>'; return; }
+    let filas='';
+    items.forEach(ev=>{
+      const ses=Array.isArray(ev.sesiones)?ev.sesiones:[];
+      const prox=ses.find(s=>new Date(s.inicia_en)>=new Date()) || ses[ses.length-1];
+      let aforo=0, vend=0, hayAforo=false;
+      ses.forEach(s=>{ if(s.aforo_total!=null){hayAforo=true; aforo+=Number(s.aforo_total)||0;} vend+=Number(s.vendidas)||0; });
+      const aforoTxt = hayAforo ? (vend+' / '+aforo) : (vend+' vendidas');
+      filas+='<tr>'+
+        '<td><span class="prod-name">'+escapeHtml(ev.nombre||'—')+'</span>'+(ev.visible_usuario===false?' <span class="pill off">Oculto</span>':'')+'</td>'+
+        '<td>'+(prox?fmtFechaHora(prox.inicia_en):'—')+'</td>'+
+        '<td class="col-c">'+ses.length+'</td>'+
+        '<td class="col-c">'+escapeHtml(aforoTxt)+'</td>'+
+        '<td class="col-r"><button class="btn-edit" data-ev="'+escapeHtml(ev.id)+'">Ver ventas</button></td>'+
+        '</tr>';
+    });
+    body.innerHTML='<div class="table-wrap"><table><thead><tr><th>Evento</th><th>Próxima sesión</th><th class="col-c">Sesiones</th><th class="col-c">Aforo</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-ev]').forEach(b=>b.addEventListener('click',()=>verVentasEvento(b.dataset.ev)));
+  }
+  function barraVenta(vend,total,label){
+    const t=(total==null)?null:Number(total); const v=Number(vend)||0;
+    const pct=(t&&t>0)?Math.min(100,Math.round(v/t*100)):0;
+    const txt=(t==null)?(v+' vendidas'):(v+' / '+t);
+    return '<div style="margin:5px 0"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>'+label+'</span><span style="color:var(--muted)">'+txt+'</span></div>'+
+      '<div style="height:7px;background:var(--surface2);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:var(--accent)"></div></div></div>';
+  }
+  async function verVentasEvento(id){
+    document.getElementById('ped-title').textContent='Ventas del evento';
+    document.getElementById('ped-sub').textContent='';
+    document.getElementById('ped-body').innerHTML='<div class="state"><span class="spinner"></span></div>';
+    document.getElementById('ped-overlay').classList.remove('hidden');
+    try{
+      const d=await api('/api/comercio/panel/eventos/'+id+'/ventas');
+      document.getElementById('ped-title').textContent=d.evento?d.evento.nombre:'Ventas';
+      document.getElementById('ped-sub').textContent='Recaudado: '+fmtEur(d.recaudado);
+      const ses=d.sesiones||[]; let html='';
+      if(!ses.length) html='<p class="hint">Este evento no tiene sesiones.</p>';
+      ses.forEach(s=>{
+        html+='<div style="margin-bottom:16px">';
+        html+='<div style="font-weight:700;margin-bottom:6px">'+escapeHtml(s.nombre||'Sesión')+' · <span style="color:var(--muted);font-weight:400">'+fmtFechaHora(s.inicia_en)+'</span></div>';
+        if(s.aforo_total!=null) html+=barraVenta(s.vendidas||0,s.aforo_total||0,'Aforo general');
+        (s.tipos||[]).forEach(t=>{ html+=barraVenta(t.vendidas||0,t.cantidad,escapeHtml(t.nombre)+' · '+fmtEur(t.precio)); });
+        (s.zonas||[]).forEach(z=>{ html+=barraVenta(z.vendidas||0,z.total,escapeHtml(z.nombre)+' · '+fmtEur(z.precio)); });
+        html+='</div>';
+      });
+      document.getElementById('ped-body').innerHTML=html;
+    }catch(e){ if(e.message!=='no-session') document.getElementById('ped-body').innerHTML='<div class="state">'+escapeHtml(e.message||'Error')+'</div>'; }
+  }
+
+  // ── Salas (espacios) ──
+  let _salaId=null; let _salas=[];
+  const ESTADO_RES={ confirmada:{t:'Confirmada',c:'var(--green)'}, pendiente:{t:'Pendiente',c:'var(--yellow)'}, cancelada:{t:'Cancelada',c:'var(--red)'}, completada:{t:'Completada',c:'var(--muted)'}, no_show:{t:'No-show',c:'var(--red)'} };
+  function renderSalas(){
+    document.getElementById('content').innerHTML=
+      '<h1 class="page-title">Salas</h1>'+
+      '<p class="page-sub">Tus espacios reservables. Edita los datos básicos y consulta las reservas. Horarios y bloqueos se gestionan en la app de comercio.</p>'+
+      '<div id="sala-list"></div>';
+    cargarSalas();
+  }
+  async function cargarSalas(){
+    const body=document.getElementById('sala-list'); if(!body)return;
+    body.innerHTML='<div class="state"><span class="spinner"></span></div>';
+    try{ const d=await api('/api/comercio/panel/espacios'); _salas=d.espacios||[]; pintarSalas(_salas); }
+    catch(e){ if(e.message==='no-session')return; body.innerHTML='<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>'; }
+  }
+  function pintarSalas(items){
+    const body=document.getElementById('sala-list');
+    if(!items.length){ body.innerHTML='<div class="table-wrap"><div class="state">No tienes salas creadas.</div></div>'; return; }
+    let filas='';
+    items.forEach(s=>{
+      const estado = s.activo!==false ? '<span class="pill on">Activa</span>' : '<span class="pill off">Inactiva</span>';
+      filas+='<tr>'+
+        '<td><span class="prod-name">'+escapeHtml(s.nombre||'—')+'</span>'+(s.descripcion?'<div class="prod-cat">'+escapeHtml(s.descripcion)+'</div>':'')+'</td>'+
+        '<td class="col-c">'+(s.capacidad!=null?s.capacidad:'—')+'</td>'+
+        '<td class="col-c">'+estado+'</td>'+
+        '<td class="col-r" style="white-space:nowrap">'+
+          '<button class="btn-edit" data-edit-sala="'+escapeHtml(s.id)+'">Editar</button> '+
+          '<button class="btn-edit" data-res-sala="'+escapeHtml(s.id)+'">Reservas</button>'+
+        '</td></tr>';
+    });
+    body.innerHTML='<div class="table-wrap"><table><thead><tr><th>Sala</th><th class="col-c">Capacidad</th><th class="col-c">Estado</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>';
+    body.querySelectorAll('[data-edit-sala]').forEach(b=>b.addEventListener('click',()=>editarSala(b.dataset.editSala)));
+    body.querySelectorAll('[data-res-sala]').forEach(b=>b.addEventListener('click',()=>verReservasSala(b.dataset.resSala)));
+  }
+  function editarSala(id){
+    const s=_salas.find(x=>String(x.id)===String(id)); if(!s)return;
+    _salaId=s.id;
+    document.getElementById('sala-title').textContent='Editar sala';
+    document.getElementById('sala-body-modal').innerHTML=
+      '<div class="field"><label>Nombre</label><input id="sl-nombre" type="text" value="'+escapeHtml(s.nombre||'')+'"></div>'+
+      '<div class="field"><label>Descripción</label><textarea id="sl-desc" rows="2" style="width:100%;resize:vertical;font-family:inherit">'+escapeHtml(s.descripcion||'')+'</textarea></div>'+
+      '<div class="field"><label>Capacidad</label><input id="sl-cap" type="number" min="1" step="1" value="'+escapeHtml(s.capacidad==null?'':s.capacidad)+'" placeholder="Nº de personas"></div>'+
+      '<div class="field"><label>Estado</label><label class="toggle"><input id="sl-activo" type="checkbox" '+(s.activo!==false?'checked':'')+'><span class="track"></span><span class="txt">Sala activa (reservable)</span></label></div>';
+    document.getElementById('sala-overlay').classList.remove('hidden');
+  }
+  function cerrarSala(){ document.getElementById('sala-overlay').classList.add('hidden'); _salaId=null; }
+  async function guardarSala(){
+    if(!_salaId)return;
+    const btn=document.getElementById('sala-save');
+    const nombre=document.getElementById('sl-nombre').value.trim();
+    if(!nombre){ toast('El nombre no puede estar vacío','err'); return; }
+    const capRaw=document.getElementById('sl-cap').value.trim();
+    const body={ nombre, descripcion:document.getElementById('sl-desc').value, capacidad: capRaw, activo:document.getElementById('sl-activo').checked };
+    btn.disabled=true; btn.textContent='Guardando…';
+    try{ await api('/api/comercio/panel/espacios/'+_salaId,{method:'PUT',body:JSON.stringify(body)}); cerrarSala(); toast('Sala actualizada'); cargarSalas(); }
+    catch(e){ if(e.message!=='no-session') toast(e.message||'No se pudo guardar','err'); }
+    finally{ btn.disabled=false; btn.textContent='Guardar'; }
+  }
+  async function verReservasSala(id){
+    const s=_salas.find(x=>String(x.id)===String(id));
+    document.getElementById('ped-title').textContent='Reservas · '+(s?s.nombre:'Sala');
+    document.getElementById('ped-sub').textContent='';
+    document.getElementById('ped-body').innerHTML='<div class="state"><span class="spinner"></span></div>';
+    document.getElementById('ped-overlay').classList.remove('hidden');
+    try{
+      const d=await api('/api/comercio/panel/espacios/'+id+'/reservas');
+      const rs=d.reservas||[];
+      if(!rs.length){ document.getElementById('ped-body').innerHTML='<p class="hint">Sin reservas.</p>'; return; }
+      let html='<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th class="col-r">Importe</th><th class="col-c">Estado</th></tr></thead><tbody>';
+      rs.forEach(r=>{
+        const est=ESTADO_RES[r.estado]||{t:(r.estado||'—'),c:'var(--muted)'};
+        html+='<tr><td>'+fmtFechaHora(r.fecha_inicio)+'</td><td>'+escapeHtml(r.usuario_nombre||'—')+'</td>'+
+          '<td class="col-r">'+fmtEur(r.importe)+'</td>'+
+          '<td class="col-c"><span class="pill" style="color:'+est.c+';background:rgba(138,138,154,.12)">'+escapeHtml(est.t)+'</span></td></tr>';
+      });
+      html+='</tbody></table></div>';
+      document.getElementById('ped-body').innerHTML=html;
+    }catch(e){ if(e.message!=='no-session') document.getElementById('ped-body').innerHTML='<div class="state">'+escapeHtml(e.message||'Error')+'</div>'; }
+  }
+
+  // ── Pedidos y devoluciones (Fase 9): solo lectura ────────────────────────────
+  const ped = { sub:'pedidos', page:1, limit:50, q:'', estadoPedido:'', pages:1, total:0, items:[], buscarT:null };
+  const dev = { page:1, limit:50, estado:'', pages:1, total:0 };
+  const ESTADO_PED = { completada:{t:'Completada',c:'var(--green)'}, pendiente:{t:'Pendiente',c:'var(--yellow)'}, cancelada:{t:'Cancelada',c:'var(--red)'}, reembolsada:{t:'Reembolsada',c:'var(--muted)'} };
+  const ESTADO_DEV = { pendiente:{t:'Pendiente',c:'var(--yellow)'}, aprobada:{t:'Aprobada',c:'var(--green)'}, rechazada:{t:'Rechazada',c:'var(--red)'}, caducada:{t:'Caducada',c:'var(--muted)'}, cancelada:{t:'Cancelada',c:'var(--muted)'} };
+
+  function renderPedidos(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Pedidos</h1>'+
+      '<p class="page-sub">Pedidos del marketplace y devoluciones. Las devoluciones pendientes puedes aprobarlas o rechazarlas desde aquí.</p>'+
+      '<div class="subtabs">'+
+        '<button class="subtab" data-sub="pedidos">Pedidos</button>'+
+        '<button class="subtab" data-sub="devoluciones">Devoluciones</button>'+
+      '</div>'+
+      '<div id="ped-area"></div>';
+    document.querySelectorAll('.subtab').forEach(b => b.addEventListener('click', () => mostrarSub(b.dataset.sub)));
+    mostrarSub(ped.sub);
+  }
+
+  function mostrarSub(sub){
+    ped.sub = sub;
+    document.querySelectorAll('.subtab').forEach(b => b.classList.toggle('active', b.dataset.sub === sub));
+    if (sub === 'devoluciones') return renderDevoluciones();
+    renderPedidosLista();
+  }
+
+  // ── Pedidos ──
+  function renderPedidosLista(){
+    document.getElementById('ped-area').innerHTML =
+      '<div class="toolbar"><div class="search"><span class="mag">🔍</span>'+
+        '<input id="ped-q" type="text" placeholder="Buscar por referencia o cliente…" autocomplete="off" /></div>'+
+        '<select id="ped-ep" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+          '<option value="">Entrega: todas</option>'+
+          '<option value="pendiente">⏳ Pendientes de entregar</option>'+
+          '<option value="entregado">✓ Entregadas</option>'+
+        '</select></div>'+
+      '<div id="ped-list"></div>';
+    const qi = document.getElementById('ped-q'); qi.value = ped.q;
+    qi.addEventListener('input', () => { clearTimeout(ped.buscarT); ped.buscarT = setTimeout(() => { ped.q = qi.value.trim(); ped.page = 1; cargarPedidos(); }, 300); });
+    const epi = document.getElementById('ped-ep'); epi.value = ped.estadoPedido;
+    epi.addEventListener('change', () => { ped.estadoPedido = epi.value; ped.page = 1; cargarPedidos(); });
+    cargarPedidos();
+  }
+
+  async function cargarPedidos(){
+    const body = document.getElementById('ped-list');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      let qs = '?page='+ped.page+'&limit='+ped.limit;
+      if (ped.q) qs += '&q='+encodeURIComponent(ped.q);
+      if (ped.estadoPedido) qs += '&estado_pedido='+encodeURIComponent(ped.estadoPedido);
+      const data = await api('/api/comercio/panel/pedidos' + qs);
+      ped.pages = data.pages || 1; ped.total = data.total || 0; ped.items = data.pedidos || [];
+      pintarTablaPedidos(ped.items);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarTablaPedidos(items){
+    const body = document.getElementById('ped-list');
+    if (!items.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">No hay pedidos del marketplace.</div></div>' + pedPagerHtml();
+      cablearPedPager();
+      return;
+    }
+    let filas = '';
+    items.forEach(p => {
+      const est = ESTADO_PED[p.estado] || { t:(p.estado||'—'), c:'var(--muted)' };
+      const ref = p.referencia || p.num_operacion || ('#'+String(p.id).slice(0,8));
+      const dev = p.devolucion_pendiente ? ' <span class="pill" style="color:var(--yellow);background:rgba(245,200,66,.12)">Devolución pendiente</span>' : '';
+      const ent = (p.estado_pedido === 'entregado')
+        ? ' <span class="pill" style="color:var(--green);background:rgba(62,207,142,.12)">Entregado</span>'
+        : (p.estado_pedido === 'pendiente' ? ' <span class="pill" style="color:var(--yellow);background:rgba(245,200,66,.12)">Por entregar</span>' : '');
+      const btnEnt = (p.estado_pedido === 'pendiente')
+        ? '<button class="btn-edit" data-entregar="'+escapeHtml(p.id)+'" style="border-color:var(--green);color:var(--green)">Entregar</button> '
+        : '';
+      filas +=
+        '<tr>'+
+          '<td><span class="prod-name">'+escapeHtml(ref)+'</span>'+dev+'</td>'+
+          '<td>'+fmtFecha(p.fecha)+'</td>'+
+          '<td>'+escapeHtml(p.usuario_nombre || 'Anónimo')+'</td>'+
+          '<td class="col-r">'+fmtEur(p.importe)+'</td>'+
+          '<td class="col-c"><span class="pill" style="color:'+est.c+';background:rgba(138,138,154,.12)">'+escapeHtml(est.t)+'</span>'+ent+'</td>'+
+          '<td class="col-r" style="white-space:nowrap">'+btnEnt+'<button class="btn-edit" data-ped="'+escapeHtml(p.id)+'">Ver</button></td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table><thead><tr><th>Referencia</th><th>Fecha</th><th>Cliente</th>'+
+      '<th class="col-r">Importe</th><th class="col-c">Estado</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>' + pedPagerHtml();
+    cablearPedPager();
+    body.querySelectorAll('[data-ped]').forEach(b => b.addEventListener('click', () => verPedido(b.dataset.ped)));
+    body.querySelectorAll('[data-entregar]').forEach(b => b.addEventListener('click', () => marcarEntregado(b.dataset.entregar)));
+  }
+
+  function pedPagerHtml(){
+    const desde = ped.total === 0 ? 0 : ((ped.page - 1) * ped.limit + 1);
+    const hasta = Math.min(ped.page * ped.limit, ped.total);
+    return '<div class="pager"><div class="info">'+desde+'–'+hasta+' de '+ped.total+' pedidos · página '+ped.page+' de '+ped.pages+'</div>'+
+      '<div class="btns"><button class="btn-ghost" id="ped-prev"'+(ped.page<=1?' disabled':'')+'>← Anterior</button>'+
+      '<button class="btn-ghost" id="ped-next"'+(ped.page>=ped.pages?' disabled':'')+'>Siguiente →</button></div></div>';
+  }
+  function cablearPedPager(){
+    const p = document.getElementById('ped-prev'), n = document.getElementById('ped-next');
+    if (p) p.addEventListener('click', () => { if (ped.page > 1){ ped.page--; cargarPedidos(); } });
+    if (n) n.addEventListener('click', () => { if (ped.page < ped.pages){ ped.page++; cargarPedidos(); } });
+  }
+
+  function verPedido(id){
+    const p = (ped.items || []).find(x => String(x.id) === String(id));
+    if (!p) return;
+    const ref = p.referencia || p.num_operacion || ('#'+String(p.id).slice(0,8));
+    document.getElementById('ped-title').textContent = 'Pedido ' + ref;
+    document.getElementById('ped-sub').textContent = fmtFecha(p.fecha) + ' · ' + (p.usuario_nombre || 'Anónimo');
+    const items = Array.isArray(p.items) ? p.items : [];
+    let html = '';
+    if (!items.length){
+      html = '<p class="hint">Este pedido no tiene detalle de artículos.</p>';
     } else {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal();
+      items.forEach(it => {
+        const nombre = it.nombre || it.name || it.descripcion || 'Artículo';
+        const cant = Number(it.cantidad ?? it.qty ?? 1) || 1;
+        const precio = Number(it.precio ?? it.price ?? 0) || 0;
+        const sub = (it.subtotal != null) ? Number(it.subtotal) : precio * cant;
+        html += '<div class="ped-item"><div>'+escapeHtml(nombre)+' <span class="q">× '+cant+'</span></div><div>'+fmtEur(sub)+'</div></div>';
       });
     }
-  });
+    html += '<div class="ped-item" style="border-top:2px solid var(--line);font-weight:700"><div>Total</div><div>'+fmtEur(p.importe)+'</div></div>';
+    const puedeEntregar = (p.estado_pedido !== 'entregado') && (p.estado !== 'reembolsada') && (p.estado !== 'cancelada');
+    if (puedeEntregar) html += '<button class="btn" id="ped-entregar" style="margin-top:14px;width:100%">✓ Marcar como entregado</button>';
+    document.getElementById('ped-body').innerHTML = html;
+    const be = document.getElementById('ped-entregar');
+    if (be) be.addEventListener('click', () => marcarEntregado(p.id));
+    document.getElementById('ped-overlay').classList.remove('hidden');
+  }
+  function cerrarPedido(){ document.getElementById('ped-overlay').classList.add('hidden'); }
 
-  /* MODAL */
-  const modal = document.getElementById('modalDownload');
-  function openModal()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
-  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  async function marcarEntregado(id){
+    try {
+      await api('/api/transacciones/' + id + '/marcar-entregado', { method:'PUT' });
+      toast('Pedido marcado como entregado');
+      cerrarPedido();
+      cargarPedidos();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo marcar como entregado', 'err');
+    }
+  }
 
-  /* MENÚ MÓVIL */
-  document.getElementById('menuToggle').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
-  });
-  document.querySelectorAll('#navLinks a').forEach(a => {
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-  });
+  // ── Devoluciones ──
+  function renderDevoluciones(){
+    document.getElementById('ped-area').innerHTML =
+      '<div class="toolbar">'+
+        '<select id="dev-estado" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+          '<option value="">Todos los estados</option>'+
+          '<option value="pendiente">Pendiente</option><option value="aprobada">Aprobada</option>'+
+          '<option value="rechazada">Rechazada</option><option value="caducada">Caducada</option>'+
+          '<option value="cancelada">Cancelada</option>'+
+        '</select></div>'+
+      '<div id="dev-list"></div>';
+    const es = document.getElementById('dev-estado'); es.value = dev.estado;
+    es.addEventListener('change', () => { dev.estado = es.value; dev.page = 1; cargarDevoluciones(); });
+    cargarDevoluciones();
+  }
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  async function cargarDevoluciones(){
+    const body = document.getElementById('dev-list');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      let qs = '?page='+dev.page+'&limit='+dev.limit;
+      if (dev.estado) qs += '&estado='+encodeURIComponent(dev.estado);
+      const data = await api('/api/comercio/panel/devoluciones' + qs);
+      dev.pages = data.pages || 1; dev.total = data.total || 0;
+      pintarTablaDevoluciones(data.devoluciones || []);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarTablaDevoluciones(items){
+    const body = document.getElementById('dev-list');
+    if (!items.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">No hay devoluciones.</div></div>' + devPagerHtml();
+      cablearDevPager();
+      return;
+    }
+    let filas = '';
+    items.forEach(d => {
+      const est = ESTADO_DEV[d.estado] || { t:(d.estado||'—'), c:'var(--muted)' };
+      const acciones = (d.estado === 'pendiente')
+        ? '<button class="btn-edit" data-aprobar="'+escapeHtml(d.id)+'" style="border-color:var(--green);color:var(--green)">Aprobar</button> '+
+          '<button class="btn-edit" data-rechazar="'+escapeHtml(d.id)+'" style="border-color:var(--red);color:var(--red)">Rechazar</button>'
+        : '';
+      filas +=
+        '<tr>'+
+          '<td>'+fmtFecha(d.fecha_solicitud)+'</td>'+
+          '<td>'+escapeHtml(d.usuario_nombre || 'Anónimo')+'</td>'+
+          '<td class="col-r">'+fmtEur(d.importe)+'</td>'+
+          '<td>'+escapeHtml(d.motivo || '—')+'</td>'+
+          '<td class="col-c"><span class="pill" style="color:'+est.c+';background:rgba(138,138,154,.12)">'+escapeHtml(est.t)+'</span></td>'+
+          '<td class="col-r" style="white-space:nowrap">'+acciones+'</td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th class="col-r">Importe</th>'+
+      '<th>Motivo</th><th class="col-c">Estado</th><th></th></tr></thead><tbody>'+filas+'</tbody></table></div>' + devPagerHtml();
+    cablearDevPager();
+    body.querySelectorAll('[data-aprobar]').forEach(b => b.addEventListener('click', () => gestionarDevolucion(b.dataset.aprobar, 'aprobar')));
+    body.querySelectorAll('[data-rechazar]').forEach(b => b.addEventListener('click', () => gestionarDevolucion(b.dataset.rechazar, 'rechazar')));
+  }
+
+  async function gestionarDevolucion(id, accion){
+    const msg = accion === 'aprobar'
+      ? '¿Aprobar esta devolución? Se reembolsará el importe al cliente.'
+      : '¿Rechazar esta devolución?';
+    if (!window.confirm(msg)) return;
+    try {
+      await api('/api/devoluciones/' + id + '/gestionar', { method:'PUT', body: JSON.stringify({ accion }) });
+      toast(accion === 'aprobar' ? 'Devolución aprobada' : 'Devolución rechazada');
+      cargarDevoluciones();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo procesar la devolución', 'err');
+    }
+  }
+
+  function devPagerHtml(){
+    const desde = dev.total === 0 ? 0 : ((dev.page - 1) * dev.limit + 1);
+    const hasta = Math.min(dev.page * dev.limit, dev.total);
+    return '<div class="pager"><div class="info">'+desde+'–'+hasta+' de '+dev.total+' devoluciones · página '+dev.page+' de '+dev.pages+'</div>'+
+      '<div class="btns"><button class="btn-ghost" id="dev-prev"'+(dev.page<=1?' disabled':'')+'>← Anterior</button>'+
+      '<button class="btn-ghost" id="dev-next"'+(dev.page>=dev.pages?' disabled':'')+'>Siguiente →</button></div></div>';
+  }
+  function cablearDevPager(){
+    const p = document.getElementById('dev-prev'), n = document.getElementById('dev-next');
+    if (p) p.addEventListener('click', () => { if (dev.page > 1){ dev.page--; cargarDevoluciones(); } });
+    if (n) n.addEventListener('click', () => { if (dev.page < dev.pages){ dev.page++; cargarDevoluciones(); } });
+  }
+
+  // ── Analítica (Fase 8) ───────────────────────────────────────────────────────
+  const ana = { desde:'', hasta:'', bucket:'dia' };
+  function isoDate(d){ return d.toISOString().slice(0,10); }
+
+  function renderAnalitica(){
+    if (!ana.desde || !ana.hasta){
+      const hoy = new Date();
+      const hace30 = new Date(); hace30.setDate(hoy.getDate() - 30);
+      ana.hasta = isoDate(hoy); ana.desde = isoDate(hace30);
+    }
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Analítica</h1>'+
+      '<p class="page-sub">Cómo va tu negocio: facturación, tendencia, productos y clientes.</p>'+
+      '<div class="toolbar">'+
+        '<input id="an-desde" type="date" title="Desde" value="'+ana.desde+'" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+        '<input id="an-hasta" type="date" title="Hasta" value="'+ana.hasta+'" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+        '<select id="an-bucket" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+          '<option value="dia">Por día</option><option value="semana">Por semana</option><option value="mes">Por mes</option>'+
+        '</select>'+
+        '<button class="btn-ghost" id="an-export">⬇ Exportar clientes CSV</button>'+
+      '</div>'+
+      '<div id="an-body"></div>';
+    document.getElementById('an-bucket').value = ana.bucket;
+    document.getElementById('an-desde').addEventListener('change', e => { ana.desde = e.target.value; cargarAnalitica(); });
+    document.getElementById('an-hasta').addEventListener('change', e => { ana.hasta = e.target.value; cargarAnalitica(); });
+    document.getElementById('an-bucket').addEventListener('change', e => { ana.bucket = e.target.value; cargarAnalitica(); });
+    document.getElementById('an-export').addEventListener('click', exportClientesCsv);
+    cargarAnalitica();
+  }
+
+  async function cargarAnalitica(){
+    const body = document.getElementById('an-body');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      const qs = '?desde='+encodeURIComponent(ana.desde)+'&hasta='+encodeURIComponent(ana.hasta)+'&bucket='+encodeURIComponent(ana.bucket);
+      const d = await api('/api/comercio/panel/analiticas' + qs);
+      pintarAnalitica(d);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarAnalitica(d){
+    const r = d.resumen || {};
+    const kpis =
+      '<div class="kpis">'+
+        '<div class="kpi"><div class="k-label">Facturado</div><div class="k-val">'+fmtEur(r.total_facturado)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Operaciones</div><div class="k-val">'+(r.num_operaciones||0)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Ticket medio</div><div class="k-val">'+fmtEur(r.ticket_medio)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Cashback generado</div><div class="k-val" style="color:var(--yellow)">'+fmtEur(r.cashback_generado)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Clientes únicos</div><div class="k-val">'+(r.clientes_unicos||0)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Recurrentes</div><div class="k-val">'+(r.clientes_recurrentes||0)+'</div></div>'+
+      '</div>';
+
+    const chart =
+      '<div class="card" style="max-width:none;margin-bottom:18px;padding:20px 22px">'+
+        '<div style="font-size:13px;color:var(--muted);margin-bottom:12px">Tendencia de facturación</div>'+
+        chartTendenciaSVG(d.tendencia || [])+
+      '</div>';
+
+    document.getElementById('an-body').innerHTML = kpis + chart +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" id="an-grid"></div>';
+
+    // Top productos
+    const prods = d.productos || [];
+    let pHtml = '<div class="table-wrap"><table><thead><tr><th>Producto</th><th class="col-c">Uds.</th><th class="col-r">Importe</th></tr></thead><tbody>';
+    if (!prods.length) pHtml += '<tr><td colspan="3"><div class="state">Sin ventas con detalle de productos.</div></td></tr>';
+    else prods.forEach(p => { pHtml += '<tr><td>'+escapeHtml(p.nombre)+'</td><td class="col-c">'+p.unidades+'</td><td class="col-r">'+fmtEur(p.importe)+'</td></tr>'; });
+    pHtml += '</tbody></table></div>';
+
+    // Top clientes
+    const clis = d.clientes || [];
+    let cHtml = '<div class="table-wrap"><table><thead><tr><th>Cliente</th><th class="col-c">Compras</th><th class="col-r">Gasto</th></tr></thead><tbody>';
+    if (!clis.length) cHtml += '<tr><td colspan="3"><div class="state">Sin clientes identificados en el periodo.</div></td></tr>';
+    else clis.forEach(c => { cHtml += '<tr><td>'+escapeHtml(c.nombre || '—')+'</td><td class="col-c">'+c.num_compras+'</td><td class="col-r">'+fmtEur(c.gasto_total)+'</td></tr>'; });
+    cHtml += '</tbody></table></div>';
+
+    document.getElementById('an-grid').innerHTML =
+      '<div><div style="font-size:13px;color:var(--muted);margin-bottom:8px">Top productos</div>'+pHtml+'</div>'+
+      '<div><div style="font-size:13px;color:var(--muted);margin-bottom:8px">Mejores clientes</div>'+cHtml+'</div>';
+  }
+
+  // Gráfico de barras SVG (facturación por periodo), sin librerías.
+  function chartTendenciaSVG(serie){
+    if (!serie.length) return '<div class="state">Sin datos en el periodo seleccionado.</div>';
+    const W = 720, H = 180, padB = 22, padT = 8, padL = 4, padR = 4;
+    const max = Math.max.apply(null, serie.map(s => Number(s.total) || 0)) || 1;
+    const n = serie.length;
+    const bw = (W - padL - padR) / n;
+    const barW = Math.max(1, bw * 0.7);
+    let bars = '';
+    serie.forEach((s, idx) => {
+      const val = Number(s.total) || 0;
+      const h = Math.round((val / max) * (H - padB - padT));
+      const x = padL + idx * bw + (bw - barW) / 2;
+      const y = H - padB - h;
+      bars += '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h+'" rx="2" fill="var(--accent)"><title>'+escapeHtml(String(s.periodo).slice(0,10))+': '+fmtEur(val)+'</title></rect>';
+    });
+    const first = String(serie[0].periodo).slice(0,10);
+    const last = String(serie[n-1].periodo).slice(0,10);
+    return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+
+      bars+
+      '<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+(W-padR)+'" y2="'+(H-padB)+'" stroke="var(--line)" stroke-width="1"/>'+
+      '<text x="'+padL+'" y="'+(H-6)+'" fill="var(--muted)" font-size="11">'+first+'</text>'+
+      '<text x="'+(W-padR)+'" y="'+(H-6)+'" fill="var(--muted)" font-size="11" text-anchor="end">'+last+'</text>'+
+      '<text x="'+padL+'" y="'+(padT+10)+'" fill="var(--muted)" font-size="11">máx '+fmtEur(max)+'</text>'+
+      '</svg>';
+  }
+
+  async function exportClientesCsv(){
+    const btn = document.getElementById('an-export');
+    btn.disabled = true; btn.textContent = 'Exportando…';
+    try {
+      const qs = '?desde='+encodeURIComponent(ana.desde)+'&hasta='+encodeURIComponent(ana.hasta);
+      const res = await fetch('/api/comercio/panel/analiticas/clientes.csv' + qs, { credentials:'same-origin' });
+      if (res.status === 401){ mostrarLogin(); return; }
+      if (!res.ok){ toast('No se pudo exportar', 'err'); return; }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'clientes-' + new Date().toISOString().slice(0,10) + '.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      toast('CSV descargado');
+    } catch(e){ toast('No se pudo exportar', 'err'); }
+    finally { btn.disabled = false; btn.textContent = '⬇ Exportar clientes CSV'; }
+  }
+
+  // ── Cobros (Fase 7): historial de cobros de LocalPay (solo lectura) ──────────
+  const cob = { page:1, limit:50, estado:'', mes:'', pages:1, total:0, buscarT:null };
+  const ESTADO_COBRO = {
+    pendiente:{ t:'Pendiente', c:'var(--yellow)' },
+    cargado:  { t:'Cargado',   c:'var(--accent)' },
+    cobrado:  { t:'Cobrado',   c:'var(--green)' },
+    vencido:  { t:'Vencido',   c:'var(--red)' },
+    anulado:  { t:'Anulado',   c:'var(--muted)' },
+  };
+  const TIPO_COBRO = {
+    alta:'Alta', tx:'Comisión venta', venta:'Comisión venta', comision:'Comisión venta',
+    devolucion:'Abono devolución', gestor:'Gestor mensual', gestor_mensual:'Gestor mensual',
+  };
+  function tipoCobro(t){ return TIPO_COBRO[t] || (t || '—'); }
+
+  function renderCobros(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Cobros</h1>'+
+      '<p class="page-sub">El detalle de lo que LocalPay te cobra: comisiones, altas y abonos, con su estado.</p>'+
+      '<div id="cob-cond"></div>'+
+      '<div id="cob-kpis"></div>'+
+      '<div class="toolbar">'+
+        '<select id="cob-estado" class="" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+          '<option value="">Todos los estados</option>'+
+          '<option value="pendiente">Pendiente</option>'+
+          '<option value="cargado">Cargado</option>'+
+          '<option value="cobrado">Cobrado</option>'+
+          '<option value="vencido">Vencido</option>'+
+          '<option value="anulado">Anulado</option>'+
+        '</select>'+
+        '<input id="cob-mes" type="month" title="Mes" style="padding:11px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:14px">'+
+      '</div>'+
+      '<div id="cob-body"></div>';
+
+    const es = document.getElementById('cob-estado'); es.value = cob.estado;
+    es.addEventListener('change', () => { cob.estado = es.value; cob.page = 1; cargarCobros(); });
+    const me = document.getElementById('cob-mes'); me.value = cob.mes;
+    me.addEventListener('change', () => { cob.mes = me.value; cob.page = 1; cargarCobros(); });
+    cargarCobros();
+  }
+
+  async function cargarCobros(){
+    const body = document.getElementById('cob-body');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      let qs = '?page='+cob.page+'&limit='+cob.limit;
+      if (cob.estado) qs += '&estado='+encodeURIComponent(cob.estado);
+      if (cob.mes) qs += '&mes='+encodeURIComponent(cob.mes);
+      const data = await api('/api/comercio/panel/cobros' + qs);
+      cob.pages = data.pages || 1; cob.total = data.total || 0;
+      pintarCondiciones(data.config);
+      pintarKpisCobros(data);
+      pintarTablaCobros(data.cobros || []);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarCondiciones(cfg){
+    const el = document.getElementById('cob-cond');
+    if (!el) return;
+    if (!cfg){ el.innerHTML = ''; return; }
+    const partes = [];
+    if (cfg.alta_precio != null) partes.push('Alta: <b>'+fmtEur(cfg.alta_precio)+'</b>');
+    if (cfg.tx_porcentaje != null) partes.push('Comisión por venta: <b>'+(Number(cfg.tx_porcentaje)||0)+'%</b>');
+    if (cfg.gestor_mensual_precio != null) partes.push('Gestor mensual: <b>'+fmtEur(cfg.gestor_mensual_precio)+'</b>');
+    el.innerHTML = partes.length ? '<div class="cond"><span>Tus condiciones:</span>'+partes.map(p=>'<span>'+p+'</span>').join('')+'</div>' : '';
+  }
+
+  function pintarKpisCobros(d){
+    const el = document.getElementById('cob-kpis');
+    if (!el) return;
+    el.innerHTML =
+      '<div class="kpis">'+
+        '<div class="kpi"><div class="k-label">Cargos</div><div class="k-val">'+fmtEur(d.total_cargos)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Abonos</div><div class="k-val" style="color:var(--green)">'+fmtEur(d.total_abonos)+'</div></div>'+
+        '<div class="kpi"><div class="k-label">Neto</div><div class="k-val">'+fmtEur(d.neto)+'</div></div>'+
+      '</div>';
+  }
+
+  function pintarTablaCobros(items){
+    const body = document.getElementById('cob-body');
+    if (!items.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">No hay movimientos para los filtros seleccionados.</div></div>' + cobPagerHtml();
+      cablearCobPager();
+      return;
+    }
+    let filas = '';
+    items.forEach(m => {
+      const est = ESTADO_COBRO[m.estado] || { t:(m.estado||'—'), c:'var(--muted)' };
+      const esAbono = Number(m.signo) < 0;
+      const imp = (esAbono ? '−' : '') + fmtEur(m.importe);
+      const impColor = esAbono ? 'var(--green)' : 'var(--text)';
+      filas +=
+        '<tr>'+
+          '<td>'+fmtFecha(m.fecha)+'</td>'+
+          '<td><span class="prod-name">'+escapeHtml(m.concepto || tipoCobro(m.tipo))+'</span></td>'+
+          '<td>'+escapeHtml(tipoCobro(m.tipo))+'</td>'+
+          '<td class="col-r" style="color:'+impColor+';font-weight:600">'+imp+'</td>'+
+          '<td class="col-c"><span class="pill" style="color:'+est.c+';background:rgba(138,138,154,.12)">'+escapeHtml(est.t)+'</span></td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table>'+
+        '<thead><tr><th>Fecha</th><th>Concepto</th><th>Tipo</th><th class="col-r">Importe</th><th class="col-c">Estado</th></tr></thead>'+
+        '<tbody>'+filas+'</tbody></table></div>' + cobPagerHtml();
+    cablearCobPager();
+  }
+
+  function cobPagerHtml(){
+    const desde = cob.total === 0 ? 0 : ((cob.page - 1) * cob.limit + 1);
+    const hasta = Math.min(cob.page * cob.limit, cob.total);
+    return '<div class="pager">'+
+      '<div class="info">'+desde+'–'+hasta+' de '+cob.total+' movimientos · página '+cob.page+' de '+cob.pages+'</div>'+
+      '<div class="btns">'+
+        '<button class="btn-ghost" id="cob-prev"'+(cob.page<=1?' disabled':'')+'>← Anterior</button>'+
+        '<button class="btn-ghost" id="cob-next"'+(cob.page>=cob.pages?' disabled':'')+'>Siguiente →</button>'+
+      '</div></div>';
+  }
+  function cablearCobPager(){
+    const p = document.getElementById('cob-prev'), n = document.getElementById('cob-next');
+    if (p) p.addEventListener('click', () => { if (cob.page > 1){ cob.page--; cargarCobros(); } });
+    if (n) n.addEventListener('click', () => { if (cob.page < cob.pages){ cob.page++; cargarCobros(); } });
+  }
+
+  // ── Facturación / tickets (Fase 6) ───────────────────────────────────────────
+  const fac = { page:1, limit:50, q:'', desde:'', hasta:'', pages:1, total:0, items:[], buscarT:null };
+  const METODO_LABEL = { qr:'QR en tienda', marketplace:'Marketplace', efectivo:'Efectivo', sala:'En sala', qr_etiqueta:'QR etiqueta', tarjeta:'Tarjeta' };
+  function metodoLabel(m){ return METODO_LABEL[m] || (m || '—'); }
+  function fmtFecha(f){ if(!f) return '—'; const d=new Date(f); return isNaN(d.getTime())?'—':d.toLocaleDateString('es-ES'); }
+
+  function renderFacturacion(){
+    document.getElementById('content').innerHTML =
+      '<h1 class="page-title">Facturación</h1>'+
+      '<p class="page-sub">Tickets y facturas emitidos. Búscalos, ábrelos para imprimir o guardar en PDF, y reenvíalos al cliente.</p>'+
+      '<div class="toolbar">'+
+        '<div class="search"><span class="mag">🔍</span>'+
+          '<input id="fac-q" type="text" placeholder="Buscar por número…" autocomplete="off" /></div>'+
+        '<input id="fac-desde" type="date" title="Desde">'+
+        '<input id="fac-hasta" type="date" title="Hasta">'+
+      '</div>'+
+      '<div id="fac-body"></div>';
+
+    const qi = document.getElementById('fac-q');
+    qi.value = fac.q;
+    qi.addEventListener('input', () => {
+      clearTimeout(fac.buscarT);
+      fac.buscarT = setTimeout(() => { fac.q = qi.value.trim(); fac.page = 1; cargarFacturas(); }, 300);
+    });
+    const di = document.getElementById('fac-desde'); di.value = fac.desde;
+    const hi = document.getElementById('fac-hasta'); hi.value = fac.hasta;
+    di.addEventListener('change', () => { fac.desde = di.value; fac.page = 1; cargarFacturas(); });
+    hi.addEventListener('change', () => { fac.hasta = hi.value; fac.page = 1; cargarFacturas(); });
+    cargarFacturas();
+  }
+
+  async function cargarFacturas(){
+    const body = document.getElementById('fac-body');
+    if (!body) return;
+    body.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    try {
+      let qs = '?page='+fac.page+'&limit='+fac.limit;
+      if (fac.q) qs += '&q='+encodeURIComponent(fac.q);
+      if (fac.desde) qs += '&desde='+encodeURIComponent(fac.desde);
+      if (fac.hasta) qs += '&hasta='+encodeURIComponent(fac.hasta);
+      const data = await api('/api/comercio/panel/tickets' + qs);
+      fac.pages = data.pages || 1; fac.total = data.total || 0; fac.items = data.tickets || [];
+      pintarTablaFacturas(fac.items);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      body.innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarTablaFacturas(items){
+    const body = document.getElementById('fac-body');
+    if (!items.length){
+      body.innerHTML = '<div class="table-wrap"><div class="state">No hay tickets para los filtros seleccionados.</div></div>' + facPagerHtml();
+      cablearFacPager();
+      return;
+    }
+    let filas = '';
+    items.forEach(t => {
+      const cliente = t.usuario_id ? '' : '<span class="pill off">Anónimo</span>';
+      const estado = t.enviado ? '<span class="pill on">Enviado</span>' : '<span class="pill off">No enviado</span>';
+      const reenviar = t.usuario_id
+        ? '<button class="btn-edit" data-reenviar="'+escapeHtml(t.id)+'">Reenviar</button>'
+        : '';
+      filas +=
+        '<tr>'+
+          '<td><span class="prod-name">'+escapeHtml(t.numero || '—')+'</span></td>'+
+          '<td>'+fmtFecha(t.fecha_operacion)+'</td>'+
+          '<td class="col-r">'+fmtEur(t.total)+'</td>'+
+          '<td>'+escapeHtml(metodoLabel(t.metodo_pago))+'</td>'+
+          '<td class="col-c">'+(cliente || estado)+'</td>'+
+          '<td class="col-r" style="white-space:nowrap">'+
+            '<button class="btn-edit" data-ver="'+escapeHtml(t.id)+'">Ver</button> '+
+            reenviar+
+          '</td>'+
+        '</tr>';
+    });
+    body.innerHTML =
+      '<div class="table-wrap"><table>'+
+        '<thead><tr><th>Número</th><th>Fecha</th><th class="col-r">Total</th><th>Método</th>'+
+        '<th class="col-c">Cliente</th><th></th></tr></thead>'+
+        '<tbody>'+filas+'</tbody></table></div>' + facPagerHtml();
+    cablearFacPager();
+    body.querySelectorAll('[data-ver]').forEach(b => b.addEventListener('click', () => verTicket(b.dataset.ver)));
+    body.querySelectorAll('[data-reenviar]').forEach(b => b.addEventListener('click', () => reenviarTicket(b.dataset.reenviar, b)));
+  }
+
+  function facPagerHtml(){
+    const desde = fac.total === 0 ? 0 : ((fac.page - 1) * fac.limit + 1);
+    const hasta = Math.min(fac.page * fac.limit, fac.total);
+    return '<div class="pager">'+
+      '<div class="info">'+desde+'–'+hasta+' de '+fac.total+' tickets · página '+fac.page+' de '+fac.pages+'</div>'+
+      '<div class="btns">'+
+        '<button class="btn-ghost" id="fac-prev"'+(fac.page<=1?' disabled':'')+'>← Anterior</button>'+
+        '<button class="btn-ghost" id="fac-next"'+(fac.page>=fac.pages?' disabled':'')+'>Siguiente →</button>'+
+      '</div></div>';
+  }
+  function cablearFacPager(){
+    const p = document.getElementById('fac-prev'), n = document.getElementById('fac-next');
+    if (p) p.addEventListener('click', () => { if (fac.page > 1){ fac.page--; cargarFacturas(); } });
+    if (n) n.addEventListener('click', () => { if (fac.page < fac.pages){ fac.page++; cargarFacturas(); } });
+  }
+
+  async function reenviarTicket(id, btn){
+    if (btn){ btn.disabled = true; btn.textContent = 'Enviando…'; }
+    try {
+      await api('/api/comercio/panel/tickets/' + id + '/reenviar', { method:'POST' });
+      toast('Ticket reenviado al cliente');
+      cargarFacturas();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo reenviar', 'err');
+      if (btn){ btn.disabled = false; btn.textContent = 'Reenviar'; }
+    }
+  }
+
+  // Abre el ticket en una ventana nueva para imprimir o guardar como PDF.
+  async function verTicket(id){
+    const win = window.open('', '_blank');
+    if (win) win.document.write('<p style="font-family:sans-serif;padding:24px;color:#555">Cargando ticket…</p>');
+    try {
+      const data = await api('/api/comercio/panel/tickets/' + id);
+      const html = ticketPrintHTML(data.ticket);
+      if (win){ win.document.open(); win.document.write(html); win.document.close(); }
+    } catch(e){
+      if (win) win.close();
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo abrir el ticket', 'err');
+    }
+  }
+
+  function ticketPrintHTML(t){
+    const esc = (s)=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const eur = (n)=>(Number(n)||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+    const fecha = fmtFecha(t.fecha_operacion);
+    const lineas = Array.isArray(t.lineas) ? t.lineas : [];
+    const desglose = Array.isArray(t.iva_desglose) ? t.iva_desglose : [];
+    let filas = '';
+    lineas.forEach(l => {
+      filas += '<tr><td>'+esc(l.nombre)+'</td><td style="text-align:center">'+(Number(l.cantidad)||1)+'</td>'+
+               '<td style="text-align:right">'+eur(l.subtotal)+'</td></tr>';
+    });
+    let ivaRows = '';
+    desglose.forEach(d => {
+      ivaRows += '<tr><td>IVA '+(Number(d.tipo)||0)+'% (base '+eur(d.base)+')</td><td style="text-align:right">'+eur(d.cuota)+'</td></tr>';
+    });
+    const cashback = Number(t.cashback)||0;
+    return '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Ticket '+esc(t.numero)+'</title>'+
+      '<style>body{font-family:Arial,sans-serif;color:#111;max-width:420px;margin:24px auto;padding:0 16px}'+
+      'h1{font-size:18px;margin:0 0 2px}.muted{color:#666;font-size:13px;margin:0}'+
+      'table{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}'+
+      'td{padding:5px 0}.tot td{border-top:2px solid #111;font-weight:700;padding-top:8px;font-size:16px}'+
+      '.sub td{border-top:1px solid #ddd}.no-print{margin:18px 0}'+
+      'button{padding:9px 16px;border:1px solid #111;background:#111;color:#fff;border-radius:8px;cursor:pointer;font-size:14px}'+
+      '@media print{.no-print{display:none}}</style></head><body>'+
+      '<div class="no-print"><button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button></div>'+
+      '<h1>'+esc(t.comercio_nombre)+'</h1>'+
+      (t.emisor_nif?'<p class="muted">NIF: '+esc(t.emisor_nif)+'</p>':'')+
+      (t.emisor_direccion?'<p class="muted">'+esc(t.emisor_direccion)+'</p>':'')+
+      '<p class="muted">Ticket nº '+esc(t.numero)+' · '+fecha+'</p>'+
+      (t.cliente_nombre?'<p class="muted">Cliente: '+esc(t.cliente_nombre)+'</p>':'')+
+      '<table>'+filas+'</table>'+
+      '<table style="margin-top:4px">'+ivaRows+
+        '<tr class="tot"><td>Total</td><td style="text-align:right">'+eur(t.total)+'</td></tr></table>'+
+      (cashback>0?'<p class="muted" style="margin-top:10px">Cashback generado: '+eur(cashback)+'</p>':'')+
+      '<p class="muted" style="margin-top:10px">Método de pago: '+esc(metodoLabel(t.metodo_pago))+'</p>'+
+      '</body></html>';
+  }
+
+  // ── Cashback (Fase 5): configuración ─────────────────────────────────────────
+  async function renderCashback(){
+    const c = document.getElementById('content');
+    c.innerHTML =
+      '<h1 class="page-title">Cashback</h1>'+
+      '<p class="page-sub">Tu palanca para atraer y fidelizar clientes. Define cuánto cashback genera tu comercio.</p>'+
+      '<div class="card" style="max-width:520px"><div id="cb-body"><div class="state"><span class="spinner"></span></div></div></div>';
+    try {
+      const data = await api('/api/comercio/panel/cashback');
+      pintarCashback(data.cashback || {});
+    } catch(e){
+      if (e.message === 'no-session') return;
+      document.getElementById('cb-body').innerHTML = '<div class="state">No se pudo cargar: '+escapeHtml(e.message)+'</div>';
+    }
+  }
+
+  function pintarCashback(cb){
+    const pct = Number(cb.cashback_porcentaje) || 0;
+    document.getElementById('cb-body').innerHTML =
+      '<div class="field"><label>Porcentaje de cashback</label>'+
+        '<div class="input-eur"><input id="cb-pct" type="number" min="0" max="100" step="0.1" value="'+pct+'"><span class="eur">%</span></div>'+
+        '<div class="hint">Porcentaje del importe que el cliente recibe como cashback en sus compras.</div>'+
+      '</div>'+
+      '<div class="field"><label>Opciones</label>'+
+        '<label class="toggle" style="margin-bottom:12px"><input id="cb-genera" type="checkbox" '+(cb.genera_cashback !== false ? 'checked' : '')+'>'+
+          '<span class="track"></span><span class="txt">Genera cashback (tus clientes acumulan al comprar)</span></label>'+
+        '<label class="toggle"><input id="cb-acepta" type="checkbox" '+(cb.acepta_cashback !== false ? 'checked' : '')+'>'+
+          '<span class="track"></span><span class="txt">Acepta cashback (pueden gastarlo en tu comercio)</span></label>'+
+      '</div>'+
+      '<div style="margin-top:20px"><button class="btn" id="cb-save" style="width:auto;margin:0;padding:11px 24px">Guardar</button></div>';
+    document.getElementById('cb-save').addEventListener('click', guardarCashback);
+  }
+
+  async function guardarCashback(){
+    const btn = document.getElementById('cb-save');
+    const pct = parseFloat(document.getElementById('cb-pct').value);
+    if (!isFinite(pct) || pct < 0 || pct > 100){ toast('Porcentaje no válido (0–100)', 'err'); return; }
+    const body = {
+      cashback_porcentaje: pct,
+      genera_cashback: document.getElementById('cb-genera').checked,
+      acepta_cashback: document.getElementById('cb-acepta').checked,
+    };
+    btn.disabled = true; btn.textContent = 'Guardando…';
+    try {
+      const data = await api('/api/comercio/panel/cashback', { method:'PUT', body: JSON.stringify(body) });
+      pintarCashback(data.cashback || body);
+      toast('Cashback actualizado');
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo guardar', 'err');
+    } finally {
+      const b = document.getElementById('cb-save');
+      if (b){ b.disabled = false; b.textContent = 'Guardar'; }
+    }
+  }
+
+  // ── Exportar catálogo a CSV (Fase 4a) ────────────────────────────────────────
+  async function exportarCsv(){
+    const btn = document.getElementById('cat-export');
+    btn.disabled = true; btn.textContent = 'Exportando…';
+    try {
+      const res = await fetch('/api/comercio/panel/exportar-csv', { credentials:'same-origin' });
+      if (res.status === 401){ mostrarLogin(); return; }
+      if (!res.ok){ toast('No se pudo exportar', 'err'); return; }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const fecha = new Date().toISOString().slice(0, 10);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'catalogo-' + fecha + '.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      toast('CSV descargado');
+    } catch(e){
+      toast('No se pudo exportar', 'err');
+    } finally {
+      btn.disabled = false; btn.textContent = '⬇ Exportar CSV';
+    }
+  }
+
+  // ── Importar catálogo desde CSV (Fase 4b) ────────────────────────────────────
+  let _csvTexto = null;
+
+  function abrirImport(){
+    document.getElementById('cat-file').value = '';
+    _csvTexto = null;
+    document.getElementById('import-body').innerHTML =
+      '<p class="hint" style="margin-bottom:14px">Sube un CSV con el mismo formato que el de exportación. '+
+      'Las filas con <b>id</b> actualizan ese producto; sin <b>id</b>, se crea uno nuevo.</p>'+
+      '<button class="btn-ghost" id="imp-pick">Seleccionar archivo CSV…</button>'+
+      '<div id="imp-summary" style="margin-top:16px"></div>';
+    document.getElementById('imp-confirm').disabled = true;
+    document.getElementById('import-overlay').classList.remove('hidden');
+    document.getElementById('imp-pick').addEventListener('click', () => document.getElementById('cat-file').click());
+  }
+  function cerrarImport(){
+    document.getElementById('import-overlay').classList.add('hidden');
+    _csvTexto = null;
+  }
+
+  function onArchivoCsv(ev){
+    const file = ev.target.files && ev.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => { _csvTexto = String(reader.result || ''); previsualizarImport(); };
+    reader.onerror = () => toast('No se pudo leer el archivo', 'err');
+    reader.readAsText(file, 'UTF-8');
+  }
+
+  async function previsualizarImport(){
+    const sum = document.getElementById('imp-summary');
+    if (!sum) return;
+    sum.innerHTML = '<div class="state"><span class="spinner"></span></div>';
+    document.getElementById('imp-confirm').disabled = true;
+    try {
+      const data = await api('/api/comercio/panel/importar-csv/preview', { method:'POST', body: JSON.stringify({ csv: _csvTexto }) });
+      const r = data.resumen || {};
+      let html =
+        '<div class="imp-stats">'+
+          '<div class="imp-stat"><span class="n" style="color:var(--green)">'+(r.crear||0)+'</span>a crear</div>'+
+          '<div class="imp-stat"><span class="n" style="color:var(--accent)">'+(r.actualizar||0)+'</span>a actualizar</div>'+
+          '<div class="imp-stat"><span class="n" style="color:var(--red)">'+(r.errores||0)+'</span>con error</div>'+
+        '</div>';
+      if (data.errores && data.errores.length){
+        html += '<div class="imp-errs"><div class="imp-errs-h">Errores (se omitirán):</div>';
+        data.errores.forEach(e => { html += '<div class="imp-err">Fila '+e.fila+': '+escapeHtml(e.motivo)+'</div>'; });
+        html += '</div>';
+      }
+      if (!r.validos){ html += '<p class="hint" style="margin-top:12px">No hay filas válidas para importar.</p>'; }
+      sum.innerHTML = html;
+      document.getElementById('imp-confirm').disabled = !(r.validos > 0);
+    } catch(e){
+      if (e.message === 'no-session') return;
+      sum.innerHTML = '<div class="state">'+escapeHtml(e.message || 'No se pudo previsualizar')+'</div>';
+    }
+  }
+
+  async function confirmarImport(){
+    if (!_csvTexto) return;
+    const btn = document.getElementById('imp-confirm');
+    btn.disabled = true; btn.textContent = 'Importando…';
+    try {
+      const data = await api('/api/comercio/panel/importar-csv/confirmar', { method:'POST', body: JSON.stringify({ csv: _csvTexto }) });
+      cerrarImport();
+      toast('Importado: '+(data.creados||0)+' creados, '+(data.actualizados||0)+' actualizados');
+      cat.page = 1; cargarCatalogo();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo importar', 'err');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Confirmar importación';
+    }
+  }
+
+  // ── Editor de producto (Fase 3): precio, visibilidad y stock ─────────────────
+  // Engancha los botones "Editar" de la tabla del catálogo al editor.
+  function cablearEditar(){
+    document.querySelectorAll('#cat-body [data-edit]').forEach(b => b.addEventListener('click', () => abrirEditor(b.dataset.edit)));
+  }
+
+  // ── Imágenes (Cloudinary, subida desde el navegador) ─────────────────────────
+  const CLOUDINARY_CLOUD  = 'dgnvmtatg';
+  const CLOUDINARY_PRESET = 'pagolocal_unsigned';
+  async function uploadToCloudinary(file){
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', CLOUDINARY_PRESET);
+    const resp = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', { method:'POST', body: fd });
+    const json = await resp.json();
+    if (!resp.ok || !json.secure_url) throw new Error((json && json.error && json.error.message) || 'Error de Cloudinary');
+    return json.secure_url;
+  }
+  function elegirImagen(cb){
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'image/*';
+    input.onchange = async () => {
+      const file = input.files[0]; if (!file) return;
+      if (file.size > 3 * 1024 * 1024){ toast('La imagen no puede superar 3 MB', 'err'); return; }
+      try { toast('Subiendo imagen…'); const url = await uploadToCloudinary(file); cb(url); }
+      catch(e){ toast(e.message || 'Error subiendo imagen', 'err'); }
+    };
+    input.click();
+  }
+  // Galería real del producto: atributos.imagenes (o imagen_url como respaldo)
+  function imagenesDe(p){
+    const at = parseAtributos(p.atributos);
+    if (Array.isArray(at.imagenes) && at.imagenes.length) return at.imagenes.filter(Boolean);
+    if (p.imagen_url) return [p.imagen_url];
+    return [];
+  }
+
+  // ── Editor de producto (completo, agnóstico a la plantilla) ──────────────────
+  let _editId = null;
+  let _editImgs = [];
+  function abrirEditor(id){
+    const p = (cat.items || []).find(x => String(x.id) === String(id));
+    if (!p) return;
+    _editId = p.id;
+    document.getElementById('modal-sub').textContent = p.nombre || '';
+    const at = parseAtributos(p.atributos);
+    _editImgs = imagenesDe(p).slice();
+    const variantes = Array.isArray(p.variantes) ? p.variantes : [];
+    const tieneVar = variantes.length > 0;
+    const tallas = Array.isArray(at.tallas) ? at.tallas
+                 : (typeof at.tallas === 'string' ? at.tallas.split(',').map(s=>s.trim()).filter(Boolean) : []);
+    const spt = (at.stockPorTalla && typeof at.stockPorTalla === 'object') ? at.stockPorTalla : {};
+
+    let stockHtml = '';
+    if (tieneVar){
+      stockHtml = '<div class="field"><label>Variantes</label><div id="ed-variantes">' +
+        variantes.map((v, idx) => {
+          const op = parseAtributos(v.opciones);
+          const label = Object.keys(op).map(k => op[k]).join(' · ') || ('Variante ' + (idx+1));
+          const st = (v.stock == null) ? '' : v.stock;
+          const pr = (v.precio == null) ? '' : v.precio;
+          return '<div class="var-row" data-vid="'+escapeHtml(v.id)+'" style="display:grid;grid-template-columns:1fr 80px 90px auto;gap:8px;align-items:center;margin-bottom:8px">'+
+            '<div style="font-size:13px;font-weight:600">'+escapeHtml(label)+'</div>'+
+            '<input type="number" min="0" step="1" data-vstock placeholder="∞" value="'+escapeHtml(st)+'" title="Stock">'+
+            '<input type="number" min="0" step="0.01" data-vprecio placeholder="precio" value="'+escapeHtml(pr)+'" title="Precio (opcional)">'+
+            '<label class="toggle" style="margin:0"><input type="checkbox" data-vvisible '+(v.visible!==false?'checked':'')+'><span class="track"></span></label>'+
+          '</div>';
+        }).join('') +
+        '</div><div class="hint">Stock vacío = ilimitado. Cada variante se guarda al pulsar Guardar.</div></div>';
+    } else {
+      stockHtml =
+        '<div class="field"><label>Tallas (separadas por comas)</label>'+
+          '<input id="ed-tallas" type="text" value="'+escapeHtml(tallas.join(', '))+'" placeholder="Ej.: S, M, L">'+
+          '<div class="hint">Déjalo vacío si el producto no usa tallas.</div></div>'+
+        '<div class="field" id="ed-spt-wrap" style="'+(tallas.length?'':'display:none')+'"><label>Stock por talla</label>'+
+          '<div class="tallas-grid" id="ed-spt"></div></div>'+
+        '<div class="field" id="ed-stock-wrap" style="'+(tallas.length?'display:none':'')+'"><label>Stock</label>'+
+          '<input id="ed-stock" type="number" min="0" step="1" value="'+escapeHtml(p.stock==null?'':p.stock)+'" placeholder="Vacío = ilimitado">'+
+          '<div class="hint">Déjalo vacío para stock ilimitado.</div></div>';
+    }
+
+    document.getElementById('modal-body').innerHTML =
+      '<div class="field"><label>Imágenes</label><div id="ed-galeria"></div>'+
+        '<button class="btn-ghost" id="ed-add-img" style="margin-top:8px">＋ Añadir foto</button>'+
+        '<div class="hint">La primera imagen es la principal. Máx. 3 MB por foto.</div></div>'+
+      '<div class="field"><label>Nombre</label><input id="ed-nombre" type="text" value="'+escapeHtml(p.nombre||'')+'"></div>'+
+      '<div class="field"><label>Descripción</label><textarea id="ed-desc" rows="2" style="width:100%;resize:vertical;font-family:inherit">'+escapeHtml(p.descripcion||'')+'</textarea></div>'+
+      '<div class="field"><label>Categoría</label><input id="ed-cat" type="text" value="'+escapeHtml(p.categoria||'')+'"></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">'+
+        '<div class="field"><label>Precio</label><div class="input-eur"><input id="ed-precio" type="number" min="0" step="0.01" value="'+(Number(p.precio)||0)+'"><span class="eur">€</span></div></div>'+
+        '<div class="field"><label>Oferta</label><div class="input-eur"><input id="ed-oferta" type="number" min="0" step="0.01" value="'+escapeHtml(p.precio_oferta==null?'':p.precio_oferta)+'"><span class="eur">€</span></div></div>'+
+        '<div class="field"><label>IVA</label><div class="input-eur"><input id="ed-iva" type="number" min="0" max="100" step="0.1" value="'+escapeHtml(p.iva_porcentaje==null?'':p.iva_porcentaje)+'"><span class="eur">%</span></div></div>'+
+      '</div>'+
+      '<div class="field"><label>Opciones</label>'+
+        '<label class="toggle" style="margin-bottom:10px"><input id="ed-visible" type="checkbox" '+(p.visible_usuario!==false?'checked':'')+'><span class="track"></span><span class="txt">Visible para clientes</span></label>'+
+        '<label class="toggle"><input id="ed-destacado" type="checkbox" '+(p.destacado?'checked':'')+'><span class="track"></span><span class="txt">Destacado</span></label>'+
+      '</div>'+
+      stockHtml;
+
+    pintarGaleriaEditor();
+    document.getElementById('ed-add-img').addEventListener('click', () => elegirImagen(url => { _editImgs.push(url); pintarGaleriaEditor(); }));
+    if (!tieneVar){
+      document.getElementById('ed-tallas').addEventListener('input', () => pintarSptEditor());
+      pintarSptEditor(spt);
+    }
+    document.getElementById('modal-overlay').classList.remove('hidden');
+  }
+
+  function pintarGaleriaEditor(){
+    const c = document.getElementById('ed-galeria');
+    if (!c) return;
+    if (!_editImgs.length){ c.innerHTML = '<div class="hint" style="margin:0">Sin imágenes todavía.</div>'; return; }
+    c.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:10px">'+
+      _editImgs.map((u,i)=>'<div style="position:relative;width:64px;height:64px">'+
+        '<img src="'+escapeHtml(u)+'" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">'+
+        (i===0
+          ? '<span style="position:absolute;left:2px;bottom:2px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:0 4px;border-radius:4px">Principal</span>'
+          : '<button type="button" data-mkmain="'+i+'" title="Hacer principal" style="position:absolute;left:2px;bottom:2px;background:rgba(0,0,0,.6);color:#fff;border:none;font-size:10px;padding:1px 5px;border-radius:4px;cursor:pointer">★</button>')+
+        '<button type="button" data-rmimg="'+i+'" title="Quitar" style="position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;border:none;cursor:pointer;font-size:12px;line-height:1">×</button>'+
+      '</div>').join('')+'</div>';
+    c.querySelectorAll('[data-rmimg]').forEach(b=>b.addEventListener('click',()=>{ _editImgs.splice(Number(b.dataset.rmimg),1); pintarGaleriaEditor(); }));
+    c.querySelectorAll('[data-mkmain]').forEach(b=>b.addEventListener('click',()=>{ const i=Number(b.dataset.mkmain); const u=_editImgs.splice(i,1)[0]; _editImgs.unshift(u); pintarGaleriaEditor(); }));
+  }
+
+  function pintarSptEditor(initial){
+    const ti = document.getElementById('ed-tallas');
+    const wrap = document.getElementById('ed-spt-wrap');
+    const stockWrap = document.getElementById('ed-stock-wrap');
+    const cont = document.getElementById('ed-spt');
+    if (!ti || !cont) return;
+    const tallas = ti.value.split(',').map(s=>s.trim()).filter(Boolean);
+    const prev = {};
+    cont.querySelectorAll('input[data-talla]').forEach(inp=>{ prev[inp.dataset.talla] = inp.value; });
+    const base = initial || prev;
+    if (!tallas.length){ wrap.style.display='none'; if (stockWrap) stockWrap.style.display=''; cont.innerHTML=''; return; }
+    wrap.style.display=''; if (stockWrap) stockWrap.style.display='none';
+    cont.innerHTML = tallas.map(t=>{
+      const val = (base[t]!=null && base[t]!=='') ? base[t] : '';
+      return '<div class="talla-cell"><label>'+escapeHtml(t)+'</label><input type="number" min="0" step="1" data-talla="'+escapeHtml(t)+'" value="'+escapeHtml(val)+'" placeholder="∞"></div>';
+    }).join('');
+  }
+
+  function cerrarEditor(){
+    document.getElementById('modal-overlay').classList.add('hidden');
+    _editId = null; _editImgs = [];
+  }
+
+  async function guardarEditor(){
+    if (!_editId) return;
+    const btn = document.getElementById('modal-save');
+    const nombre = document.getElementById('ed-nombre').value.trim();
+    if (!nombre){ toast('El nombre no puede estar vacío', 'err'); return; }
+    const precio = parseFloat(document.getElementById('ed-precio').value);
+    if (!isFinite(precio) || precio < 0){ toast('Precio no válido', 'err'); return; }
+
+    const body = {
+      nombre,
+      descripcion: document.getElementById('ed-desc').value,
+      categoria: document.getElementById('ed-cat').value,
+      precio,
+      precio_oferta: document.getElementById('ed-oferta').value.trim(),
+      iva_porcentaje: document.getElementById('ed-iva').value.trim(),
+      visible_usuario: document.getElementById('ed-visible').checked,
+      destacado: document.getElementById('ed-destacado').checked,
+      imagenes: _editImgs.slice(),
+    };
+
+    const variantesEl = document.getElementById('ed-variantes');
+    if (!variantesEl){
+      const tallas = document.getElementById('ed-tallas').value.split(',').map(s=>s.trim()).filter(Boolean);
+      body.tallas = tallas;
+      if (tallas.length){
+        const spt = {}; let malo=false;
+        document.querySelectorAll('#ed-spt input[data-talla]').forEach(inp=>{
+          const raw = inp.value.trim();
+          const v = raw==='' ? 0 : parseInt(raw,10);
+          if (!Number.isInteger(v) || v<0) malo=true;
+          spt[inp.dataset.talla] = (Number.isInteger(v)&&v>=0)?v:0;
+        });
+        if (malo){ toast('Revisa el stock por talla','err'); return; }
+        body.stockPorTalla = spt;
+      } else {
+        const raw = document.getElementById('ed-stock').value.trim();
+        if (raw===''){ body.stock = null; }
+        else { const v = parseInt(raw,10); if (!Number.isInteger(v)||v<0){ toast('Stock no válido','err'); return; } body.stock = v; }
+      }
+    }
+
+    btn.disabled = true; btn.textContent = 'Guardando…';
+    try {
+      await api('/api/comercio/panel/productos/' + _editId, { method:'PUT', body: JSON.stringify(body) });
+      if (variantesEl){
+        const rows = variantesEl.querySelectorAll('.var-row');
+        for (const r of rows){
+          const vid = r.dataset.vid;
+          const st = r.querySelector('[data-vstock]').value.trim();
+          const pr = r.querySelector('[data-vprecio]').value.trim();
+          const vis = r.querySelector('[data-vvisible]').checked;
+          await api('/api/comercio/panel/productos/' + _editId + '/variantes/' + vid, {
+            method:'PUT',
+            body: JSON.stringify({ stock: st==='' ? null : parseInt(st,10), precio: pr==='' ? null : parseFloat(pr), visible: vis })
+          });
+        }
+      }
+      cerrarEditor();
+      toast('Producto actualizado');
+      cargarCatalogo();
+    } catch(e){
+      if (e.message !== 'no-session') toast(e.message || 'No se pudo guardar', 'err');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Guardar';
+    }
+  }
+
+  // ── Arranque: ¿hay cookie de sesión válida? ──────────────────────────────────
+  async function init(){
+    document.getElementById('btn-login').addEventListener('click', hacerLogin);
+    document.getElementById('btn-logout').addEventListener('click', hacerLogout);
+    document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') hacerLogin(); });
+    document.getElementById('email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('password').focus(); });
+    document.getElementById('modal-cancel').addEventListener('click', cerrarEditor);
+    document.getElementById('modal-save').addEventListener('click', guardarEditor);
+    document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target.id === 'modal-overlay') cerrarEditor(); });
+    document.getElementById('imp-cancel').addEventListener('click', cerrarImport);
+    document.getElementById('imp-confirm').addEventListener('click', confirmarImport);
+    document.getElementById('import-overlay').addEventListener('click', e => { if (e.target.id === 'import-overlay') cerrarImport(); });
+    document.getElementById('ped-close').addEventListener('click', cerrarPedido);
+    document.getElementById('ped-overlay').addEventListener('click', e => { if (e.target.id === 'ped-overlay') cerrarPedido(); });
+    document.getElementById('gestor-cancel').addEventListener('click', cerrarGestor);
+    document.getElementById('gestor-save').addEventListener('click', guardarGestor);
+    document.getElementById('gestor-overlay').addEventListener('click', e => { if (e.target.id === 'gestor-overlay') cerrarGestor(); });
+    document.getElementById('sala-cancel').addEventListener('click', cerrarSala);
+    document.getElementById('sala-save').addEventListener('click', guardarSala);
+    document.getElementById('sala-overlay').addEventListener('click', e => { if (e.target.id === 'sala-overlay') cerrarSala(); });
+    document.getElementById('form-cancel').addEventListener('click', cerrarForm);
+    document.getElementById('form-save').addEventListener('click', guardarForm);
+    document.getElementById('form-overlay').addEventListener('click', e => { if (e.target.id === 'form-overlay') cerrarForm(); });
+
+    try {
+      const data = await api('/api/comercio/web-session');
+      mostrarApp(data.comercio);
+    } catch(e){
+      mostrarLogin(); // sin sesión → pantalla de login
+    }
+  }
+
+  init();
+})();
+</script>
 </body>
 </html>
