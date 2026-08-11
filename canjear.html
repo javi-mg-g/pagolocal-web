@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canjear tarjeta regalo · LocalPay</title>
+<meta name="description" content="Te han regalado una tarjeta de saldo en LocalPay. Canjéala en la app.">
+<style>
+  :root{ --charcoal:#0D0D14; --gold:#F5C842; --blue:#3B9EFF; --text:#fff; --muted:#9aa0aa; --card:#16161f; --border:#262633; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:var(--charcoal); color:var(--text); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .wrap{ width:100%; max-width:440px; text-align:center; }
+  .brand{ display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:28px; }
+  .brand svg{ width:26px; height:26px; }
+  .brand b{ font-size:19px; font-weight:800; letter-spacing:.3px; }
+  .brand b span{ color:var(--gold); }
+  .gift{ font-size:56px; margin-bottom:10px; }
+  h1{ font-size:23px; font-weight:800; margin:0 0 6px; }
+  .commerce{ color:var(--gold); }
+  p.sub{ color:var(--muted); font-size:15px; line-height:1.5; margin:0 0 22px; }
+  .codebox{ background:var(--card); border:1px solid var(--gold); border-radius:16px; padding:18px; margin-bottom:10px; }
+  .codelabel{ color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .code{ color:var(--gold); font-size:26px; font-weight:800; letter-spacing:2px; word-break:break-all; }
+  .copy{ background:transparent; color:var(--gold); border:1px solid var(--border); border-radius:10px; padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer; margin-bottom:28px; }
+  .copy:active{ opacity:.7; }
+  .steps{ text-align:left; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 18px 8px; margin-bottom:22px; }
+  .step{ display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+  .num{ flex:0 0 26px; width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; }
+  .step div{ font-size:14px; line-height:1.45; }
+  .store{ display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--gold); color:var(--charcoal); text-decoration:none; font-weight:800; font-size:16px; border-radius:14px; padding:15px 22px; width:100%; }
+  .ios{ color:var(--muted); font-size:12px; margin-top:12px; }
+  .none{ color:var(--muted); font-size:15px; line-height:1.6; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#F5C842"/></svg>
+      <b>Local<span>Pay</span></b>
+    </div>
+
+    <div id="content"></div>
+  </div>
+
+<script>
+  (function(){
+    function getParam(name){
+      var m = new RegExp('[?&]' + name + '=([^&]+)').exec(window.location.search);
+      return m ? decodeURIComponent(m[1].replace(/\+/g,' ')) : '';
+    }
+    function esc(str){ return String(str||'').replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+
+    var codigo = (getParam('codigo') || '').trim();
+    var PLAY = 'https://play.google.com/store/apps/details?id=xyz.pagolocal.usuario';
+    var content = document.getElementById('content');
+
+    if(!codigo){
+      content.innerHTML =
+        '<div class="gift">🎁</div>'+
+        '<h1>Tarjetas regalo LocalPay</h1>'+
+        '<p class="none">Este enlace sirve para canjear una tarjeta regalo, pero no trae ningún código.<br>Pide a quien te la regala que comparta de nuevo el enlace o el código.</p>'+
+        '<a class="store" href="'+PLAY+'">📲 Descargar LocalPay</a>';
+      return;
+    }
+
+    content.innerHTML =
+      '<div class="gift">🎁</div>'+
+      '<h1>¡Te han regalado saldo!</h1>'+
+      '<p class="sub">Alguien te ha regalado una tarjeta de saldo para gastar en un comercio local. Canjéala en la app de LocalPay.</p>'+
+      '<div class="codebox">'+
+        '<div class="codelabel">Tu código</div>'+
+        '<div class="code" id="code">'+esc(codigo)+'</div>'+
+      '</div>'+
+      '<button class="copy" id="copyBtn">Copiar código</button>'+
+      '<div class="steps">'+
+        '<div class="step"><div class="num">1</div><div>Descarga <b>LocalPay</b> y crea tu cuenta (es gratis).</div></div>'+
+        '<div class="step"><div class="num">2</div><div>Entra en <b>Mis tarjetas regalo</b> y pulsa <b>Canjear código</b>.</div></div>'+
+        '<div class="step"><div class="num">3</div><div>Pega el código y listo: el saldo será tuyo.</div></div>'+
+      '</div>'+
+      '<a class="store" href="'+PLAY+'">📲 Descargar LocalPay</a>'+
+      '<div class="ios">En iPhone: próximamente en la App Store.</div>';
+
+    var btn = document.getElementById('copyBtn');
+    if(btn){
+      btn.addEventListener('click', function(){
+        var txt = codigo;
+        function done(){ btn.textContent = '✓ Copiado'; setTimeout(function(){ btn.textContent = 'Copiar código'; }, 1800); }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(txt).then(done).catch(done);
+        } else {
+          var r = document.createRange(); r.selectNode(document.getElementById('code'));
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          try{ document.execCommand('copy'); }catch(e){}
+          sel.removeAllRanges(); done();
+        }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
