@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Presupuesto · LocalPay</title>
+<style>
+  :root{
+    --ink:#1b1a17; --muted:#6f6a60; --paper:#ffffff; --bg:#eceae4;
+    --line:#e4e1d9; --accent:#7a5c00; --accent-soft:#f3ecd6;
+    --ok:#1e7d46; --no:#b23a2e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    padding:24px 16px 120px; display:flex; justify-content:center;
+  }
+  .wrap{width:100%; max-width:560px}
+  .brand{display:flex; align-items:center; gap:10px; margin:4px 4px 16px}
+  .brand .mark{width:30px; height:30px; border-radius:8px; background:#17161a; color:#fff;
+    display:grid; place-items:center; font-size:16px}
+  .brand .name{font-weight:700; letter-spacing:.2px}
+  .doc{background:var(--paper); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+  .doc-head{padding:22px 22px 18px; border-bottom:1px solid var(--line)}
+  .kicker{font-size:13px; color:var(--muted); margin:0 0 4px}
+  .comercio{font-size:22px; font-weight:750; margin:0; letter-spacing:-.01em}
+  .concepto{margin:8px 0 0; color:var(--muted)}
+  .estado{display:inline-block; margin-top:14px; font-size:12.5px; font-weight:650;
+    padding:5px 11px; border-radius:999px; background:var(--accent-soft); color:var(--accent)}
+  .estado.ok{background:#e4f3ea; color:var(--ok)} .estado.no{background:#f7e6e4; color:var(--no)}
+  .estado.gris{background:#efeee9; color:var(--muted)}
+  .lines{padding:6px 22px}
+  .line{display:flex; justify-content:space-between; gap:14px; padding:13px 0; border-bottom:1px solid var(--line)}
+  .line:last-child{border-bottom:0}
+  .line .desc{flex:1}
+  .line .desc small{display:block; color:var(--muted); font-size:12.5px; margin-top:2px}
+  .line .imp{font-variant-numeric:tabular-nums; white-space:nowrap}
+  .tot{padding:16px 22px 22px; background:#faf9f6}
+  .tot .row{display:flex; justify-content:space-between; padding:4px 0; color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums}
+  .tot .row.total{margin-top:8px; padding-top:12px; border-top:1px solid var(--line);
+    color:var(--ink); font-size:20px; font-weight:750}
+  .meta{color:var(--muted); font-size:13px; margin:16px 4px 0}
+  .bar{position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.94);
+    backdrop-filter:blur(8px); border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    display:flex; gap:10px; justify-content:center}
+  .bar .inner{width:100%; max-width:560px; display:flex; gap:10px}
+  button{font:inherit; cursor:pointer; border-radius:11px; padding:14px 16px; font-weight:700; border:1px solid transparent}
+  button:disabled{opacity:.55; cursor:default}
+  .accept{flex:2; background:var(--accent); color:#fff}
+  .accept:hover{background:#654c00}
+  .reject{flex:1; background:transparent; border-color:var(--line); color:var(--ink)}
+  .reject:hover{border-color:var(--no); color:var(--no)}
+  .center{text-align:center; color:var(--muted); padding:60px 20px}
+  .banner{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-top:14px}
+  .banner b{color:var(--ink)}
+  a.link{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand"><span class="mark">⚡</span><span class="name">LocalPay</span></div>
+    <div id="app"><div class="center">Cargando presupuesto…</div></div>
+    <p class="meta" id="meta"></p>
+    <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:24px"><a href="https://pagolocal.xyz/privacy.html" style="color:var(--muted)">Privacidad</a> · <a href="https://pagolocal.xyz/terms.html" style="color:var(--muted)">Términos</a></p>
+  </div>
+  <div class="bar" id="bar" style="display:none"><div class="inner">
+    <button class="reject" id="btn-no">Rechazar</button>
+    <button class="accept" id="btn-si">Aceptar presupuesto</button>
+  </div></div>
+
+<script>
+  var API = 'https://localpay-backend-production.up.railway.app';
+  var token = new URLSearchParams(location.search).get('t')
+           || (location.pathname.split('/').filter(Boolean).pop() || '');
+  var app = document.getElementById('app'), bar = document.getElementById('bar'), meta = document.getElementById('meta');
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function eur(n){ return (Number(n)||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €'; }
+  function estadoUI(e){
+    var m = { enviado:['Pendiente de tu respuesta',''], aceptado:['Aceptado','ok'], cobrado:['Pagado','ok'],
+              rechazado:['Rechazado','no'], vencido:['Caducado','gris'] };
+    return m[e] || [e,'gris'];
+  }
+
+  function pintar(p, lineas){
+    var eu = estadoUI(p.estado);
+    var lh = (lineas||[]).map(function(l){
+      return '<div class="line"><div class="desc">'+esc(l.descripcion)+
+        '<small>'+ (Number(l.cantidad)||0) +' × '+eur(l.precio_unitario)+'</small></div>'+
+        '<div class="imp">'+eur(l.importe)+'</div></div>';
+    }).join('') || (p.pdf_url ? '' : '<div class="line"><div class="desc">Sin líneas.</div></div>');
+
+    var totRows = '';
+    if (Number(p.descuento) > 0) totRows += '<div class="row"><span>Descuento</span><span>−'+eur(p.descuento)+'</span></div>';
+    totRows += '<div class="row"><span>Base'+(p.iva_porcentaje!=null?' + IVA '+p.iva_porcentaje+'%':'')+'</span><span>'+eur(p.base)+'</span></div>';
+    if (Number(p.iva) > 0) totRows += '<div class="row"><span>IVA</span><span>'+eur(p.iva)+'</span></div>';
+    totRows += '<div class="row total"><span>Total</span><span>'+eur(p.total)+'</span></div>';
+
+    var logo = p.comercio_logo ? '<img src="'+esc(p.comercio_logo)+'" alt="" style="width:46px;height:46px;border-radius:10px;object-fit:cover;float:right;margin-left:12px">' : '';
+    var pdfBtn = p.pdf_url ? '<div style="padding:'+(lh?'0':'4px')+' 22px 18px"><a href="'+esc(p.pdf_url)+'" target="_blank" rel="noopener" style="display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:11px 15px">📄 Ver presupuesto en PDF</a></div>' : '';
+    var cont = [];
+    if (p.comercio_direccion) cont.push('📍 '+esc(p.comercio_direccion));
+    if (p.comercio_telefono) cont.push('📞 '+esc(p.comercio_telefono));
+    if (p.comercio_email) cont.push('✉️ '+esc(p.comercio_email));
+    var contactoHtml = cont.length ? '<div class="banner" style="margin-top:14px"><div style="font-weight:700;color:var(--ink);margin-bottom:6px">'+esc(p.comercio_nombre||'')+'</div>'+cont.map(function(x){return '<div style="color:var(--muted);font-size:13px;line-height:1.8">'+x+'</div>';}).join('')+'</div>' : '';
+
+    app.innerHTML =
+      '<div class="doc">'+
+        '<div class="doc-head">'+ logo +
+          '<p class="kicker">Presupuesto'+(p.numero?' · '+esc(p.numero):'')+'</p>'+
+          '<h1 class="comercio">'+esc(p.comercio_nombre||'')+'</h1>'+
+          (p.concepto?'<p class="concepto">'+esc(p.concepto)+'</p>':'')+
+          '<span class="estado '+eu[1]+'">'+eu[0]+'</span>'+
+        '</div>'+
+        '<div class="lines">'+lh+'</div>'+
+        pdfBtn +
+        '<div class="tot">'+totRows+'</div>'+
+      '</div>'+
+      contactoHtml +
+      (p.valido_hasta ? '<p class="meta">Válido hasta el '+esc(String(p.valido_hasta).slice(0,10))+'.</p>' : '');
+
+    if (p.estado === 'enviado') {
+      bar.style.display = 'flex';
+      document.getElementById('btn-si').onclick = function(){ responder('aceptar'); };
+      document.getElementById('btn-no').onclick = function(){ if (confirm('¿Rechazar este presupuesto?')) responder('rechazar'); };
+    } else {
+      bar.style.display = 'none';
+      cerrar(p.estado);
+    }
+  }
+
+  function cerrar(estado){
+    var msg = '';
+    if (estado === 'aceptado') msg = '<b>Has aceptado el presupuesto.</b> El profesional se pondrá en contacto contigo para el cobro.';
+    else if (estado === 'cobrado') msg = '<b>Presupuesto pagado.</b> ¡Gracias!';
+    else if (estado === 'rechazado') msg = 'Has rechazado este presupuesto.';
+    else if (estado === 'vencido') msg = 'Este presupuesto ha caducado. Pide al profesional que te envíe uno nuevo.';
+    if (msg) { var d = document.createElement('div'); d.className = 'banner'; d.innerHTML = msg; app.appendChild(d); }
+  }
+
+  function responder(accion){
+    var si = document.getElementById('btn-si'), no = document.getElementById('btn-no');
+    si.disabled = true; no.disabled = true; si.textContent = 'Enviando…';
+    fetch(API + '/api/p/' + encodeURIComponent(token) + '/' + accion, { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' })
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(res){
+        if (!res.ok) throw new Error((res.d && res.d.error) || 'No se pudo completar');
+        bar.style.display = 'none';
+        cerrar(accion === 'aceptar' ? 'aceptado' : 'rechazado');
+      })
+      .catch(function(e){
+        si.disabled = false; no.disabled = false; si.textContent = 'Aceptar presupuesto';
+        meta.textContent = e.message || 'No se pudo completar la acción. Inténtalo de nuevo.';
+      });
+  }
+
+  function cargar(){
+    if (!token){ app.innerHTML = '<div class="center">Enlace no válido.</div>'; return; }
+    fetch(API + '/api/p/' + encodeURIComponent(token))
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(res){
+        if (!res.ok || !res.d || !res.d.presupuesto) { app.innerHTML = '<div class="center">Este presupuesto no está disponible.</div>'; return; }
+        pintar(res.d.presupuesto, res.d.lineas);
+      })
+      .catch(function(){ app.innerHTML = '<div class="center">No se pudo cargar el presupuesto. Revisa tu conexión e inténtalo de nuevo.</div>'; });
+  }
+  cargar();
+</script>
+</body>
+</html>
