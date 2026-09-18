@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagolocal · El ecosistema digital del comercio local de Ontinyent</title>
+<meta name="description" content="La tecnología de las grandes cadenas para el comercio local de Ontinyent. Gestión, cobros, cashback y una app para tus clientes, con una versión para comercios y otra para hostelería.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230D0D14'/%3E%3Cpath d='M17.5 6 9 18h5l-1.5 8 8.5-12h-5z' fill='%23F5C842'/%3E%3C/svg%3E">
+<style>
+/* TOKENS: replican styles.css de pagolocal.xyz */
+:root{
+  --bg:#F5F7FB;--surface:#FFFFFF;--surface-2:#FAFAFA;--surface-3:#F0F0F5;
+  --border:#D4D8E2;--border-soft:#E2E5EE;
+  --accent:#B07908;--accent-hover:#C8870A;--accent-soft:#8A5E06;
+  --accent-bright:#F5C842;--accent-dim:rgba(176,121,8,0.10);--accent-tint:#FBF6E8;
+  --dark-bg:#0D0D14;--dark-surface:#16161F;--dark-card:#1E1E2A;--dark-border:#2A2A3C;
+  --dark-text:#F0F0FA;--dark-muted:#6060A0;
+  --purple:#7C3AED;--red:#DC2626;--blue:#2563EB;--green:#059669;
+  --text:#1A1A2E;--muted:#6B7280;--text-dim:#A1A1AA;--white:#FFFFFF;
+  --s-xs:4px;--s-sm:8px;--s-md:12px;--s-lg:16px;--s-xl:24px;--s-xxl:32px;--s-huge:48px;
+  --r-xs:6px;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:24px;--r-full:9999px;
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --container:1180px;
+  --shadow-sm:0 1px 3px rgba(26,26,46,0.06),0 1px 2px rgba(26,26,46,0.04);
+  --shadow:0 8px 24px rgba(26,26,46,0.06),0 2px 6px rgba(26,26,46,0.04);
+  --shadow-lg:0 20px 50px rgba(26,26,46,0.08),0 8px 16px rgba(26,26,46,0.05);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;background:var(--bg);}
+body{margin:0;font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--font-body);font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin:0;color:var(--text);}
+h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-0.03em;}
+h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800;letter-spacing:-0.025em;}
+h3{font-size:1.1rem;font-weight:700;}
+p{margin:0 0 var(--s-lg);color:var(--muted);}
+a{color:inherit;text-decoration:none;}
+img,svg{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:0;background:none;}
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--s-xl);}
+section[id],div[id="top"]{scroll-margin-top:84px;}
+.section{padding:92px 0;}
+.section-head{max-width:680px;margin:0 auto 52px;text-align:center;}
+.section-head p{font-size:1.06rem;margin-top:var(--s-md);}
+.eyebrow{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);padding:6px 14px;background:var(--accent-tint);border:1px solid rgba(176,121,8,0.20);border-radius:var(--r-full);margin-bottom:var(--s-lg);}
+.eyebrow .num{color:var(--accent-soft);opacity:.75;margin-right:6px;}
+.btn{display:inline-flex;align-items:center;gap:var(--s-sm);padding:14px 24px;border-radius:var(--r-md);font-weight:700;font-size:0.95rem;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;white-space:nowrap;}
+.btn:active{transform:translateY(1px) scale(0.99);}
+.btn-primary{background:var(--accent);color:var(--white);}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 8px 20px rgba(176,121,8,0.25);}
+.btn-secondary{color:var(--text);border:1px solid var(--border);background:var(--surface);}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.btn-lg{padding:16px 30px;font-size:1rem;}
+.btn svg{width:18px;height:18px;}
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(245,247,251,0.85);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--border);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:var(--s-xl);}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;color:var(--text);}
+.logo-mark{width:38px;height:38px;background:var(--dark-bg);border-radius:var(--r-full);display:grid;place-items:center;color:var(--accent-bright);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,0.04);flex:none;}
+.logo-mark svg{width:20px;height:20px;filter:drop-shadow(0 0 6px rgba(245,200,66,0.5));}
+.logo .tag{font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);padding:2px 7px;border-radius:var(--r-full);border:1px solid rgba(176,121,8,0.2);}
+.nav-links{display:flex;align-items:center;gap:22px;list-style:none;margin:0;padding:0;}
+.nav-links a{font-size:0.9rem;font-weight:600;color:var(--muted);transition:color .15s ease;white-space:nowrap;}
+.nav-links a:hover{color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:var(--s-lg);}
+.nav-cta{display:inline-flex;}
+.lang-switch{display:flex;gap:2px;background:var(--surface);padding:3px;border-radius:var(--r-full);border:1px solid var(--border);}
+.lang-switch button{padding:5px 11px;border-radius:var(--r-full);font-size:0.72rem;font-weight:700;letter-spacing:0.06em;color:var(--muted);transition:all .15s ease;}
+.lang-switch button.active{background:var(--accent);color:var(--white);}
+.lang-switch button:not(.active):hover{color:var(--text);}
+.menu-toggle{display:none;padding:8px;color:var(--text);}
+.menu-toggle svg{width:26px;height:26px;}
+@media (max-width:1080px){
+  .nav-links,.nav-cta{display:none;}
+  .menu-toggle{display:block;}
+  .nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;background:var(--bg);padding:var(--s-xl);gap:18px;border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
+}
+/* SHOWCASE = BLOQUE 1 (hero oscuro) */
+.showcase{background:var(--dark-bg);color:var(--dark-text);position:relative;overflow:hidden;padding:70px 0 92px;}
+.showcase::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 480px at 82% -5%,rgba(245,200,66,0.14),transparent 60%),radial-gradient(700px 400px at 10% 20%,rgba(124,58,237,0.10),transparent 55%);}
+.showcase .inner{position:relative;z-index:1;}
+.showcase .eyebrow{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.25);color:var(--accent-bright);}
+.showcase h1,.showcase h2{color:var(--dark-text);}
+.sc-top{display:grid;grid-template-columns:1.02fr 1fr;gap:48px;align-items:center;margin-bottom:60px;}
+.sc-copy .lead{color:var(--dark-muted);font-size:1.12rem;max-width:44ch;margin-bottom:var(--s-xl);}
+.sc-copy h1{margin-bottom:var(--s-lg);}
+.sc-copy h1 .hl{color:var(--accent-bright);}
+.sc-actions{display:flex;gap:var(--s-md);flex-wrap:wrap;}
+.showcase .btn-secondary{background:transparent;color:var(--dark-text);border-color:var(--dark-border);}
+.showcase .btn-secondary:hover{border-color:var(--accent-bright);color:var(--accent-bright);}
+.sc-trust{display:flex;align-items:center;gap:10px;margin-top:var(--s-xl);font-size:0.9rem;color:var(--dark-muted);}
+.sc-trust .dot{width:7px;height:7px;border-radius:var(--r-full);background:var(--green);box-shadow:0 0 0 4px rgba(5,150,105,0.16);}
+.rig{position:relative;}
+.laptop{width:100%;max-width:540px;margin:0 auto;}
+.laptop .lid{background:#05050a;border-radius:16px;padding:10px;box-shadow:var(--shadow-lg);}
+.laptop .lscreen{background:var(--dark-card);border-radius:9px;display:flex;height:300px;overflow:hidden;border:1px solid var(--dark-border);}
+.lside{width:116px;background:#101019;border-right:1px solid var(--dark-border);padding:12px 10px;display:flex;flex-direction:column;gap:4px;}
+.lside .brand{display:flex;align-items:center;gap:6px;font-size:0.64rem;font-weight:800;color:var(--dark-text);margin-bottom:8px;}
+.lside .brand .lm{width:16px;height:16px;border-radius:5px;background:var(--dark-bg);display:grid;place-items:center;color:var(--accent-bright);}
+.lside .brand .lm svg{width:10px;height:10px;}
+.lside .lb{display:flex;align-items:center;gap:6px;font-size:0.6rem;font-weight:600;color:var(--dark-muted);padding:5px 6px;border-radius:6px;}
+.lside .lb svg{width:12px;height:12px;}
+.lside .lb.act{background:rgba(245,200,66,0.14);color:var(--accent-bright);}
+.lmain{flex:1;padding:12px 13px;display:flex;flex-direction:column;min-width:0;}
+.lmain .lh{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.lmain .lh .lt{font-size:0.72rem;font-weight:800;color:var(--dark-text);}
+.lmain .lh .lp{font-size:0.55rem;font-weight:700;color:#0D0D14;background:var(--accent-bright);padding:3px 8px;border-radius:var(--r-full);}
+.dash-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;}
+.dkpi{background:rgba(255,255,255,0.04);border:1px solid var(--dark-border);border-radius:7px;padding:7px 8px;}
+.dkpi .k{font-size:0.5rem;color:var(--dark-muted);margin-bottom:2px;}
+.dkpi .v{font-size:0.8rem;font-weight:800;color:var(--dark-text);line-height:1;}
+.dkpi .v.gold{color:var(--accent-bright);}
+.dkpi .t{font-size:0.46rem;color:var(--green);margin-top:2px;}
+.dash-charts{display:grid;grid-template-columns:1.6fr 1fr;gap:8px;flex:1;min-height:0;}
+.chart-card{background:rgba(255,255,255,0.03);border:1px solid var(--dark-border);border-radius:8px;padding:9px;display:flex;flex-direction:column;}
+.chart-card .ct{font-size:0.5rem;color:var(--dark-muted);margin-bottom:7px;}
+.bars{display:flex;align-items:flex-end;gap:5px;flex:1;min-height:64px;}
+.bars .bar{flex:1;background:linear-gradient(180deg,rgba(245,200,66,0.55),rgba(176,121,8,0.35));border-radius:3px 3px 0 0;}
+.bars .bar.hot{background:linear-gradient(180deg,var(--accent-bright),var(--accent));}
+.donut{width:62px;height:62px;border-radius:50%;margin:0 auto;background:conic-gradient(var(--accent-bright) 0 48%,var(--purple) 48% 76%,#3a3a52 76% 100%);position:relative;}
+.donut::after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--dark-card);}
+.legend{display:flex;flex-direction:column;gap:3px;margin-top:8px;}
+.legend .lg{display:flex;align-items:center;gap:5px;font-size:0.5rem;color:var(--dark-muted);}
+.legend .lg .d{width:6px;height:6px;border-radius:2px;flex:none;}
+.laptop .lbase{height:11px;background:linear-gradient(180deg,#1a1a24,#05050a);border-radius:0 0 12px 12px;margin:0 auto;width:76%;box-shadow:var(--shadow);}
+.float-stat{position:absolute;left:-10px;bottom:24px;background:var(--surface);color:var(--text);border-radius:var(--r-md);padding:10px 14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;z-index:3;}
+.float-stat .fsi{width:30px;height:30px;border-radius:8px;background:rgba(5,150,105,0.14);color:var(--green);display:grid;place-items:center;}
+.float-stat .fsi svg{width:16px;height:16px;}
+.float-stat .fsn{font-size:0.9rem;font-weight:800;line-height:1;display:block;}
+.float-stat .fsl{font-size:0.62rem;color:var(--muted);display:block;}
+/* feature tiles */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.feat{border-radius:var(--r-lg);padding:18px;transition:transform .18s cubic-bezier(0.16,1,0.3,1),box-shadow .18s ease,border-color .18s ease;}
+.feat .fi{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:12px;}
+.feat .fi svg{width:22px;height:22px;}
+.feat h3{font-size:0.95rem;margin-bottom:4px;}
+.feat p{font-size:0.8rem;margin:0;line-height:1.45;}
+.feat.dark{background:var(--dark-card);border:1px solid var(--dark-border);}
+.feat.dark:hover{transform:translateY(-4px);border-color:rgba(245,200,66,0.4);box-shadow:0 16px 30px rgba(0,0,0,0.3);}
+.feat.dark .fi{background:rgba(245,200,66,0.12);color:var(--accent-bright);}
+.feat.dark h3{color:var(--dark-text);}
+.feat.dark p{color:var(--dark-muted);}
+.feat.light{background:var(--surface);border:1px solid var(--border-soft);box-shadow:var(--shadow-sm);}
+.feat.light:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg);}
+.feat.light .fi{background:var(--accent-tint);color:var(--accent);}
+.feat.light h3{color:var(--text);}
+.feat.light p{color:var(--muted);}
+/* benefit strip */
+.benefit-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--dark-border);border:1px solid var(--dark-border);border-radius:var(--r-lg);overflow:hidden;margin-top:32px;}
+.benefit{background:var(--dark-bg);padding:20px 18px;}
+.benefit .bi{width:34px;height:34px;border-radius:9px;background:rgba(245,200,66,0.12);color:var(--accent-bright);display:grid;place-items:center;margin-bottom:10px;}
+.benefit .bi svg{width:18px;height:18px;}
+.benefit h4{font-size:0.9rem;color:var(--dark-text);margin-bottom:3px;}
+.benefit p{font-size:0.78rem;color:var(--dark-muted);margin:0;}
+/* APP STRIP */
+.applink{border-bottom:1px solid var(--border-soft);background:var(--surface);}
+.applink .container{display:flex;align-items:center;justify-content:center;gap:var(--s-xl);flex-wrap:wrap;padding-top:22px;padding-bottom:22px;}
+.applink span{font-size:0.9rem;font-weight:600;color:var(--muted);}
+.applink .badges{display:flex;gap:12px;flex-wrap:wrap;}
+.pill-app{display:inline-flex;align-items:center;gap:9px;background:var(--dark-bg);color:var(--white);padding:9px 16px;border-radius:var(--r-md);font-size:0.82rem;font-weight:700;position:relative;transition:transform .15s ease;}
+.pill-app:hover{transform:translateY(-2px);}
+.pill-app svg{width:20px;height:20px;color:var(--accent-bright);}
+.pill-app small{display:block;font-size:0.6rem;font-weight:600;opacity:0.7;}
+/* SECTORES */
+.sectors{background:var(--surface);}
+.sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.sector{border-radius:var(--r-lg);padding:22px;background:var(--surface);border:1px solid var(--border-soft);box-shadow:var(--shadow-sm);transition:transform .18s cubic-bezier(0.16,1,0.3,1),box-shadow .18s ease,border-color .18s ease;}
+.sector:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--accent);}
+.sector .si{width:46px;height:46px;border-radius:12px;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;margin-bottom:12px;}
+.sector .si svg{width:24px;height:24px;}
+.sector h3{font-size:1rem;margin-bottom:4px;}
+.sector p{font-size:0.82rem;margin:0;color:var(--muted);line-height:1.4;}
+.sectors-note{text-align:center;margin-top:32px;font-size:0.98rem;color:var(--text);max-width:640px;margin-left:auto;margin-right:auto;}
+/* VERTICALES (para quién) */
+.verticals{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto;}
+.vcard{display:flex;flex-direction:column;border-radius:var(--r-xl);padding:34px;background:var(--surface);border:1px solid var(--border-soft);box-shadow:var(--shadow-sm);transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s ease,border-color .2s ease;position:relative;overflow:hidden;}
+.vcard::after{content:"";position:absolute;inset:0;background:radial-gradient(320px 160px at 92% 0%,var(--accent-dim),transparent 60%);pointer-events:none;}
+.vcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--accent);}
+.vcard .vic{width:60px;height:60px;border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1;}
+.vcard .vic svg{width:30px;height:30px;}
+.vcard h3{font-size:1.35rem;margin-bottom:8px;letter-spacing:-0.02em;position:relative;z-index:1;}
+.vcard p{font-size:0.95rem;color:var(--muted);margin:0 0 20px;flex:1;position:relative;z-index:1;}
+.vcard .vgo{font-weight:800;color:var(--accent);font-size:0.95rem;position:relative;z-index:1;}
+.vcard .vgo::after{content:"→";margin-left:6px;display:inline-block;transition:transform .15s ease;}
+.vcard:hover .vgo::after{transform:translateX(4px);}
+@media(max-width:720px){.verticals{grid-template-columns:1fr;max-width:440px;}}
+/* BLOQUE 2: DOS APPS */
+.apps-top{display:grid;grid-template-columns:1.02fr 1fr;gap:48px;align-items:center;}
+.apps-copy h2 .hl{color:var(--accent);}
+.apps-copy .lead{font-size:1.1rem;color:var(--muted);max-width:42ch;margin-bottom:var(--s-xl);}
+.scene{position:relative;height:470px;width:100%;display:grid;place-items:center;}
+.scene-core{position:relative;display:flex;align-items:center;justify-content:center;z-index:3;}
+.phone{width:146px;height:300px;border-radius:30px;background:var(--dark-surface);border:6px solid #05050a;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;flex:none;}
+.phone::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:6px;border-radius:var(--r-full);background:#05050a;z-index:2;}
+.phone .screen{position:absolute;inset:6px;border-radius:22px;padding:26px 12px 12px;display:flex;flex-direction:column;gap:8px;}
+.phone.user .screen{background:linear-gradient(180deg,#16161F,#0D0D14);}
+.phone.shop .screen{background:linear-gradient(180deg,#1a1408,#0D0D14);}
+.p-top{display:flex;align-items:center;gap:6px;}
+.p-top .pi{width:19px;height:19px;color:var(--accent-bright);}
+.p-label{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark-muted);}
+.p-card{background:rgba(255,255,255,0.05);border:1px solid var(--dark-border);border-radius:10px;padding:9px 10px;}
+.p-card .k{font-size:0.54rem;color:var(--dark-muted);margin-bottom:3px;}
+.p-card .v{font-size:0.9rem;font-weight:800;color:var(--dark-text);}
+.p-card.gold{background:linear-gradient(135deg,rgba(245,200,66,0.18),rgba(176,121,8,0.06));border-color:rgba(245,200,66,0.3);}
+.p-card.gold .v{color:var(--accent-bright);}
+.p-row{display:flex;align-items:center;gap:6px;font-size:0.58rem;color:var(--dark-text);}
+.p-chip{margin-top:auto;background:var(--accent);color:#0D0D14;font-size:0.58rem;font-weight:800;text-align:center;padding:7px;border-radius:8px;}
+.phone.user{transform:rotate(-5deg) translateX(14px);z-index:2;}
+.phone.shop{transform:rotate(5deg) translateX(-14px);z-index:2;}
+.beam{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:3px;z-index:4;background:linear-gradient(90deg,transparent,var(--accent-bright),transparent);border-radius:var(--r-full);box-shadow:0 0 14px 2px rgba(245,200,66,0.6);opacity:0;}
+.beam.on{animation:beamIn .8s ease .3s forwards;}
+@keyframes beamIn{from{opacity:0;transform:translate(-50%,-50%) scaleX(0.2);}to{opacity:1;transform:translate(-50%,-50%) scaleX(1);}}
+.spark{position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:var(--r-full);background:var(--accent-bright);box-shadow:0 0 10px 3px rgba(245,200,66,0.7);z-index:5;opacity:0;}
+.scene.live .spark{animation:spark 2.4s linear .9s infinite;}
+@keyframes spark{0%{opacity:0;transform:translate(-58px,-50%);}10%{opacity:1;}90%{opacity:1;}100%{opacity:0;transform:translate(50px,-50%);}}
+.node{position:absolute;display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-full);padding:7px 13px 7px 7px;box-shadow:var(--shadow);font-size:0.73rem;font-weight:700;color:var(--text);opacity:0;transform:scale(0.6) translateY(8px);transition:opacity .5s ease,transform .5s cubic-bezier(0.16,1,0.3,1);z-index:6;white-space:nowrap;}
+.node .ni{width:26px;height:26px;border-radius:var(--r-full);background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;flex:none;}
+.node .ni svg{width:15px;height:15px;}
+.node.show{opacity:1;transform:scale(1) translateY(0);}
+.scene.live .node.show{animation:floaty 5s ease-in-out infinite;}
+@keyframes floaty{0%,100%{translate:0 0;}50%{translate:0 -7px;}}
+.n1{top:5%;left:0;} .n2{top:-1%;right:4%;} .n3{top:34%;right:-6%;} .n4{bottom:14%;right:-2%;}
+.n5{bottom:0;left:52%;transform:translateX(-50%) scale(0.6);} .n5.show{transform:translateX(-50%) scale(1);}
+.n6{bottom:14%;left:-4%;} .n7{top:30%;left:-8%;} .n8{top:56%;left:-4%;}
+.scene-orbit{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.scene-orbit circle{fill:none;stroke:var(--accent);stroke-opacity:0.14;stroke-dasharray:4 7;}
+.client-sub{max-width:640px;margin:60px auto 40px;text-align:center;}
+.client-sub h3{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;}
+.client-sub p{font-size:1rem;margin:0;}
+/* CASHBACK */
+.cashback{background:var(--dark-bg);color:var(--dark-text);}
+.cashback .eyebrow{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.25);color:var(--accent-bright);}
+.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.cashback h2{color:var(--dark-text);}
+.cashback .cb-copy p{color:var(--dark-muted);font-size:1.05rem;}
+.cb-stats{display:flex;gap:var(--s-xl);margin-top:var(--s-xl);}
+.cb-stat .n{font-size:1.7rem;font-weight:900;color:var(--accent-bright);letter-spacing:-0.02em;}
+.cb-stat .l{font-size:0.82rem;color:var(--dark-muted);}
+.cb-anim{position:relative;height:320px;border-radius:var(--r-xl);background:var(--dark-surface);border:1px solid var(--dark-border);overflow:hidden;display:grid;place-items:center;}
+.cb-track{position:relative;width:82%;height:120px;}
+.cb-end{position:absolute;top:50%;transform:translateY(-50%);width:96px;text-align:center;}
+.cb-end .ic{width:64px;height:64px;margin:0 auto 8px;border-radius:var(--r-lg);display:grid;place-items:center;}
+.cb-end.shop .ic{background:rgba(245,200,66,0.14);color:var(--accent-bright);}
+.cb-end.user .ic{background:rgba(124,58,237,0.18);color:#b794f6;}
+.cb-end .ic svg{width:32px;height:32px;}
+.cb-end .t{font-size:0.72rem;font-weight:700;color:var(--dark-text);}
+.cb-end.shop{left:0;} .cb-end.user{right:0;}
+.cb-coin{position:absolute;top:50%;left:14%;width:34px;height:34px;border-radius:var(--r-full);background:radial-gradient(circle at 35% 30%,var(--accent-bright),var(--accent));color:#3a2600;display:grid;place-items:center;transform:translateY(-50%);box-shadow:0 0 16px rgba(245,200,66,0.5);}
+.cb-coin svg{width:18px;height:18px;}
+.cb-anim.live .cb-coin{animation:coinCycle 4s ease-in-out infinite;}
+@keyframes coinCycle{0%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}10%{opacity:1;transform:translateY(-50%) scale(1);}45%{left:74%;top:50%;transform:translateY(-50%) scale(1);}55%{left:74%;top:22%;}90%{left:16%;top:22%;opacity:1;}100%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}}
+.cb-path{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.cb-path path{fill:none;stroke:var(--accent);stroke-opacity:0.28;stroke-width:2;stroke-dasharray:5 6;}
+/* COMUNIDAD */
+.community{background:var(--surface);}
+.comm-viz{position:relative;height:380px;max-width:720px;margin:40px auto 0;}
+.bubble{position:absolute;border-radius:var(--r-full);display:grid;place-items:center;color:#fff;opacity:0;transform:scale(0);transition:opacity .6s ease,transform .6s cubic-bezier(0.34,1.56,0.64,1);}
+.comm-viz.reveal .bubble{opacity:1;transform:scale(1);}
+.bubble.shop{background:linear-gradient(135deg,var(--accent),var(--accent-soft));}
+.bubble.user{background:linear-gradient(135deg,var(--purple),#5b21b6);}
+.bubble svg{width:42%;height:42%;opacity:0.92;}
+.comm-viz.reveal .bubble{animation:bob 6s ease-in-out infinite;}
+@keyframes bob{0%,100%{translate:0 0;}50%{translate:0 -10px;}}
+.comm-lines{position:absolute;inset:0;z-index:0;}
+.comm-lines line{stroke:var(--border);stroke-width:1.5;stroke-opacity:0;transition:stroke-opacity 1s ease .4s;}
+.comm-viz.reveal .comm-lines line{stroke-opacity:0.5;}
+/* ECOSISTEMA ONTINYENT */
+.onti{background:linear-gradient(180deg,var(--surface-2),var(--bg));}
+.onet{position:relative;max-width:760px;margin:0 auto;height:420px;}
+.onet-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;background:var(--dark-bg);color:#fff;padding:16px 20px;border-radius:var(--r-xl);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;text-align:left;}
+.onet-center .oi{width:40px;height:40px;border-radius:11px;background:rgba(245,200,66,0.15);color:var(--accent-bright);display:grid;place-items:center;}
+.onet-center .oi svg{width:22px;height:22px;}
+.onet-center .txt{font-size:0.82rem;font-weight:800;}
+.onet-center .txt small{display:block;font-size:0.64rem;color:var(--dark-muted);font-weight:600;}
+.onet-lines{position:absolute;inset:0;z-index:1;}
+.onet-lines line{stroke:var(--accent);stroke-width:1.5;stroke-opacity:0.22;stroke-dasharray:6;stroke-dashoffset:200;transition:stroke-dashoffset 1s ease;}
+.onet.reveal .onet-lines line{stroke-dashoffset:0;}
+.onode{position:absolute;transform:translate(-50%,-50%);z-index:2;background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-lg);padding:12px 14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:9px;opacity:0;transition:opacity .5s ease,transform .3s ease;min-width:150px;}
+.onet.reveal .onode{opacity:1;}
+.onode .oi{width:34px;height:34px;border-radius:10px;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;flex:none;}
+.onode .oi svg{width:18px;height:18px;}
+.onode h4{font-size:0.85rem;margin:0 0 1px;}
+.onode p{font-size:0.68rem;margin:0;color:var(--muted);}
+.onet.reveal .onode:hover{transform:translate(-50%,-50%) scale(1.05);border-color:var(--accent);}
+.onti-note{text-align:center;margin-top:32px;font-size:0.98rem;color:var(--text);max-width:640px;margin-left:auto;margin-right:auto;}
+/* FUTURO */
+.future{background:var(--surface);}
+.future-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center;}
+.javi-card{background:var(--dark-bg);color:var(--dark-text);border-radius:var(--r-xl);padding:36px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.javi-card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 100% 0%,rgba(245,200,66,0.14),transparent 60%);pointer-events:none;}
+.javi-card .jc{position:relative;z-index:1;}
+.javi-avatar{display:flex;align-items:center;gap:12px;margin-bottom:var(--s-lg);}
+.javi-avatar .ava{width:52px;height:52px;border-radius:var(--r-full);background:linear-gradient(135deg,var(--accent-bright),var(--accent));color:#0D0D14;display:grid;place-items:center;font-weight:900;font-size:1.2rem;flex:none;}
+.javi-avatar .who{font-size:0.9rem;font-weight:800;color:var(--dark-text);line-height:1.2;}
+.javi-avatar .who small{display:block;font-size:0.72rem;color:var(--dark-muted);font-weight:600;}
+.javi-card .quote{font-size:1.12rem;line-height:1.6;color:var(--dark-text);font-weight:500;margin:0;}
+.javi-card .quote .hl{color:var(--accent-bright);font-weight:700;}
+.future-list h3{margin-bottom:6px;}
+.future-list .sub{color:var(--muted);margin-bottom:var(--s-xl);font-size:0.98rem;}
+.flist{display:flex;flex-direction:column;gap:12px;}
+.fitem{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border-soft);border-radius:var(--r-md);padding:13px 16px;}
+.fitem .fic{width:34px;height:34px;border-radius:9px;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;flex:none;}
+.fitem .fic svg{width:17px;height:17px;}
+.fitem .ft{font-size:0.92rem;font-weight:700;color:var(--text);}
+.fitem .badge{margin-left:auto;font-size:0.6rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);border:1px solid rgba(176,121,8,0.2);padding:3px 9px;border-radius:var(--r-full);}
+/* PRECIOS */
+.pricing{background:linear-gradient(180deg,var(--bg),var(--surface-2));}
+.pt-wrap{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-full);padding:4px;margin:0 auto 14px;}
+.pt-center{text-align:center;}
+.pt-wrap button{padding:9px 22px;border-radius:var(--r-full);font-weight:700;font-size:0.9rem;color:var(--muted);transition:all .15s ease;white-space:nowrap;}
+.pt-wrap button.active{background:var(--accent);color:#fff;}
+.save-hint{text-align:center;font-size:0.86rem;color:var(--green);font-weight:700;margin:0 auto 44px;}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:840px;margin:0 auto;align-items:start;}
+.plan{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--r-xl);padding:32px;box-shadow:var(--shadow-sm);position:relative;}
+.plan.pro{border:2px solid var(--accent);box-shadow:var(--shadow-lg);}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:0.64rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:5px 14px;border-radius:var(--r-full);white-space:nowrap;}
+.plan h3{font-size:1.35rem;margin-bottom:4px;}
+.plan .tagline{font-size:0.9rem;color:var(--muted);margin-bottom:var(--s-lg);min-height:40px;}
+.price{display:flex;align-items:baseline;gap:5px;}
+.price .amt{font-size:2.7rem;font-weight:900;letter-spacing:-0.03em;color:var(--text);line-height:1;}
+.price .per{font-size:0.95rem;color:var(--muted);font-weight:700;}
+.price-sub{font-size:0.82rem;color:var(--muted);margin-top:6px;min-height:18px;}
+.price-old{font-size:0.8rem;color:var(--text-dim);text-decoration:line-through;min-height:16px;margin-top:2px;}
+.plan .btn{width:100%;justify-content:center;margin:20px 0;}
+.plan-feats{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+.plan-feats li{display:flex;gap:10px;align-items:flex-start;font-size:0.9rem;color:var(--text);line-height:1.4;}
+.plan-feats li svg{width:18px;height:18px;flex:none;margin-top:2px;}
+.plan-feats li.yes svg{color:var(--green);}
+.plan-feats li.no{color:var(--text-dim);}
+.plan-feats li.no svg{color:var(--text-dim);}
+.plan-feats li.strong{font-weight:700;}
+.feat-div{margin:16px 0 12px;font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);}
+.plan-fut{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.plan-fut .b{font-size:0.56rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);background:var(--accent-tint);border:1px solid rgba(176,121,8,.2);padding:2px 8px;border-radius:var(--r-full);}
+@media (max-width:720px){ .plans{grid-template-columns:1fr;max-width:420px;} .plan.pro{order:-1;} }
+/* ENTRADAS Y EVENTOS */
+.entradas{background:var(--surface);}
+.ent-top{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;}
+.ent-copy h2{margin-bottom:var(--s-md);}
+.ent-list{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:12px;}
+.ent-list li{display:flex;gap:10px;align-items:flex-start;font-size:0.98rem;color:var(--text);}
+.ent-list li svg{width:20px;height:20px;color:var(--green);flex:none;margin-top:3px;}
+.ent-visual{display:grid;place-items:center;}
+.tik{width:100%;max-width:360px;background:var(--dark-bg);color:var(--dark-text);border-radius:var(--r-xl);padding:26px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
+.tik::after{content:"";position:absolute;inset:0;background:radial-gradient(300px 160px at 90% 0%,rgba(245,200,66,0.14),transparent 60%);pointer-events:none;}
+.tik-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;z-index:1;}
+.tik-top .ev{font-weight:800;font-size:1.05rem;color:var(--dark-text);}
+.tik-top .dt{font-size:0.82rem;color:var(--dark-muted);margin-top:4px;}
+.tik-top .badge{background:var(--accent);color:#0D0D14;font-size:0.62rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r-full);flex:none;}
+.tik-sep{position:relative;border-top:1.5px dashed var(--dark-border);margin:20px -26px;}
+.tik-sep::before,.tik-sep::after{content:"";position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--surface);}
+.tik-sep::before{left:-9px;} .tik-sep::after{right:-9px;}
+.tik-foot{display:flex;align-items:center;gap:16px;position:relative;z-index:1;}
+.tik-foot .qr{width:76px;height:76px;background:#fff;border-radius:12px;padding:8px;flex:none;color:#0D0D14;}
+.tik-foot .qr svg{width:100%;height:100%;}
+.tik-foot .valid{font-size:0.85rem;color:var(--dark-muted);font-weight:600;line-height:1.4;}
+/* FAQ */
+.faq-sec{background:linear-gradient(180deg,var(--surface-2),var(--bg));}
+.faq{max-width:820px;margin:0 auto;}
+.faq-item{border:1px solid var(--border-soft);border-radius:var(--r-md);margin-bottom:12px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow-sm);}
+.faq-q{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 20px;font-weight:700;font-size:1rem;color:var(--text);}
+.faq-q .chev{width:20px;height:20px;flex:none;color:var(--accent);transition:transform .2s ease;}
+.faq-item.open .faq-q .chev{transform:rotate(180deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-item.open .faq-a{max-height:280px;}
+.faq-a p{padding:0 20px 18px;margin:0;color:var(--muted);font-size:0.95rem;line-height:1.55;}
+@media (max-width:940px){.ent-top{grid-template-columns:1fr;gap:32px;}}
+/* CTA */
+.cta-final{padding:0 0 92px;}
+.cta-box{background:var(--dark-bg);border-radius:var(--r-xl);padding:64px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0%,rgba(245,200,66,0.16),transparent 60%);pointer-events:none;}
+.cta-box .inner{position:relative;z-index:1;}
+.cta-box h2{color:var(--dark-text);max-width:20ch;margin:0 auto 14px;}
+.cta-box p{color:var(--dark-muted);max-width:46ch;margin:0 auto 28px;font-size:1.08rem;}
+.cta-actions{display:flex;gap:var(--s-md);justify-content:center;flex-wrap:wrap;}
+.cta-box .btn-secondary{background:transparent;color:var(--dark-text);border-color:var(--dark-border);}
+.cta-box .btn-secondary:hover{border-color:var(--accent-bright);color:var(--accent-bright);}
+.cta-contact{display:flex;gap:var(--s-xl);justify-content:center;flex-wrap:wrap;margin-top:32px;font-size:0.9rem;color:var(--dark-muted);}
+.cta-contact a{display:inline-flex;align-items:center;gap:8px;color:var(--dark-text);font-weight:600;}
+.cta-contact a:hover{color:var(--accent-bright);}
+.cta-contact svg{width:17px;height:17px;color:var(--accent-bright);}
+/* FOOTER */
+footer.site-footer{background:var(--dark-bg);color:var(--dark-muted);padding:70px 0 36px;}
+footer.site-footer .logo{color:var(--dark-text);}
+footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px var(--dark-border);}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:56px;}
+.footer-brand .logo{margin-bottom:var(--s-md);}
+.footer-brand p{color:var(--dark-muted);font-size:0.92rem;max-width:280px;}
+.footer-col h4{font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-bright);margin-bottom:var(--s-lg);}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;}
+.footer-col a{color:var(--dark-muted);font-size:0.92rem;transition:color .15s ease;}
+.footer-col a:hover{color:var(--dark-text);}
+.footer-bottom{padding-top:var(--s-xxl);border-top:1px solid var(--dark-border);display:flex;justify-content:space-between;align-items:center;gap:var(--s-lg);flex-wrap:wrap;font-size:0.85rem;color:var(--dark-muted);}
+.footer-bottom a{color:var(--dark-muted);}.footer-bottom a:hover{color:var(--accent-bright);}
+/* reveal */
+.reveal-up{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1);}
+.reveal-up.in{opacity:1;transform:translateY(0);}
+.reveal-up.d1{transition-delay:.06s;}.reveal-up.d2{transition-delay:.12s;}.reveal-up.d3{transition-delay:.18s;}.reveal-up.d4{transition-delay:.24s;}
+/* RESPONSIVE */
+@media (max-width:940px){
+  .sc-top,.apps-top,.cb-grid,.future-grid{grid-template-columns:1fr;gap:32px;}
+  .scene{height:430px;transform:scale(0.9);}
+  .feat-grid,.sector-grid{grid-template-columns:repeat(3,1fr);}
+  .benefit-strip{grid-template-columns:1fr 1fr;}
+  .rig{max-width:540px;margin:0 auto;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}.footer-brand{grid-column:1/-1;}
+}
+@media (max-width:640px){
+  .logo .tag{display:none;}
+  .section{padding:60px 0;}
+  .showcase{padding:56px 0 68px;}
+  .feat-grid,.sector-grid{grid-template-columns:1fr 1fr;}
+  .benefit-strip{grid-template-columns:1fr;}
+  .cb-stats{flex-direction:column;gap:14px;}
+  .cta-box{padding:48px 24px;}
+  .javi-card{padding:26px;}
+  .onode{min-width:0;padding:9px;}.onode p{display:none;}
+  .float-stat{left:0;}
+}
+@media (max-width:420px){ .feat-grid,.sector-grid{grid-template-columns:1fr;} }
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important;}
+  html{scroll-behavior:auto;}
+  .reveal-up,.node,.onode,.bubble{opacity:1!important;transform:none!important;translate:0!important;}
+  .onode{transform:translate(-50%,-50%)!important;}
+  .node.n5{transform:translateX(-50%)!important;}
+  .beam{opacity:1!important;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal <span class="tag" data-i18n="brand_tag">Ontinyent</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="#plataforma" data-i18n="nav_app">La plataforma</a></li>
+      <li><a href="#verticales" data-i18n="nav_verticals">Para quién</a></li>
+      <li><a href="/entradas.html" data-i18n="nav_tickets">Entradas</a></li>
+      <li><a href="#precios" data-i18n="nav_price">Precios</a></li>
+      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-switch" id="langSwitch"><button data-lang="es" class="active">ES</button><button data-lang="va">VA</button><button data-lang="en">EN</button></div>
+      <a href="#unirse" class="btn btn-primary nav-cta" data-i18n="nav_cta">Digitalizar</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+    </div>
+  </div>
+</header>
+<span id="top"></span>
+
+<!-- BLOQUE 1: LA PLATAFORMA -->
+<section class="showcase" id="plataforma">
+  <div class="container inner">
+    <div class="sc-top">
+      <div class="sc-copy">
+        <span class="eyebrow"><span class="num">01</span><span data-i18n="s1_eyebrow">El comercio local de Ontinyent, en digital</span></span>
+        <h1><span data-i18n="s1_h1a">Digitaliza tu negocio local</span> <span class="hl" data-i18n="s1_h1b">con la tecnología de las grandes cadenas.</span></h1>
+        <p class="lead" data-i18n="s1_lead">Gestión, cobros, fidelización y una app para tus clientes, en una sola plataforma. Una versión para comercios y otra para hostelería, hecha en Ontinyent.</p>
+        <div class="sc-actions">
+          <a href="#unirse" class="btn btn-primary btn-lg" data-i18n="s1_cta1">Quiero digitalizar mi negocio</a>
+          <a href="#verticales" class="btn btn-secondary btn-lg" data-i18n="s1_cta2">Elige tu negocio</a>
+        </div>
+        <div class="sc-trust"><span class="dot"></span><span data-i18n="s1_trust">Comercios, servicios y hostelería de Ontinyent</span></div>
+      </div>
+      <div class="rig">
+        <div class="laptop">
+          <div class="lid">
+            <div class="lscreen">
+              <div class="lside">
+                <div class="brand"><span class="lm"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</div>
+                <div class="lb act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span data-i18n="sb1">Resumen</span></div>
+                <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg><span data-i18n="sb2">Pedidos</span></div>
+                <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-i18n="sb3">Reservas</span></div>
+                <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8l-9-5-9 5v8l9 5z"/></svg><span data-i18n="sb4">Inventario</span></div>
+                <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="sb5">Estadísticas</span></div>
+              </div>
+              <div class="lmain">
+                <div class="lh"><span class="lt" data-i18n="dash_title">Panel de control</span><span class="lp" data-i18n="dash_today">Hoy</span></div>
+                <div class="dash-kpis">
+                  <div class="dkpi"><div class="k" data-i18n="dk_sales">Ventas</div><div class="v gold">1.284 €</div><div class="t">▲ 18%</div></div>
+                  <div class="dkpi"><div class="k" data-i18n="dk_orders">Pedidos</div><div class="v">46</div><div class="t">▲ 11%</div></div>
+                  <div class="dkpi"><div class="k" data-i18n="dk_ticket">Ticket medio</div><div class="v">27,9 €</div><div class="t">▲ 5%</div></div>
+                </div>
+                <div class="dash-charts">
+                  <div class="chart-card">
+                    <div class="ct" data-i18n="ch_sales">Ventas · últimos 7 días</div>
+                    <div class="bars"><span class="bar" style="height:44%"></span><span class="bar" style="height:60%"></span><span class="bar" style="height:50%"></span><span class="bar" style="height:72%"></span><span class="bar" style="height:56%"></span><span class="bar" style="height:66%"></span><span class="bar hot" style="height:94%"></span></div>
+                  </div>
+                  <div class="chart-card">
+                    <div class="ct" data-i18n="ch_channel">Por canal</div>
+                    <div class="donut"></div>
+                    <div class="legend">
+                      <div class="lg"><span class="d" style="background:var(--accent-bright)"></span><span data-i18n="lg_shop">Tienda 48%</span></div>
+                      <div class="lg"><span class="d" style="background:var(--purple)"></span><span data-i18n="lg_online">Online 28%</span></div>
+                      <div class="lg"><span class="d" style="background:#3a3a52"></span><span data-i18n="lg_book">Reservas 24%</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lbase"></div>
+        </div>
+        <div class="float-stat"><span class="fsi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></span><span><span class="fsn">+18%</span><span class="fsl" data-i18n="float_stat">ventas vs ayer</span></span></div>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3 data-i18n="r1_t">Escaparate digital</h3><p data-i18n="r1_p">Tu catálogo online, con fotos, precios y variantes.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M2 9h20M6 21h12"/></svg></div><h3 data-i18n="r2_t">TPV integrado</h3><p data-i18n="r2_p">Cobra en tienda o mostrador desde la app.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/></svg></div><h3 data-i18n="r3_t">Reservas y citas</h3><p data-i18n="r3_p">Agenda de citas y reservas con recordatorios.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><h3 data-i18n="r4_t">Reserva de espacios</h3><p data-i18n="r4_p">Salas, pistas o equipos por franjas horarias.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div><h3 data-i18n="r5_t">Pedidos y encargos</h3><p data-i18n="r5_p">Marketplace para vender online y recibir encargos.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></div><h3 data-i18n="r6_t">Stock y variantes</h3><p data-i18n="r6_p">Inventario por talla, color, número o unidad.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3 data-i18n="r7_t">Proveedores</h3><p data-i18n="r7_p">Pedidos a proveedores organizados y a tiempo.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></div><h3 data-i18n="r8_t">Facturación y caja</h3><p data-i18n="r8_p">Facturas, tickets y arqueo de caja al cuadrar.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.5 9h-13zM7 9V6a5 5 0 0 1 10 0v3"/></svg></div><h3 data-i18n="r9_t">Eventos y aforo</h3><p data-i18n="r9_p">Entradas, aforo y validación en la puerta.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div><h3 data-i18n="r10_t">P&amp;L e ingresos</h3><p data-i18n="r10_p">Estadísticas, márgenes por producto e ingresos.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3 data-i18n="r11_t">CRM y clientes</h3><p data-i18n="r11_p">Quiénes son, qué compran y cuándo vuelven.</p></div>
+      <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><h3 data-i18n="r12_t">Notificaciones</h3><p data-i18n="r12_p">Novedades y promos directo al móvil del cliente.</p></div>
+    </div>
+
+    <div class="benefit-strip">
+      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h4 data-i18n="bs1_t">Ahorra tiempo</h4><p data-i18n="bs1_p">Menos tareas manuales cada día.</p></div>
+      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></div><h4 data-i18n="bs2_t">Más ingresos</h4><p data-i18n="bs2_p">Más ventas online y en tienda.</p></div>
+      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h4 data-i18n="bs3_t">Todo conectado</h4><p data-i18n="bs3_p">Una sola plataforma, sin islas.</p></div>
+      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h4 data-i18n="bs4_t">Seguridad y RGPD</h4><p data-i18n="bs4_p">Datos protegidos y en regla.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="applink">
+  <div class="container">
+    <span data-i18n="app_strip">Una app para tu comercio, otra para tus clientes. Disponibles en:</span>
+    <div class="badges">
+      <a href="#unirse" class="pill-app"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.15.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.42-.93-2.44-3.68zM14.8 5.09c.64-.78 1.07-1.86.95-2.94-.92.04-2.03.61-2.69 1.38-.59.69-1.11 1.79-.97 2.85 1.03.08 2.07-.52 2.71-1.29z"/></svg><span>App Store<small data-i18n="app_soon">Próximamente</small></span></a>
+      <a href="#unirse" class="pill-app"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.3c-.3.3-.4.8-.4 1.4v16.6c0 .6.1 1.1.4 1.4l.1.1 9.3-9.3v-.2L3.7 2.2l-.1.1zM17 15.3l-3.1-3.1v-.2L17 8.9l.1.1 3.7 2.1c1 .6 1 1.6 0 2.2L17.1 15.3l-.1-.1zM16 16.3l-3.2-3.2-9.3 9.3c.4.3.9.3 1.6-.1l10.9-6zM5.1 1.7c-.7-.4-1.2-.4-1.6-.1l9.3 9.3L16 7.7 5.1 1.7z"/></svg><span>Google Play<small data-i18n="app_soon">Próximamente</small></span></a>
+    </div>
+  </div>
+</div>
+
+<!-- BLOQUE 2: PARA QUIÉN -->
+<section class="section sectors" id="verticales">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow"><span class="num">02</span><span data-i18n="v_eyebrow">Para tu tipo de negocio</span></span>
+      <h2 data-i18n="v_h2">Una plataforma, adaptada a lo que tú haces.</h2>
+      <p data-i18n="v_p">Comercio u hostelería: elige tu mundo y descubre la versión de Pagolocal pensada para ti, con las herramientas de tu sector activadas de serie.</p>
+    </div>
+    <div class="verticals">
+      <a class="vcard reveal-up" href="/comercios.html">
+        <div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></div>
+        <h3 data-i18n="v1_t">Comercio y servicios</h3>
+        <p data-i18n="v1_p">Moda, belleza, alimentación, zapatería, servicios, eventos y reserva de espacios. Catálogo, TPV, citas y stock por variantes.</p>
+        <span class="vgo" data-i18n="v1_cta">Ver Pagolocal Comercios</span>
+      </a>
+      <a class="vcard reveal-up d2" href="/restauracion.html">
+        <div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20a6 6 0 0 1 12 0M12 6V4M9 6a3 3 0 0 1 6 0"/></svg></div>
+        <h3 data-i18n="v2_t">Bares y restaurantes</h3>
+        <p data-i18n="v2_p">Restaurantes, bares, cafeterías y food trucks. Comanda sin papel, KDS de cocina, pedidos desde la mesa y gestión de mesas.</p>
+        <span class="vgo" data-i18n="v2_cta">Ver Pagolocal Restauración</span>
+      </a>
+    </div>
+    <p class="sectors-note" data-i18n="v_note">¿Tu negocio no encaja en ninguna? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada negocio de Ontinyent.</p>
+  </div>
+</section>
+
+<!-- BLOQUE 3: DOS APPS -->
+<section class="section" id="apps">
+  <div class="container">
+    <div class="apps-top">
+      <div class="apps-copy reveal-up">
+        <span class="eyebrow"><span class="num">03</span><span data-i18n="s2_eyebrow">Conexión directa con tus clientes</span></span>
+        <h2><span data-i18n="s2_h2a">Dos apps que se hablan.</span> <span class="hl" data-i18n="s2_h2b">Un ecosistema digital para tu comercio.</span></h2>
+        <p class="lead" data-i18n="s2_p">Una app para ti y otra para tus clientes, hablando entre sí. Te descubren, compran, reservan y pagan, y vuelven gracias al cashback. Sin intermediarios que se llevan tu margen.</p>
+        <a href="#unirse" class="btn btn-primary btn-lg" data-i18n="s2_cta">Quiero llegar a más clientes</a>
+      </div>
+      <div class="reveal-up d2">
+        <div class="scene" id="scene">
+          <svg class="scene-orbit" viewBox="0 0 400 400"><circle cx="200" cy="200" r="150"/><circle cx="200" cy="200" r="190"/></svg>
+          <div class="scene-core">
+            <div class="phone user"><div class="screen">
+              <div class="p-top"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="p-label">Cliente</span></div>
+              <div class="p-card gold"><div class="k">Tu pedido</div><div class="v" style="font-size:.78rem">2 artículos</div></div>
+              <div class="p-card"><div class="k">Cashback</div><div class="v">4,10 €</div></div>
+              <div class="p-row"><span>Reserva y paga en la app</span></div>
+              <div class="p-chip">Comprar</div>
+            </div></div>
+            <div class="beam" id="beam"></div>
+            <div class="phone shop"><div class="screen">
+              <div class="p-top"><span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9"/></svg></span><span class="p-label">Comercio</span></div>
+              <div class="p-card"><div class="k">Pedidos hoy</div><div class="v" style="font-size:.78rem">46 pedidos</div></div>
+              <div class="p-card gold"><div class="k">Ventas de hoy</div><div class="v">1.284 €</div></div>
+              <div class="p-row"><span>Stock y clientes al día</span></div>
+              <div class="p-chip">Ver pedidos</div>
+            </div></div>
+          </div>
+          <div class="spark"></div>
+          <div class="node n1"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><span data-i18n="node_shop">Escaparate</span></div>
+          <div class="node n2"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg></span><span data-i18n="node_order">Pedido online</span></div>
+          <div class="node n3"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></span><span data-i18n="node_pay">Pago en la app</span></div>
+          <div class="node n4"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>Cashback</div>
+          <div class="node n5"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM16 10a4 4 0 0 1-8 0"/></svg></span><span data-i18n="node_takeaway">Encargos</span></div>
+          <div class="node n6"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span data-i18n="node_book">Reservas y citas</span></div>
+          <div class="node n7"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8l-9-5-9 5v8l9 5z"/></svg></span>Stock</div>
+          <div class="node n8"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>CRM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="client-sub reveal-up">
+      <h3 data-i18n="cl_h3">Tu comercio, en el bolsillo de tus clientes</h3>
+      <p data-i18n="cl_p">Te descubren, compran, reservan y pagan desde su móvil, y vuelven gracias al cashback.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V9l6-4 6 4v12M9 21v-5h6v5"/></svg></div><h3 data-i18n="c1_t">Perfil público</h3><p data-i18n="c1_p">Tu ficha de comercio, visible para toda la comunidad.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div><h3 data-i18n="c2_t">Compra por marketplace</h3><p data-i18n="c2_p">Ven tu catálogo y compran online, directo a ti.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3 data-i18n="c3_t">Reservas y citas</h3><p data-i18n="c3_p">Reservan cita, mesa o espacio desde el móvil.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM16 10a4 4 0 0 1-8 0"/></svg></div><h3 data-i18n="c4_t">Encargos</h3><p data-i18n="c4_p">Piden con antelación para recoger o llevar.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><h3 data-i18n="c5_t">Notificaciones</h3><p data-i18n="c5_p">Avisas de novedades y promos directo a su móvil.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div><h3 data-i18n="c6_t">Pagos por la app</h3><p data-i18n="c6_p">Pagan desde el móvil, en tienda u online.</p></div>
+      <div class="feat light reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><h3 data-i18n="c7_t">Cashback</h3><p data-i18n="c7_p">Vuelven una y otra vez gracias a la fidelización.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASHBACK -->
+<section class="section cashback" id="cashback">
+  <div class="container cb-grid">
+    <div class="cb-copy reveal-up">
+      <span class="eyebrow" data-i18n="cb_eyebrow">El poder del cashback</span>
+      <h2 data-i18n="cb_h2">Cashback que hace que tus clientes vuelvan.</h2>
+      <p data-i18n="cb_p">Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu comercio.</p>
+      <div class="cb-stats">
+        <div class="cb-stat"><div class="n" data-i18n="cb_s1_n">Tú decides</div><div class="l" data-i18n="cb_s1_l">el % de cashback de tu comercio</div></div>
+        <div class="cb-stat"><div class="n" data-i18n="cb_s2_n">Repiten</div><div class="l" data-i18n="cb_s2_l">y te recomiendan a los suyos</div></div>
+      </div>
+    </div>
+    <div class="cb-anim reveal-up d2" id="cbAnim">
+      <div class="cb-track">
+        <svg class="cb-path" viewBox="0 0 300 120" preserveAspectRatio="none"><path d="M40 60 H260 V26 H40"/></svg>
+        <div class="cb-end shop"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></div><div class="t" data-i18n="cb_shop">Tu comercio</div></div>
+        <div class="cb-end user"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="t" data-i18n="cb_user">Tu cliente</div></div>
+        <div class="cb-coin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMUNIDAD -->
+<section class="section community" id="comunidad">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="comm_eyebrow">La comunidad que crece</span>
+      <h2 data-i18n="comm_h2">Más comercios, más usuarios. Más usuarios, más clientes para todos.</h2>
+      <p data-i18n="comm_p">No competimos entre nosotros. Sumamos fuerzas para que el comercio local sea la primera opción de la gente.</p>
+    </div>
+    <div class="comm-viz" id="commViz"><svg class="comm-lines" id="commLines" viewBox="0 0 720 380" preserveAspectRatio="none"></svg></div>
+  </div>
+</section>
+
+<!-- BLOQUE 4: ECOSISTEMA ONTINYENT -->
+<section class="section onti" id="ontinyent">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="b3_eyebrow">El ecosistema de Ontinyent</span>
+      <h2 data-i18n="b3_h2">No estás solo: todo el pueblo empuja contigo.</h2>
+      <p data-i18n="b3_p">Un ecosistema conjunto de servicios de Ontinyent, junto a Comerç In, el Ayuntamiento y el resto de comercios, pensado para atraer más usuarios y clientes hacia tu tienda.</p>
+    </div>
+    <div class="onet" id="onet">
+      <svg class="onet-lines" id="onetLines" viewBox="0 0 760 420" preserveAspectRatio="none"></svg>
+      <div class="onet-center"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></span><span class="txt" data-i18n="onet_center">Tu comercio<small data-i18n="onet_center_s">en el centro del ecosistema</small></span></div>
+      <div class="onode" style="top:12%;left:20%"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V9l6-4 6 4v12M9 21v-5h6v5"/></svg></span><span><h4 data-i18n="on1_t">Ayuntamiento</h4><p data-i18n="on1_p">Eventos y agenda local</p></span></div>
+      <div class="onode" style="top:12%;left:80%"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span><span><h4 data-i18n="on2_t">Comerç In</h4><p data-i18n="on2_p">La asociación de comercios</p></span></div>
+      <div class="onode" style="top:88%;left:20%"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></span><span><h4 data-i18n="on3_t">Otros comercios</h4><p data-i18n="on3_p">Sumáis, no competís</p></span></div>
+      <div class="onode" style="top:88%;left:80%"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span><h4 data-i18n="on4_t">Más usuarios</h4><p data-i18n="on4_p">Una comunidad que crece</p></span></div>
+    </div>
+    <p class="onti-note" data-i18n="b3_note">Cada nuevo comercio trae más usuarios, y cada usuario es un cliente potencial para tu tienda. El comercio local de Ontinyent, jugando en equipo.</p>
+  </div>
+</section>
+
+<!-- FUTURO -->
+<section class="section future" id="futuro">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="fut_eyebrow">Funcionalidades futuras</span>
+      <h2 data-i18n="fut_h2">Crece contigo, a tu ritmo.</h2>
+    </div>
+    <div class="future-grid">
+      <div class="javi-card reveal-up">
+        <div class="jc">
+          <div class="javi-avatar"><span class="ava">J</span><span class="who">Javi<small data-i18n="javi_role">Creador de Pagolocal · Ontinyent</small></span></div>
+          <p class="quote"><span data-i18n="javi_q1">Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:</span> <span class="hl" data-i18n="javi_q2">"Oye Javi, este botón debe hacer esto o aquello"</span> <span data-i18n="javi_q3">y lo hacemos.</span></p>
+        </div>
+      </div>
+      <div class="future-list reveal-up d2">
+        <h3 data-i18n="fut_list_t">Ya trabajando en lo próximo</h3>
+        <div class="sub" data-i18n="fut_list_s">Algunas de las funciones que llegarán al ecosistema.</div>
+        <div class="flist">
+          <div class="fitem"><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><span class="ft" data-i18n="f1">Integración con proveedores</span><span class="badge" data-i18n="fut_badge">Próximamente</span></div>
+          <div class="fitem"><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 6h4"/></svg></span><span class="ft" data-i18n="f2">TPV físico y datáfono</span><span class="badge" data-i18n="fut_badge">Próximamente</span></div>
+          <div class="fitem"><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="ft" data-i18n="f3">Registro horario</span><span class="badge" data-i18n="fut_badge">Próximamente</span></div>
+          <div class="fitem"><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span class="ft" data-i18n="f4">Personal y turnos</span><span class="badge" data-i18n="fut_badge">Próximamente</span></div>
+          <div class="fitem"><span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="ft" data-i18n="f5">Y lo que tu comercio necesite</span><span class="badge" data-i18n="fut_badge2">Tú lo pides</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section class="section pricing" id="precios">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="price_eyebrow">Precios</span>
+      <h2 data-i18n="price_h2">Precios claros, sin sorpresas.</h2>
+      <p data-i18n="price_p">Elige el plan que encaja con tu comercio. Cambia o cancela cuando quieras.</p>
+    </div>
+    <div class="pt-center reveal-up">
+      <div class="pt-wrap" id="ptWrap">
+        <button data-p="m" class="active" data-i18n="pt_month">Mensual</button>
+        <button data-p="y" data-i18n="pt_year">Anual</button>
+      </div>
+      <div class="save-hint" data-i18n="save_hint">Paga el año completo y te ahorras 2 meses.</div>
+    </div>
+    <div class="plans">
+      <div class="plan lite reveal-up">
+        <h3 data-i18n="plan_lite">Lite</h3>
+        <div class="tagline" data-i18n="lite_tag">Lo básico para vender y cobrar desde el primer día.</div>
+        <div class="price"><span class="amt" id="lite-amt">45</span><span class="per" id="lite-per">€/mes</span></div>
+        <div class="price-sub" id="lite-sub">Facturado mes a mes</div>
+        <div class="price-old" id="lite-old"></div>
+        <a href="mailto:hola@pagolocal.xyz?subject=Plan%20Lite" class="btn btn-secondary" data-i18n="price_cta_lite">Empezar con Lite</a>
+        <ul class="plan-feats">
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl1">Escaparate digital</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl2">TPV integrado</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl3">Reservas y citas</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl4">Pedidos y encargos (marketplace)</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl5">Pagos por la app y online</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl6">Cashback y fidelización</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pl7">Perfil público y notificaciones</span></li>
+        </ul>
+        <div class="feat-div" data-i18n="feat_no">No incluye</div>
+        <ul class="plan-feats">
+          <li class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg><span data-i18n="pln1">Stock por variantes y proveedores</span></li>
+          <li class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg><span data-i18n="pln2">Reserva de espacios y eventos</span></li>
+          <li class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg><span data-i18n="pln3">P&amp;L y analítica de clientes</span></li>
+        </ul>
+      </div>
+      <div class="plan pro reveal-up d2">
+        <span class="plan-badge" data-i18n="recommended">Recomendado</span>
+        <h3 data-i18n="plan_pro">Pro</h3>
+        <div class="tagline" data-i18n="pro_tag">Toda la plataforma, hoy y en el futuro, sin límites.</div>
+        <div class="price"><span class="amt" id="pro-amt">60</span><span class="per" id="pro-per">€/mes</span></div>
+        <div class="price-sub" id="pro-sub">Facturado mes a mes</div>
+        <div class="price-old" id="pro-old"></div>
+        <a href="mailto:hola@pagolocal.xyz?subject=Plan%20Pro" class="btn btn-primary" data-i18n="price_cta_pro">Empezar con Pro</a>
+        <ul class="plan-feats">
+          <li class="yes strong"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp0">Todo lo del plan Lite</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp1">Stock y variantes</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp2">Reserva de espacios y eventos</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp3">Proveedores</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp4">Facturación y caja con arqueo</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp5">P&amp;L, estadísticas e ingresos</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="pp6">CRM y analítica de clientes</span></li>
+          <li class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="plan-fut"><span data-i18n="pp7">Todas las funcionalidades futuras</span><span class="b" data-i18n="pp7_badge">incluidas</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEGURIDAD -->
+<section class="section seguridad" id="seguridad">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="seg_eyebrow">Seguridad y confianza</span>
+      <h2 data-i18n="seg_h2">Tu dinero y tus datos, protegidos.</h2>
+      <p data-i18n="seg_p">Un proyecto local no significa menos seguridad. Al revés: pagos con pasarela bancaria y datos tratados con el máximo cuidado.</p>
+    </div>
+    <div class="sector-grid">
+      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3 data-i18n="seg1_t">Pagos seguros</h3><p data-i18n="seg1_p">Pasarela bancaria con autenticación reforzada (SCA). No guardamos los datos de tu tarjeta.</p></div>
+      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 data-i18n="seg2_t">Cumplimiento RGPD</h3><p data-i18n="seg2_p">Tus datos protegidos y tus derechos garantizados en todo momento.</p></div>
+      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><circle cx="12" cy="16" r="1.6"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3 data-i18n="seg3_t">Datos cifrados</h3><p data-i18n="seg3_p">Comunicaciones y datos protegidos de extremo a extremo.</p></div>
+      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></div><h3 data-i18n="seg4_t">Local y transparente</h3><p data-i18n="seg4_p">Tus datos no se venden a terceros. Hecho en Ontinyent, para Ontinyent.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-sec" id="faq">
+  <div class="container">
+    <div class="section-head reveal-up">
+      <span class="eyebrow" data-i18n="faq_eyebrow">Preguntas frecuentes</span>
+      <h2 data-i18n="faq_h2">Resolvemos tus dudas.</h2>
+    </div>
+    <div class="faq reveal-up">
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q1">¿Qué es Pagolocal?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a1">La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q2">¿Cuánto cuesta?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a2">Para el usuario, la app es gratis. Para el negocio, desde 45 €/mes (Lite) o 60 €/mes (Pro), con 2 meses gratis en el pago anual.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q3">¿Es seguro pagar?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a3">Sí. Los pagos se procesan con pasarela bancaria segura y autenticación reforzada (SCA), y nunca guardamos los datos de tu tarjeta.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q4">¿Sirve para mi tipo de negocio?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a4">Sí. Hay una versión para comercio y servicios y otra para hostelería, y adaptamos la plantilla a tu sector.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q5">¿Qué pasa con mis datos?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a5">Cumplimos el RGPD: tus datos están protegidos, no se venden a terceros y puedes ejercer tus derechos cuando quieras.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q6">¿Necesito instalar algo o comprar máquinas?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a6">No. Funciona desde el móvil o el navegador. Y próximamente podrás conectar TPV físico y datáfono si lo necesitas.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-final" id="unirse">
+  <div class="container">
+    <div class="cta-box reveal-up">
+      <div class="inner">
+        <h2 data-i18n="cta_h2">Tu comercio merece competir en igualdad de condiciones.</h2>
+        <p data-i18n="cta_p">Únete al ecosistema digital del comercio local de Ontinyent. No estás solo.</p>
+        <div class="cta-actions">
+          <a href="mailto:hola@pagolocal.xyz?subject=Demo%20comercio" class="btn btn-primary btn-lg" data-i18n="cta_b1">Solicitar una demo gratuita</a>
+          <a href="mailto:hola@pagolocal.xyz" class="btn btn-secondary btn-lg" data-i18n="cta_b2">Hablar con nosotros</a>
+        </div>
+        <div class="cta-contact">
+          <a href="mailto:hola@pagolocal.xyz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> hola@pagolocal.xyz</a>
+          <a href="tel:+34000000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg> <span data-i18n="cta_phone">Teléfono próximamente</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Enlaces entre páginas de Pagolocal ===== -->
+<style>
+.pl-crossnav{background:var(--accent-tint,#FBF6E8);border-top:1px solid rgba(176,121,8,.18);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 10px;padding:15px 16px;font-size:.9rem;}
+.pl-crossnav a{color:#7A5406;font-weight:600;text-decoration:none;padding:4px 6px;border-radius:6px;transition:color .15s ease,background .15s ease;}
+.pl-crossnav a:hover{color:var(--accent,#B07908);background:rgba(176,121,8,.08);}
+.pl-crossnav a[aria-current="page"]{color:var(--accent,#B07908);font-weight:800;}
+.pl-crossnav .sep{color:rgba(176,121,8,.35);}
+</style>
+<nav class="pl-crossnav" aria-label="Páginas de Pagolocal">
+  <a href="/">Inicio</a><span class="sep">·</span>
+  <a href="/negocios.html" aria-current="page">Para negocios</a><span class="sep">·</span>
+  <a href="/comercios.html">Comercios</a><span class="sep">·</span>
+  <a href="/restauracion.html">Restauración</a><span class="sep">·</span>
+  <a href="/entradas.html">Entradas</a>
+</nav>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</a>
+        <p data-i18n="foot_desc">Una plataforma. Todo tu comercio. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.</p>
+      </div>
+      <div class="footer-col"><h4 data-i18n="foot_nav">Secciones</h4><ul>
+        <li><a href="#plataforma" data-i18n="nav_app">La plataforma</a></li>
+        <li><a href="#verticales" data-i18n="nav_verticals">Para quién</a></li>
+        <li><a href="#apps" data-i18n="nav_apps">Dos apps</a></li>
+        <li><a href="#precios" data-i18n="nav_price">Precios</a></li>
+      </ul></div>
+      <div class="footer-col"><h4 data-i18n="foot_legal">Legal</h4><ul>
+        <li><a href="#" data-i18n="foot_privacy">Política de privacidad</a></li>
+        <li><a href="#" data-i18n="foot_terms">Aviso legal</a></li>
+        <li><a href="#" data-i18n="foot_cookies">Cookies</a></li>
+      </ul></div>
+      <div class="footer-col"><h4 data-i18n="foot_contact">Contacto</h4><ul>
+        <li><a href="mailto:hola@pagolocal.xyz">hola@pagolocal.xyz</a></li>
+        <li><a href="#unirse" data-i18n="foot_demo">Solicitar demo</a></li>
+        <li><a href="#" data-i18n="foot_social">Redes sociales</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Pagolocal · pagolocal.xyz</span>
+      <span data-i18n="foot_made">Hecho con ❤️ para el comercio local de Ontinyent.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const I18N={
+ es:{brand_tag:"Ontinyent",nav_app:"La plataforma",nav_verticals:"Para quién",nav_apps:"Dos apps",nav_price:"Precios",nav_future:"Futuro",nav_cta:"Digitalizar",
+ s1_eyebrow:"El comercio local de Ontinyent, en digital",s1_h1a:"Digitaliza tu negocio local",s1_h1b:"con la tecnología de las grandes cadenas.",
+ s1_lead:"Gestión, cobros, fidelización y una app para tus clientes, en una sola plataforma. Una versión para comercios y otra para hostelería, hecha en Ontinyent.",
+ s1_cta1:"Quiero digitalizar mi negocio",s1_cta2:"Elige tu negocio",s1_trust:"Comercios, servicios y hostelería de Ontinyent",
+ v_eyebrow:"Para tu tipo de negocio",v_h2:"Una plataforma, adaptada a lo que tú haces.",v_p:"Comercio u hostelería: elige tu mundo y descubre la versión de Pagolocal pensada para ti, con las herramientas de tu sector activadas de serie.",v1_t:"Comercio y servicios",v1_p:"Moda, belleza, alimentación, zapatería, servicios, eventos y reserva de espacios. Catálogo, TPV, citas y stock por variantes.",v1_cta:"Ver Pagolocal Comercios",v2_t:"Bares y restaurantes",v2_p:"Restaurantes, bares, cafeterías y food trucks. Comanda sin papel, KDS de cocina, pedidos desde la mesa y gestión de mesas.",v2_cta:"Ver Pagolocal Restauración",v_note:"¿Tu negocio no encaja en ninguna? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada negocio de Ontinyent.",
+ nav_tickets:"Entradas",nav_faq:"FAQ",
+ ent_eyebrow:"Entradas y eventos",ent_h2:"Los eventos de Ontinyent, en la misma app.",ent_p:"Descubre los eventos del pueblo, compra tu entrada y valídala en la puerta con un QR. El Ayuntamiento y los comercios publican sus eventos; tú los llevas en el bolsillo, con cashback también aquí.",ent_b1:"Compra de entradas desde la app",ent_b2:"Validación con QR en la puerta",ent_b3:"Aforo y asistentes en tiempo real",ent_b4:"Eventos del Ayuntamiento y comercios locales",tik_badge:"Entrada",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"20 dic · 19:00 · Plaça Major",tik_valid:"Válida en puerta · Aforo controlado",
+ seg_eyebrow:"Seguridad y confianza",seg_h2:"Tu dinero y tus datos, protegidos.",seg_p:"Un proyecto local no significa menos seguridad. Al revés: pagos con pasarela bancaria y datos tratados con el máximo cuidado.",seg1_t:"Pagos seguros",seg1_p:"Pasarela bancaria con autenticación reforzada (SCA). No guardamos los datos de tu tarjeta.",seg2_t:"Cumplimiento RGPD",seg2_p:"Tus datos protegidos y tus derechos garantizados en todo momento.",seg3_t:"Datos cifrados",seg3_p:"Comunicaciones y datos protegidos de extremo a extremo.",seg4_t:"Local y transparente",seg4_p:"Tus datos no se venden a terceros. Hecho en Ontinyent, para Ontinyent.",
+ faq_eyebrow:"Preguntas frecuentes",faq_h2:"Resolvemos tus dudas.",q1:"¿Qué es Pagolocal?",a1:"La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.",q2:"¿Cuánto cuesta?",a2:"Para el usuario, la app es gratis. Para el negocio, desde 45 €/mes (Lite) o 60 €/mes (Pro), con 2 meses gratis en el pago anual.",q3:"¿Es seguro pagar?",a3:"Sí. Los pagos se procesan con pasarela bancaria segura y autenticación reforzada (SCA), y nunca guardamos los datos de tu tarjeta.",q4:"¿Sirve para mi tipo de negocio?",a4:"Sí. Hay una versión para comercio y servicios y otra para hostelería, y adaptamos la plantilla a tu sector.",q5:"¿Qué pasa con mis datos?",a5:"Cumplimos el RGPD: tus datos están protegidos, no se venden a terceros y puedes ejercer tus derechos cuando quieras.",q6:"¿Necesito instalar algo o comprar máquinas?",a6:"No. Funciona desde el móvil o el navegador. Y próximamente podrás conectar TPV físico y datáfono si lo necesitas.",
+ sb1:"Resumen",sb2:"Pedidos",sb3:"Reservas",sb4:"Inventario",sb5:"Estadísticas",dash_title:"Panel de control",dash_today:"Hoy",
+ dk_sales:"Ventas",dk_orders:"Pedidos",dk_ticket:"Ticket medio",ch_sales:"Ventas · últimos 7 días",ch_channel:"Por canal",lg_shop:"Tienda 48%",lg_online:"Online 28%",lg_book:"Reservas 24%",float_stat:"ventas vs ayer",
+ r1_t:"Escaparate digital",r1_p:"Tu catálogo online, con fotos, precios y variantes.",
+ r2_t:"TPV integrado",r2_p:"Cobra en tienda o mostrador desde la app.",
+ r3_t:"Reservas y citas",r3_p:"Agenda de citas y reservas con recordatorios.",
+ r4_t:"Reserva de espacios",r4_p:"Salas, pistas o equipos por franjas horarias.",
+ r5_t:"Pedidos y encargos",r5_p:"Marketplace para vender online y recibir encargos.",
+ r6_t:"Stock y variantes",r6_p:"Inventario por talla, color, número o unidad.",
+ r7_t:"Proveedores",r7_p:"Pedidos a proveedores organizados y a tiempo.",
+ r8_t:"Facturación y caja",r8_p:"Facturas, tickets y arqueo de caja al cuadrar.",
+ r9_t:"Eventos y aforo",r9_p:"Entradas, aforo y validación en la puerta.",
+ r10_t:"P&L e ingresos",r10_p:"Estadísticas, márgenes por producto e ingresos.",
+ r11_t:"CRM y clientes",r11_p:"Quiénes son, qué compran y cuándo vuelven.",
+ r12_t:"Notificaciones",r12_p:"Novedades y promos directo al móvil del cliente.",
+ bs1_t:"Ahorra tiempo",bs1_p:"Menos tareas manuales cada día.",bs2_t:"Más ingresos",bs2_p:"Más ventas online y en tienda.",
+ bs3_t:"Todo conectado",bs3_p:"Una sola plataforma, sin islas.",bs4_t:"Seguridad y RGPD",bs4_p:"Datos protegidos y en regla.",
+ app_strip:"Una app para tu comercio, otra para tus clientes. Disponibles en:",app_soon:"Próximamente",
+ sec_eyebrow:"Una versión para cada comercio",sec_h2:"No es una app genérica. Es la de tu sector.",
+ sec_p:"Cada comercio funciona distinto. Por eso Pagolocal tiene una plantilla adaptada a lo que tú necesitas, con las herramientas de tu sector activadas de serie.",
+ sc1_t:"Belleza y peluquería",sc1_p:"Citas, fichas de cliente, bonos y servicios.",
+ sc2_t:"Reserva de espacios",sc2_p:"Salas, pistas y equipos por franjas horarias.",
+ sc3_t:"Eventos",sc3_p:"Entradas, aforo y validación en la puerta.",
+ sc4_t:"Alimentación",sc4_p:"Pedidos, pesos y stock por producto o lote.",
+ sc5_t:"Zapatería",sc5_p:"Números, stock por variante y temporadas.",
+ sc6_t:"Moda",sc6_p:"Tallas, colores, temporada y probador.",
+ sc7_t:"Servicios profesionales",sc7_p:"Citas, presupuestos y facturación.",
+ sc8_t:"Y tu comercio",sc8_p:"Plantilla genérica, adaptada a tu medida.",
+ sec_note:"¿No ves el tuyo? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada comercio de Ontinyent.",
+ s2_eyebrow:"Conexión directa con tus clientes",s2_h2a:"Dos apps que se hablan.",s2_h2b:"Un ecosistema digital para tu comercio.",
+ s2_p:"Una app para ti y otra para tus clientes, hablando entre sí. Te descubren, compran, reservan y pagan, y vuelven gracias al cashback. Sin intermediarios que se llevan tu margen.",s2_cta:"Quiero llegar a más clientes",
+ node_shop:"Escaparate",node_order:"Pedido online",node_pay:"Pago en la app",node_takeaway:"Encargos",node_book:"Reservas y citas",
+ cl_h3:"Tu comercio, en el bolsillo de tus clientes",cl_p:"Te descubren, compran, reservan y pagan desde su móvil, y vuelven gracias al cashback.",
+ c1_t:"Perfil público",c1_p:"Tu ficha de comercio, visible para toda la comunidad.",
+ c2_t:"Compra por marketplace",c2_p:"Ven tu catálogo y compran online, directo a ti.",
+ c3_t:"Reservas y citas",c3_p:"Reservan cita, mesa o espacio desde el móvil.",
+ c4_t:"Encargos",c4_p:"Piden con antelación para recoger o llevar.",
+ c5_t:"Notificaciones",c5_p:"Avisas de novedades y promos directo a su móvil.",
+ c6_t:"Pagos por la app",c6_p:"Pagan desde el móvil, en tienda u online.",
+ c7_t:"Cashback",c7_p:"Vuelven una y otra vez gracias a la fidelización.",
+ cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que hace que tus clientes vuelvan.",
+ cb_p:"Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu comercio.",
+ cb_s1_n:"Tú decides",cb_s1_l:"el % de cashback de tu comercio",cb_s2_n:"Repiten",cb_s2_l:"y te recomiendan a los suyos",cb_shop:"Tu comercio",cb_user:"Tu cliente",
+ comm_eyebrow:"La comunidad que crece",comm_h2:"Más comercios, más usuarios. Más usuarios, más clientes para todos.",
+ comm_p:"No competimos entre nosotros. Sumamos fuerzas para que el comercio local sea la primera opción de la gente.",
+ b3_eyebrow:"El ecosistema de Ontinyent",b3_h2:"No estás solo: todo el pueblo empuja contigo.",
+ b3_p:"Un ecosistema conjunto de servicios de Ontinyent, junto a Comerç In, el Ayuntamiento y el resto de comercios, pensado para atraer más usuarios y clientes hacia tu tienda.",
+ onet_center:"Tu comercio",onet_center_s:"en el centro del ecosistema",
+ on1_t:"Ayuntamiento",on1_p:"Eventos y agenda local",on2_t:"Comerç In",on2_p:"La asociación de comercios",
+ on3_t:"Otros comercios",on3_p:"Sumáis, no competís",on4_t:"Más usuarios",on4_p:"Una comunidad que crece",
+ b3_note:"Cada nuevo comercio trae más usuarios, y cada usuario es un cliente potencial para tu tienda. El comercio local de Ontinyent, jugando en equipo.",
+ fut_eyebrow:"Funcionalidades futuras",fut_h2:"Crece contigo, a tu ritmo.",javi_role:"Creador de Pagolocal · Ontinyent",
+ javi_q1:"Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:",javi_q2:"\"Oye Javi, este botón debe hacer esto o aquello\"",javi_q3:"y lo hacemos.",
+ fut_list_t:"Ya trabajando en lo próximo",fut_list_s:"Algunas de las funciones que llegarán al ecosistema.",
+ f1:"Integración con proveedores",f2:"TPV físico y datáfono",f3:"Registro horario",f4:"Personal y turnos",f5:"Y lo que tu comercio necesite",
+ fut_badge:"Próximamente",fut_badge2:"Tú lo pides",
+ price_eyebrow:"Precios",price_h2:"Precios claros, sin sorpresas.",price_p:"Elige el plan que encaja con tu comercio. Cambia o cancela cuando quieras.",
+ pt_month:"Mensual",pt_year:"Anual",save_hint:"Paga el año completo y te ahorras 2 meses.",
+ per_month:"/mes",per_year:"/año",billed_month:"Facturado mes a mes",eq_prefix:"equivale a",
+ plan_lite:"Lite",plan_pro:"Pro",recommended:"Recomendado",
+ lite_tag:"Lo básico para vender y cobrar desde el primer día.",pro_tag:"Toda la plataforma, hoy y en el futuro, sin límites.",
+ price_cta_lite:"Empezar con Lite",price_cta_pro:"Empezar con Pro",
+ pl1:"Escaparate digital",pl2:"TPV integrado",pl3:"Reservas y citas",pl4:"Pedidos y encargos (marketplace)",pl5:"Pagos por la app y online",pl6:"Cashback y fidelización",pl7:"Perfil público y notificaciones",
+ feat_no:"No incluye",pln1:"Stock por variantes y proveedores",pln2:"Reserva de espacios y eventos",pln3:"P&L y analítica de clientes",
+ pp0:"Todo lo del plan Lite",pp1:"Stock y variantes",pp2:"Reserva de espacios y eventos",pp3:"Proveedores",pp4:"Facturación y caja con arqueo",pp5:"P&L, estadísticas e ingresos",pp6:"CRM y analítica de clientes",pp7:"Todas las funcionalidades futuras",pp7_badge:"incluidas",
+ cta_h2:"Tu comercio merece competir en igualdad de condiciones.",cta_p:"Únete al ecosistema digital del comercio local de Ontinyent. No estás solo.",
+ cta_b1:"Solicitar una demo gratuita",cta_b2:"Hablar con nosotros",cta_phone:"Teléfono próximamente",
+ foot_desc:"Una plataforma. Todo tu comercio. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.",
+ foot_nav:"Secciones",foot_legal:"Legal",foot_privacy:"Política de privacidad",foot_terms:"Aviso legal",foot_cookies:"Cookies",
+ foot_contact:"Contacto",foot_demo:"Solicitar demo",foot_social:"Redes sociales",foot_made:"Hecho con ❤️ para el comercio local de Ontinyent."},
+ va:{brand_tag:"Ontinyent",nav_app:"La plataforma",nav_verticals:"Per a qui",nav_apps:"Dues apps",nav_price:"Preus",nav_future:"Futur",nav_cta:"Digitalitzar",
+ s1_eyebrow:"El comerç local d'Ontinyent, en digital",s1_h1a:"Digitalitza el teu negoci local",s1_h1b:"amb la tecnologia de les grans cadenes.",
+ s1_lead:"Gestió, cobraments, fidelització i una app per als teus clients, en una sola plataforma. Una versió per a comerços i una altra per a hostaleria, feta a Ontinyent.",
+ s1_cta1:"Vull digitalitzar el meu negoci",s1_cta2:"Tria el teu negoci",s1_trust:"Comerços, serveis i hostaleria d'Ontinyent",
+ v_eyebrow:"Per al teu tipus de negoci",v_h2:"Una plataforma, adaptada al que tu fas.",v_p:"Comerç o hostaleria: tria el teu món i descobrix la versió de Pagolocal pensada per a tu, amb les ferramentes del teu sector activades de sèrie.",v1_t:"Comerç i serveis",v1_p:"Moda, bellesa, alimentació, sabateria, serveis, esdeveniments i reserva d'espais. Catàleg, TPV, cites i estoc per variants.",v1_cta:"Veure Pagolocal Comerços",v2_t:"Bars i restaurants",v2_p:"Restaurants, bars, cafeteries i food trucks. Comanda sense paper, KDS de cuina, comandes des de la taula i gestió de taules.",v2_cta:"Veure Pagolocal Restauració",v_note:"El teu negoci no encaixa en cap? L'adaptem. Eixe és el sentit d'un projecte local: fer-lo a la mida de cada negoci d'Ontinyent.",
+ nav_tickets:"Entrades",nav_faq:"FAQ",
+ ent_eyebrow:"Entrades i esdeveniments",ent_h2:"Els esdeveniments d'Ontinyent, en la mateixa app.",ent_p:"Descobrix els esdeveniments del poble, compra la teua entrada i valida-la a la porta amb un QR. L'Ajuntament i els comerços publiquen els seus esdeveniments; tu els portes a la butxaca, amb cashback també ací.",ent_b1:"Compra d'entrades des de l'app",ent_b2:"Validació amb QR a la porta",ent_b3:"Aforament i assistents en temps real",ent_b4:"Esdeveniments de l'Ajuntament i comerços locals",tik_badge:"Entrada",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"20 des · 19:00 · Plaça Major",tik_valid:"Vàlida a la porta · Aforament controlat",
+ seg_eyebrow:"Seguretat i confiança",seg_h2:"Els teus diners i les teues dades, protegits.",seg_p:"Un projecte local no vol dir menys seguretat. Al contrari: pagaments amb passarel·la bancària i dades tractades amb la màxima cura.",seg1_t:"Pagaments segurs",seg1_p:"Passarel·la bancària amb autenticació reforçada (SCA). No guardem les dades de la teua targeta.",seg2_t:"Compliment RGPD",seg2_p:"Les teues dades protegides i els teus drets garantits en tot moment.",seg3_t:"Dades xifrades",seg3_p:"Comunicacions i dades protegides d'extrem a extrem.",seg4_t:"Local i transparent",seg4_p:"Les teues dades no es venen a tercers. Fet a Ontinyent, per a Ontinyent.",
+ faq_eyebrow:"Preguntes freqüents",faq_h2:"Resolem els teus dubtes.",q1:"Què és Pagolocal?",a1:"La plataforma digital del comerç local d'Ontinyent: una app per als teus clients i una altra per al teu negoci, connectades, amb cashback i marketplace.",q2:"Quant costa?",a2:"Per a l'usuari, l'app és gratis. Per al negoci, des de 45 €/mes (Lite) o 60 €/mes (Pro), amb 2 mesos gratis en el pagament anual.",q3:"És segur pagar?",a3:"Sí. Els pagaments es processen amb passarel·la bancària segura i autenticació reforçada (SCA), i mai guardem les dades de la teua targeta.",q4:"Serveix per al meu tipus de negoci?",a4:"Sí. Hi ha una versió per a comerç i serveis i una altra per a hostaleria, i adaptem la plantilla al teu sector.",q5:"Què passa amb les meues dades?",a5:"Complim el RGPD: les teues dades estan protegides, no es venen a tercers i pots exercir els teus drets quan vulgues.",q6:"Necessite instal·lar res o comprar màquines?",a6:"No. Funciona des del mòbil o el navegador. I pròximament podràs connectar TPV físic i datàfon si el necessites.",
+ sb1:"Resum",sb2:"Comandes",sb3:"Reserves",sb4:"Inventari",sb5:"Estadístiques",dash_title:"Panell de control",dash_today:"Hui",
+ dk_sales:"Vendes",dk_orders:"Comandes",dk_ticket:"Tiquet mitjà",ch_sales:"Vendes · últims 7 dies",ch_channel:"Per canal",lg_shop:"Botiga 48%",lg_online:"Online 28%",lg_book:"Reserves 24%",float_stat:"vendes vs ahir",
+ r1_t:"Aparador digital",r1_p:"El teu catàleg en línia, amb fotos, preus i variants.",
+ r2_t:"TPV integrat",r2_p:"Cobra en botiga o mostrador des de l'app.",
+ r3_t:"Reserves i cites",r3_p:"Agenda de cites i reserves amb recordatoris.",
+ r4_t:"Reserva d'espais",r4_p:"Sales, pistes o equips per franges horàries.",
+ r5_t:"Comandes i encàrrecs",r5_p:"Marketplace per vendre en línia i rebre encàrrecs.",
+ r6_t:"Estoc i variants",r6_p:"Inventari per talla, color, número o unitat.",
+ r7_t:"Proveïdors",r7_p:"Comandes a proveïdors organitzades i a temps.",
+ r8_t:"Facturació i caixa",r8_p:"Factures, tiquets i arqueig de caixa en quadrar.",
+ r9_t:"Esdeveniments i aforament",r9_p:"Entrades, aforament i validació a la porta.",
+ r10_t:"P&L i ingressos",r10_p:"Estadístiques, marges per producte i ingressos.",
+ r11_t:"CRM i clients",r11_p:"Qui són, què compren i quan tornen.",
+ r12_t:"Notificacions",r12_p:"Novetats i promos directe al mòbil del client.",
+ bs1_t:"Estalvia temps",bs1_p:"Menys tasques manuals cada dia.",bs2_t:"Més ingressos",bs2_p:"Més vendes en línia i en botiga.",
+ bs3_t:"Tot connectat",bs3_p:"Una sola plataforma, sense illes.",bs4_t:"Seguretat i RGPD",bs4_p:"Dades protegides i en regla.",
+ app_strip:"Una app per al teu comerç, una altra per als teus clients. Disponibles a:",app_soon:"Pròximament",
+ sec_eyebrow:"Una versió per a cada comerç",sec_h2:"No és una app genèrica. És la del teu sector.",
+ sec_p:"Cada comerç funciona distint. Per això Pagolocal té una plantilla adaptada al que necessites, amb les ferramentes del teu sector activades de sèrie.",
+ sc1_t:"Bellesa i perruqueria",sc1_p:"Cites, fitxes de client, bons i serveis.",
+ sc2_t:"Reserva d'espais",sc2_p:"Sales, pistes i equips per franges horàries.",
+ sc3_t:"Esdeveniments",sc3_p:"Entrades, aforament i validació a la porta.",
+ sc4_t:"Alimentació",sc4_p:"Comandes, pesos i estoc per producte o lot.",
+ sc5_t:"Sabateria",sc5_p:"Números, estoc per variant i temporades.",
+ sc6_t:"Moda",sc6_p:"Talles, colors, temporada i emprovador.",
+ sc7_t:"Serveis professionals",sc7_p:"Cites, pressupostos i facturació.",
+ sc8_t:"I el teu comerç",sc8_p:"Plantilla genèrica, adaptada a la teua mida.",
+ sec_note:"No veus el teu? L'adaptem. Eixe és el sentit d'un projecte local: fer-lo a la mida de cada comerç d'Ontinyent.",
+ s2_eyebrow:"Connexió directa amb els teus clients",s2_h2a:"Dues apps que es parlen.",s2_h2b:"Un ecosistema digital per al teu comerç.",
+ s2_p:"Una app per a tu i una altra per als teus clients, parlant entre si. Et descobrixen, compren, reserven i paguen, i tornen gràcies al cashback. Sense intermediaris que s'emporten el teu marge.",s2_cta:"Vull arribar a més clients",
+ node_shop:"Aparador",node_order:"Comanda en línia",node_pay:"Pagament a l'app",node_takeaway:"Encàrrecs",node_book:"Reserves i cites",
+ cl_h3:"El teu comerç, a la butxaca dels teus clients",cl_p:"Et descobrixen, compren, reserven i paguen des del mòbil, i tornen gràcies al cashback.",
+ c1_t:"Perfil públic",c1_p:"La teua fitxa de comerç, visible per a tota la comunitat.",
+ c2_t:"Compra per marketplace",c2_p:"Veuen el teu catàleg i compren en línia, directe a tu.",
+ c3_t:"Reserves i cites",c3_p:"Reserven cita, taula o espai des del mòbil.",
+ c4_t:"Encàrrecs",c4_p:"Demanen amb antelació per arreplegar o emportar.",
+ c5_t:"Notificacions",c5_p:"Avises de novetats i promos directe al seu mòbil.",
+ c6_t:"Pagaments per l'app",c6_p:"Paguen des del mòbil, en botiga o en línia.",
+ c7_t:"Cashback",c7_p:"Tornen una vegada i una altra gràcies a la fidelització.",
+ cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que fa que els teus clients tornen.",
+ cb_p:"Cada compra genera un percentatge de tornada per al client. Així repetixen i et recomanen. L'estratègia de les grans cadenes, ara al teu comerç.",
+ cb_s1_n:"Tu decideixes",cb_s1_l:"el % de cashback del teu comerç",cb_s2_n:"Repetixen",cb_s2_l:"i et recomanen als seus",cb_shop:"El teu comerç",cb_user:"El teu client",
+ comm_eyebrow:"La comunitat que creix",comm_h2:"Més comerços, més usuaris. Més usuaris, més clients per a tots.",
+ comm_p:"No competim entre nosaltres. Sumem forces perquè el comerç local siga la primera opció de la gent.",
+ b3_eyebrow:"L'ecosistema d'Ontinyent",b3_h2:"No estàs sol: tot el poble empeny amb tu.",
+ b3_p:"Un ecosistema conjunt de serveis d'Ontinyent, junt a Comerç In, l'Ajuntament i la resta de comerços, pensat per atraure més usuaris i clients cap a la teua botiga.",
+ onet_center:"El teu comerç",onet_center_s:"al centre de l'ecosistema",
+ on1_t:"Ajuntament",on1_p:"Esdeveniments i agenda local",on2_t:"Comerç In",on2_p:"L'associació de comerços",
+ on3_t:"Altres comerços",on3_p:"Sumeu, no competiu",on4_t:"Més usuaris",on4_p:"Una comunitat que creix",
+ b3_note:"Cada nou comerç porta més usuaris, i cada usuari és un client potencial per a la teua botiga. El comerç local d'Ontinyent, jugant en equip.",
+ fut_eyebrow:"Funcionalitats futures",fut_h2:"Creix amb tu, al teu ritme.",javi_role:"Creador de Pagolocal · Ontinyent",
+ javi_q1:"Som d'Ontinyent. Ajustar-nos a les teues necessitats reals és tan senzill com vindre i dir-me:",javi_q2:"\"Ei Javi, este botó ha de fer açò o allò\"",javi_q3:"i ho fem.",
+ fut_list_t:"Ja treballant en el que ve",fut_list_s:"Algunes de les funcions que arribaran a l'ecosistema.",
+ f1:"Integració amb proveïdors",f2:"TPV físic i datàfon",f3:"Registre horari",f4:"Personal i torns",f5:"I el que el teu comerç necessite",
+ fut_badge:"Pròximament",fut_badge2:"Tu ho demanes",
+ price_eyebrow:"Preus",price_h2:"Preus clars, sense sorpreses.",price_p:"Tria el pla que encaixa amb el teu comerç. Canvia o cancel·la quan vulgues.",
+ pt_month:"Mensual",pt_year:"Anual",save_hint:"Paga l'any complet i t'estalvies 2 mesos.",
+ per_month:"/mes",per_year:"/any",billed_month:"Facturat mes a mes",eq_prefix:"equival a",
+ plan_lite:"Lite",plan_pro:"Pro",recommended:"Recomanat",
+ lite_tag:"El bàsic per vendre i cobrar des del primer dia.",pro_tag:"Tota la plataforma, hui i en el futur, sense límits.",
+ price_cta_lite:"Començar amb Lite",price_cta_pro:"Començar amb Pro",
+ pl1:"Aparador digital",pl2:"TPV integrat",pl3:"Reserves i cites",pl4:"Comandes i encàrrecs (marketplace)",pl5:"Pagaments per l'app i en línia",pl6:"Cashback i fidelització",pl7:"Perfil públic i notificacions",
+ feat_no:"No inclou",pln1:"Estoc per variants i proveïdors",pln2:"Reserva d'espais i esdeveniments",pln3:"P&L i analítica de clients",
+ pp0:"Tot el del pla Lite",pp1:"Estoc i variants",pp2:"Reserva d'espais i esdeveniments",pp3:"Proveïdors",pp4:"Facturació i caixa amb arqueig",pp5:"P&L, estadístiques i ingressos",pp6:"CRM i analítica de clients",pp7:"Totes les funcionalitats futures",pp7_badge:"incloses",
+ cta_h2:"El teu comerç mereix competir en igualtat de condicions.",cta_p:"Uneix-te a l'ecosistema digital del comerç local d'Ontinyent. No estàs sol.",
+ cta_b1:"Sol·licitar una demo gratuïta",cta_b2:"Parlar amb nosaltres",cta_phone:"Telèfon pròximament",
+ foot_desc:"Una plataforma. Tot el teu comerç. Gestió, clients i comunitat local, en un mateix ecosistema fet a Ontinyent.",
+ foot_nav:"Seccions",foot_legal:"Legal",foot_privacy:"Política de privacitat",foot_terms:"Avís legal",foot_cookies:"Cookies",
+ foot_contact:"Contacte",foot_demo:"Sol·licitar demo",foot_social:"Xarxes socials",foot_made:"Fet amb ❤️ per al comerç local d'Ontinyent."},
+ en:{brand_tag:"Ontinyent",nav_app:"The platform",nav_verticals:"For who",nav_apps:"Two apps",nav_price:"Pricing",nav_future:"Future",nav_cta:"Go digital",
+ s1_eyebrow:"Ontinyent's local commerce, gone digital",s1_h1a:"Digitalize your local business",s1_h1b:"with the technology of the big chains.",
+ s1_lead:"Management, payments, loyalty and a customer app, all in one platform. One version for shops and another for hospitality, made in Ontinyent.",
+ s1_cta1:"I want to digitalize my business",s1_cta2:"Choose your business",s1_trust:"Shops, services and hospitality in Ontinyent",
+ v_eyebrow:"For your type of business",v_h2:"One platform, tailored to what you do.",v_p:"Retail or hospitality: choose your world and discover the Pagolocal version built for you, with your sector's tools on out of the box.",v1_t:"Shops and services",v1_p:"Fashion, beauty, grocery, footwear, services, events and space booking. Catalog, POS, appointments and stock by variants.",v1_cta:"See Pagolocal Retail",v2_t:"Bars and restaurants",v2_p:"Restaurants, bars, cafes and food trucks. Paperless orders, kitchen KDS, order from the table and table management.",v2_cta:"See Pagolocal Hospitality",v_note:"Your business doesn't fit any of these? We adapt it. That's the point of a local project: built to fit every business in Ontinyent.",
+ nav_tickets:"Tickets",nav_faq:"FAQ",
+ ent_eyebrow:"Tickets and events",ent_h2:"Ontinyent's events, in the same app.",ent_p:"Discover the town's events, buy your ticket and validate it at the door with a QR. The town hall and shops publish their events; you carry them in your pocket, with cashback here too.",ent_b1:"Buy tickets from the app",ent_b2:"QR validation at the door",ent_b3:"Capacity and attendees in real time",ent_b4:"Events from the town hall and local shops",tik_badge:"Ticket",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"Dec 20 · 19:00 · Plaça Major",tik_valid:"Valid at the door · Capacity controlled",
+ seg_eyebrow:"Security and trust",seg_h2:"Your money and your data, protected.",seg_p:"A local project doesn't mean less security. Quite the opposite: bank-grade payments and data handled with the utmost care.",seg1_t:"Secure payments",seg1_p:"Bank payment gateway with strong authentication (SCA). We never store your card details.",seg2_t:"GDPR compliant",seg2_p:"Your data protected and your rights guaranteed at all times.",seg3_t:"Encrypted data",seg3_p:"Communications and data protected end to end.",seg4_t:"Local and transparent",seg4_p:"Your data is never sold to third parties. Made in Ontinyent, for Ontinyent.",
+ faq_eyebrow:"Frequently asked questions",faq_h2:"We answer your questions.",q1:"What is Pagolocal?",a1:"The digital platform for Ontinyent's local commerce: one app for your customers and one for your business, connected, with cashback and marketplace.",q2:"How much does it cost?",a2:"For users, the app is free. For businesses, from €45/mo (Lite) or €60/mo (Pro), with 2 months free on annual billing.",q3:"Is paying secure?",a3:"Yes. Payments are processed through a secure bank gateway with strong authentication (SCA), and we never store your card details.",q4:"Does it work for my type of business?",a4:"Yes. There's a version for retail and services and another for hospitality, and we adapt the template to your sector.",q5:"What about my data?",a5:"We are GDPR compliant: your data is protected, never sold to third parties, and you can exercise your rights anytime.",q6:"Do I need to install anything or buy hardware?",a6:"No. It works from your phone or browser. And soon you'll be able to connect a physical POS and card reader if you need one.",
+ sb1:"Overview",sb2:"Orders",sb3:"Bookings",sb4:"Inventory",sb5:"Analytics",dash_title:"Control panel",dash_today:"Today",
+ dk_sales:"Sales",dk_orders:"Orders",dk_ticket:"Avg ticket",ch_sales:"Sales · last 7 days",ch_channel:"By channel",lg_shop:"In-store 48%",lg_online:"Online 28%",lg_book:"Bookings 24%",float_stat:"sales vs yesterday",
+ r1_t:"Digital storefront",r1_p:"Your catalog online, with photos, prices and variants.",
+ r2_t:"Integrated POS",r2_p:"Charge in store or at the counter from the app.",
+ r3_t:"Bookings and appointments",r3_p:"Appointment and booking agenda with reminders.",
+ r4_t:"Space booking",r4_p:"Rooms, courts or gear by time slots.",
+ r5_t:"Orders and pre-orders",r5_p:"Marketplace to sell online and take pre-orders.",
+ r6_t:"Stock and variants",r6_p:"Inventory by size, color, number or unit.",
+ r7_t:"Suppliers",r7_p:"Supplier orders organized and on time.",
+ r8_t:"Invoicing and till",r8_p:"Invoices, receipts and till reconciliation.",
+ r9_t:"Events and capacity",r9_p:"Tickets, capacity and door validation.",
+ r10_t:"P&L and revenue",r10_p:"Analytics, margins per product and revenue.",
+ r11_t:"CRM and customers",r11_p:"Who they are, what they buy and when they return.",
+ r12_t:"Notifications",r12_p:"News and offers straight to the customer's phone.",
+ bs1_t:"Save time",bs1_p:"Fewer manual tasks every day.",bs2_t:"More revenue",bs2_p:"More sales online and in store.",
+ bs3_t:"All connected",bs3_p:"One platform, no silos.",bs4_t:"Security and GDPR",bs4_p:"Data protected and compliant.",
+ app_strip:"One app for your shop, another for your customers. Available on:",app_soon:"Coming soon",
+ sec_eyebrow:"A version for every shop",sec_h2:"Not a generic app. It's your sector's.",
+ sec_p:"Every shop works differently. That's why Pagolocal has a template tailored to what you need, with your sector's tools on out of the box.",
+ sc1_t:"Beauty and hair",sc1_p:"Appointments, client profiles, passes and services.",
+ sc2_t:"Space booking",sc2_p:"Rooms, courts and gear by time slots.",
+ sc3_t:"Events",sc3_p:"Tickets, capacity and door validation.",
+ sc4_t:"Grocery",sc4_p:"Orders, weights and stock by product or batch.",
+ sc5_t:"Footwear",sc5_p:"Sizes, stock by variant and seasons.",
+ sc6_t:"Fashion",sc6_p:"Sizes, colors, season and fitting room.",
+ sc7_t:"Professional services",sc7_p:"Appointments, quotes and invoicing.",
+ sc8_t:"And your shop",sc8_p:"Generic template, tailored to you.",
+ sec_note:"Don't see yours? We adapt it. That's the point of a local project: built to fit every shop in Ontinyent.",
+ s2_eyebrow:"A direct link to your customers",s2_h2a:"Two apps that talk to each other.",s2_h2b:"A digital ecosystem for your shop.",
+ s2_p:"One app for you and one for your customers, talking to each other. They discover you, buy, book and pay, and return thanks to cashback. No middlemen taking your margin.",s2_cta:"I want to reach more customers",
+ node_shop:"Storefront",node_order:"Online order",node_pay:"In-app payment",node_takeaway:"Pre-orders",node_book:"Bookings",
+ cl_h3:"Your shop, in your customers' pocket",cl_p:"They discover you, buy, book and pay from their phone, and return thanks to cashback.",
+ c1_t:"Public profile",c1_p:"Your shop page, visible to the whole community.",
+ c2_t:"Marketplace shopping",c2_p:"They see your catalog and buy online, straight from you.",
+ c3_t:"Bookings and appointments",c3_p:"They book an appointment, table or space from the phone.",
+ c4_t:"Pre-orders",c4_p:"They order ahead for pickup or takeaway.",
+ c5_t:"Notifications",c5_p:"You announce news and offers straight to their phone.",
+ c6_t:"In-app payments",c6_p:"They pay from the phone, in store or online.",
+ c7_t:"Cashback",c7_p:"They come back again and again through loyalty.",
+ cb_eyebrow:"The power of cashback",cb_h2:"Cashback that keeps customers coming back.",
+ cb_p:"Every purchase gives a percentage back to the customer. So they return and recommend you. The strategy of the big chains, now at your shop.",
+ cb_s1_n:"You decide",cb_s1_l:"your shop's cashback %",cb_s2_n:"They return",cb_s2_l:"and recommend you to theirs",cb_shop:"Your shop",cb_user:"Your customer",
+ comm_eyebrow:"A growing community",comm_h2:"More shops, more users. More users, more customers for everyone.",
+ comm_p:"We don't compete with each other. We join forces so local commerce is people's first choice.",
+ b3_eyebrow:"The Ontinyent ecosystem",b3_h2:"You're not alone: the whole town pushes with you.",
+ b3_p:"A shared ecosystem of Ontinyent services, alongside Comerç In, the town hall and the rest of the shops, built to bring more users and customers to your store.",
+ onet_center:"Your shop",onet_center_s:"at the center of the ecosystem",
+ on1_t:"Town hall",on1_p:"Events and local agenda",on2_t:"Comerç In",on2_p:"The merchants' association",
+ on3_t:"Other shops",on3_p:"You add up, you don't compete",on4_t:"More users",on4_p:"A growing community",
+ b3_note:"Every new shop brings more users, and every user is a potential customer for your store. Ontinyent's local commerce, playing as a team.",
+ fut_eyebrow:"Future features",fut_h2:"It grows with you, at your pace.",javi_role:"Creator of Pagolocal · Ontinyent",
+ javi_q1:"We're from Ontinyent. Fitting your real needs is as simple as coming and telling me:",javi_q2:"\"Hey Javi, this button should do this or that\"",javi_q3:"and we make it happen.",
+ fut_list_t:"Already working on what's next",fut_list_s:"Some of the features coming to the ecosystem.",
+ f1:"Supplier integration",f2:"Physical POS and card reader",f3:"Time tracking",f4:"Staff and shifts",f5:"And whatever your shop needs",
+ fut_badge:"Coming soon",fut_badge2:"You ask for it",
+ price_eyebrow:"Pricing",price_h2:"Clear pricing, no surprises.",price_p:"Choose the plan that fits your shop. Change or cancel anytime.",
+ pt_month:"Monthly",pt_year:"Yearly",save_hint:"Pay for the full year and save 2 months.",
+ per_month:"/mo",per_year:"/yr",billed_month:"Billed monthly",eq_prefix:"equals",
+ plan_lite:"Lite",plan_pro:"Pro",recommended:"Recommended",
+ lite_tag:"The basics to sell and get paid from day one.",pro_tag:"The whole platform, today and in the future, no limits.",
+ price_cta_lite:"Start with Lite",price_cta_pro:"Start with Pro",
+ pl1:"Digital storefront",pl2:"Integrated POS",pl3:"Bookings and appointments",pl4:"Orders and pre-orders (marketplace)",pl5:"In-app and online payments",pl6:"Cashback and loyalty",pl7:"Public profile and notifications",
+ feat_no:"Not included",pln1:"Stock by variants and suppliers",pln2:"Space booking and events",pln3:"P&L and customer analytics",
+ pp0:"Everything in Lite",pp1:"Stock and variants",pp2:"Space booking and events",pp3:"Suppliers",pp4:"Invoicing and till reconciliation",pp5:"P&L, analytics and revenue",pp6:"CRM and customer analytics",pp7:"All future features",pp7_badge:"included",
+ cta_h2:"Your shop deserves to compete on equal terms.",cta_p:"Join the digital ecosystem of local commerce in Ontinyent. You're not alone.",
+ cta_b1:"Request a free demo",cta_b2:"Talk to us",cta_phone:"Phone coming soon",
+ foot_desc:"One platform. Your whole shop. Management, customers and local community, in one ecosystem made in Ontinyent.",
+ foot_nav:"Sections",foot_legal:"Legal",foot_privacy:"Privacy policy",foot_terms:"Legal notice",foot_cookies:"Cookies",
+ foot_contact:"Contact",foot_demo:"Request demo",foot_social:"Social media",foot_made:"Made with ❤️ for local commerce in Ontinyent."}
+};
+let currentLang="es";
+function applyLang(lang){currentLang=lang;const d=I18N[lang];document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k];});
+ document.querySelectorAll("#langSwitch button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+ renderPrices();}
+const PRICES={lite:{m:45,y:450,old:540,eq:"37,50"},pro:{m:60,y:600,old:720,eq:"50"}};
+let period="m";
+function renderPrices(){const d=I18N[currentLang];["lite","pro"].forEach(p=>{const pr=PRICES[p];
+  const amt=document.getElementById(p+"-amt"),per=document.getElementById(p+"-per"),sub=document.getElementById(p+"-sub"),old=document.getElementById(p+"-old");
+  if(!amt)return;
+  if(period==="m"){amt.textContent=pr.m;per.textContent="€"+d.per_month;sub.textContent=d.billed_month;old.textContent="";}
+  else{amt.textContent=pr.y;per.textContent="€"+d.per_year;sub.textContent=d.eq_prefix+" "+pr.eq+" €"+d.per_month;old.textContent=pr.old+" €"+d.per_year;}});
+ document.querySelectorAll("#ptWrap button").forEach(b=>b.classList.toggle("active",b.dataset.p===period));}
+document.getElementById("ptWrap").addEventListener("click",e=>{const b=e.target.closest("button");if(b){period=b.dataset.p;renderPrices();}});
+document.getElementById("langSwitch").addEventListener("click",e=>{const b=e.target.closest("button");if(b)applyLang(b.dataset.lang);});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+document.querySelectorAll("#navLinks a").forEach(a=>a.addEventListener("click",()=>document.getElementById("navLinks").classList.remove("open")));
+document.getElementById("year").textContent=new Date().getFullYear();
+const RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const revObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");revObs.unobserve(en.target);}});},{threshold:0.12});
+document.querySelectorAll(".reveal-up").forEach(el=>revObs.observe(el));
+document.querySelectorAll(".faq-q").forEach(q=>q.addEventListener("click",()=>q.parentElement.classList.toggle("open")));
+const scene=document.getElementById("scene");
+function launchScene(){document.getElementById("beam").classList.add("on");scene.classList.add("live");
+ scene.querySelectorAll(".node").forEach((n,i)=>setTimeout(()=>n.classList.add("show"),RM?0:500+i*180));}
+const heroObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){launchScene();heroObs.disconnect();}});},{threshold:0.3});
+heroObs.observe(scene);
+const cbAnim=document.getElementById("cbAnim");
+const cbObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){cbAnim.classList.add("live");cbObs.disconnect();}});},{threshold:0.4});
+cbObs.observe(cbAnim);
+const commViz=document.getElementById("commViz"),commLines=document.getElementById("commLines");
+const bubbleData=[{x:50,y:46,r:62,type:"shop"},{x:33,y:20,r:34,type:"user"},{x:66,y:18,r:40,type:"shop"},{x:18,y:62,r:44,type:"user"},{x:80,y:60,r:50,type:"shop"},{x:44,y:78,r:34,type:"user"},{x:70,y:82,r:30,type:"user"},{x:26,y:36,r:26,type:"shop"},{x:88,y:34,r:24,type:"user"},{x:58,y:34,r:28,type:"user"}];
+const shopSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg>';
+const userSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';
+function buildBubbles(){const w=commViz.clientWidth,h=380,cx=w*0.5,cy=h*0.46;
+ commLines.setAttribute("viewBox",`0 0 ${w} ${h}`);
+ commLines.innerHTML=bubbleData.slice(1).map(b=>`<line x1="${cx}" y1="${cy}" x2="${b.x/100*w}" y2="${b.y/100*h}"/>`).join("");
+ commViz.querySelectorAll(".bubble").forEach(el=>el.remove());
+ bubbleData.forEach((b,i)=>{const el=document.createElement("div");el.className="bubble "+b.type;
+  el.style.width=el.style.height=b.r*2+"px";el.style.left=`calc(${b.x}% - ${b.r}px)`;el.style.top=(b.y/100*h-b.r)+"px";
+  el.style.transitionDelay=(RM?0:i*0.09)+"s";el.style.animationDelay=(i*0.4)+"s";
+  el.innerHTML=b.type==="shop"?shopSvg:userSvg;commViz.appendChild(el);});}
+buildBubbles();
+const commObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){commViz.classList.add("reveal");commObs.disconnect();}});},{threshold:0.3});
+commObs.observe(commViz);
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{const had=commViz.classList.contains("reveal");buildBubbles();if(had)commViz.classList.add("reveal");},200);});
+const onet=document.getElementById("onet"),onetLines=document.getElementById("onetLines");
+(function(){const cx=380,cy=210;const t=[[152,50],[608,50],[152,370],[608,370]];
+ onetLines.innerHTML=t.map(([x,y])=>`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`).join("");})();
+const onetObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){onet.classList.add("reveal");onetObs.disconnect();}});},{threshold:0.25});
+onetObs.observe(onet);
+renderPrices();
+</script>
+</body>
+</html>
