@@ -39,18 +39,6 @@
       padding: 60px 0 20px;
       overflow: hidden;
     }
-    .help-hero-decor {
-      position: absolute;
-      width: 420px; height: 420px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.06;
-      filter: blur(110px);
-      top: -120px;
-      right: -80px;
-      z-index: 0;
-      pointer-events: none;
-    }
     .help-hero .container { position: relative; z-index: 1; }
     .help-hero h1 { margin-bottom: var(--s-lg); max-width: 760px; }
     .help-hero .lead {
@@ -145,16 +133,6 @@
       position: relative;
       overflow: hidden;
     }
-    .help-contact-card::after {
-      content: "";
-      position: absolute;
-      top: -60px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(245, 200, 66, 0.14);
-      filter: blur(16px);
-      pointer-events: none;
-    }
     .help-contact-card .eyebrow { position: relative; }
     .help-contact-card h2 { color: var(--dark-text); margin-bottom: var(--s-md); position: relative; }
     .help-contact-card p { color: var(--dark-muted); max-width: 520px; margin: 0 auto var(--s-xl); position: relative; }
@@ -199,7 +177,6 @@
 
   <!-- =================== HERO =================== -->
   <section class="help-hero">
-    <div class="help-hero-decor" aria-hidden="true"></div>
     <div class="container">
       <span class="eyebrow" data-i18n="help.eyebrow"></span>
       <h1 data-i18n="help.title"></h1>

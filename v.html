@@ -33,6 +33,10 @@
     .loc{ text-align:center; margin-top:14px; font-size:.8rem; color:var(--muted); letter-spacing:1px; }
     .msg{ text-align:center; padding:40px 20px; color:var(--muted); }
     .foot{ text-align:center; color:var(--muted); font-size:.78rem; margin-top:18px; }
+    .status{ display:flex; align-items:center; justify-content:center; gap:8px; }
+    .status svg{ width:20px; height:20px; }
+    .ev-sub{ display:flex; align-items:center; gap:6px; }
+    .ev-sub svg{ width:15px; height:15px; flex:none; }
   </style>
 </head>
 <body>
@@ -47,6 +51,13 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
+    var ICO = {
+      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
+      x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>',
+      ban: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg>',
+      calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    };
     var BACKEND = 'https://localpay-backend-production.up.railway.app';
     function qs(n){ return new URLSearchParams(location.search).get(n); }
     function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -54,9 +65,9 @@
 
     function render(en){
       var estado = (en.estado||'valida');
-      var stCfg = estado==='usada' ? {cls:'s-usada', txt:'⛔ Entrada ya utilizada'} :
-                  estado==='anulada' ? {cls:'s-anulada', txt:'❌ Entrada anulada'} :
-                  {cls:'s-valida', txt:'✅ Entrada válida'};
+      var stCfg = estado==='usada' ? {cls:'s-usada', txt:ICO.ban+'Entrada ya utilizada'} :
+                  estado==='anulada' ? {cls:'s-anulada', txt:ICO.x+'Entrada anulada'} :
+                  {cls:'s-valida', txt:ICO.check+'Entrada válida'};
       var poster = en.imagen_url ? '<img class="poster" src="'+esc(en.imagen_url)+'" alt="">' : '';
       var html =
         poster +
@@ -64,8 +75,8 @@
         '<div class="body">' +
           '<div class="ev-name">'+esc(en.evento_nombre)+'</div>' +
           (en.comercio_nombre?'<div class="ev-sub">'+esc(en.comercio_nombre)+'</div>':'') +
-          (en.inicia_en?'<div class="ev-sub">🗓 '+esc(fechaLarga(en.inicia_en))+'</div>':'') +
-          (en.lugar_nombre?'<div class="ev-sub">📍 '+esc(en.lugar_nombre)+(en.direccion?' · '+esc(en.direccion):'')+'</div>':'') +
+          (en.inicia_en?'<div class="ev-sub">'+ICO.calendar+esc(fechaLarga(en.inicia_en))+'</div>':'') +
+          (en.lugar_nombre?'<div class="ev-sub">'+ICO.pin+esc(en.lugar_nombre)+(en.direccion?' · '+esc(en.direccion):'')+'</div>':'') +
           '<div class="qrbox"><div id="qr"></div></div>' +
           '<div class="det">' +
             '<div class="row"><span class="k">Entrada</span><span class="v">'+esc(en.descripcion||'General')+'</span></div>' +

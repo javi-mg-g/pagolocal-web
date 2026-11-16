@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagolocal Restauración · Una app para todo tu restaurante</title>
+<title>PagoLocal Restauración · Una app para todo tu restaurante</title>
 <meta name="description" content="Toda la gestión de tu restaurante en una app, conectada directamente con tus clientes y con el ecosistema local de Ontinyent. La tecnología de las grandes cadenas, ahora para tu local.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230D0D14'/%3E%3Cpath d='M17.5 6 9 18h5l-1.5 8 8.5-12h-5z' fill='%23F5C842'/%3E%3C/svg%3E">
 <style>
 /* TOKENS: replican styles.css de pagolocal.xyz */
@@ -17,7 +17,7 @@
   --accent:#B07908;--accent-hover:#C8870A;--accent-soft:#8A5E06;
   --accent-bright:#F5C842;--accent-dim:rgba(176,121,8,0.10);--accent-tint:#FBF6E8;
   --dark-bg:#0D0D14;--dark-surface:#16161F;--dark-card:#1E1E2A;--dark-border:#2A2A3C;
-  --dark-text:#F0F0FA;--dark-muted:#6060A0;
+  --dark-text:#F0F0FA;--dark-muted:#9A9AB8;
   --purple:#7C3AED;--red:#DC2626;--blue:#2563EB;--green:#059669;
   --text:#1A1A2E;--muted:#6B7280;--text-dim:#A1A1AA;--white:#FFFFFF;
   --s-xs:4px;--s-sm:8px;--s-md:12px;--s-lg:16px;--s-xl:24px;--s-xxl:32px;--s-huge:48px;
@@ -59,7 +59,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:var(--s-xl);}
 .logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;color:var(--text);}
 .logo-mark{width:38px;height:38px;background:var(--dark-bg);border-radius:var(--r-full);display:grid;place-items:center;color:var(--accent-bright);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,0.04);flex:none;}
-.logo-mark svg{width:20px;height:20px;filter:drop-shadow(0 0 6px rgba(245,200,66,0.5));}
+.logo-mark svg{width:20px;height:20px;}
 .logo .tag{font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);padding:2px 7px;border-radius:var(--r-full);border:1px solid rgba(176,121,8,0.2);}
 .nav-links{display:flex;align-items:center;gap:22px;list-style:none;margin:0;padding:0;}
 .nav-links a{font-size:0.9rem;font-weight:600;color:var(--muted);transition:color .15s ease;white-space:nowrap;}
@@ -79,7 +79,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 }
 /* SHOWCASE = BLOQUE 1 (hero oscuro) */
 .showcase{background:var(--dark-bg);color:var(--dark-text);position:relative;overflow:hidden;padding:70px 0 92px;}
-.showcase::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 480px at 82% -5%,rgba(245,200,66,0.14),transparent 60%),radial-gradient(700px 400px at 10% 20%,rgba(124,58,237,0.10),transparent 55%);}
+
 .showcase .inner{position:relative;z-index:1;}
 .showcase .eyebrow{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.25);color:var(--accent-bright);}
 .showcase h1,.showcase h2{color:var(--dark-text);}
@@ -118,19 +118,14 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .chart-card{background:rgba(255,255,255,0.03);border:1px solid var(--dark-border);border-radius:8px;padding:9px;display:flex;flex-direction:column;}
 .chart-card .ct{font-size:0.5rem;color:var(--dark-muted);margin-bottom:7px;}
 .bars{display:flex;align-items:flex-end;gap:5px;flex:1;min-height:64px;}
-.bars .bar{flex:1;background:linear-gradient(180deg,rgba(245,200,66,0.55),rgba(176,121,8,0.35));border-radius:3px 3px 0 0;}
-.bars .bar.hot{background:linear-gradient(180deg,var(--accent-bright),var(--accent));}
+.bars .bar{flex:1;background:rgba(245,200,66,0.35);border-radius:3px 3px 0 0;}
+.bars .bar.hot{background:var(--accent-bright);}
 .donut{width:62px;height:62px;border-radius:50%;margin:0 auto;background:conic-gradient(var(--accent-bright) 0 55%,var(--purple) 55% 78%,#3a3a52 78% 100%);position:relative;}
 .donut::after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--dark-card);}
 .legend{display:flex;flex-direction:column;gap:3px;margin-top:8px;}
 .legend .lg{display:flex;align-items:center;gap:5px;font-size:0.5rem;color:var(--dark-muted);}
 .legend .lg .d{width:6px;height:6px;border-radius:2px;flex:none;}
-.laptop .lbase{height:11px;background:linear-gradient(180deg,#1a1a24,#05050a);border-radius:0 0 12px 12px;margin:0 auto;width:76%;box-shadow:var(--shadow);}
-.float-stat{position:absolute;left:-10px;bottom:24px;background:var(--surface);color:var(--text);border-radius:var(--r-md);padding:10px 14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;z-index:3;}
-.float-stat .fsi{width:30px;height:30px;border-radius:8px;background:rgba(5,150,105,0.14);color:var(--green);display:grid;place-items:center;}
-.float-stat .fsi svg{width:16px;height:16px;}
-.float-stat .fsn{display:block;font-size:0.95rem;font-weight:800;line-height:1.1;}
-.float-stat .fsl{display:block;font-size:0.62rem;color:var(--muted);}
+.laptop .lbase{height:11px;background:#14141c;border-radius:0 0 12px 12px;margin:0 auto;width:76%;box-shadow:var(--shadow);}
 /* feature tiles */
 .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 .feat{border-radius:var(--r-lg);padding:18px;transition:transform .18s cubic-bezier(0.16,1,0.3,1),box-shadow .18s ease,border-color .18s ease;}
@@ -148,13 +143,6 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .feat.light .fi{background:var(--accent-tint);color:var(--accent);}
 .feat.light h3{color:var(--text);}
 .feat.light p{color:var(--muted);}
-/* benefit strip */
-.benefit-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--dark-border);border:1px solid var(--dark-border);border-radius:var(--r-lg);overflow:hidden;margin-top:32px;}
-.benefit{background:var(--dark-bg);padding:20px 18px;}
-.benefit .bi{width:34px;height:34px;border-radius:9px;background:rgba(245,200,66,0.12);color:var(--accent-bright);display:grid;place-items:center;margin-bottom:10px;}
-.benefit .bi svg{width:18px;height:18px;}
-.benefit h4{font-size:0.9rem;color:var(--dark-text);margin-bottom:3px;}
-.benefit p{font-size:0.78rem;color:var(--dark-muted);margin:0;}
 /* APP STRIP */
 .applink{border-bottom:1px solid var(--border-soft);background:var(--surface);}
 .applink .container{display:flex;align-items:center;justify-content:center;gap:var(--s-xl);flex-wrap:wrap;padding-top:22px;padding-bottom:22px;}
@@ -173,15 +161,15 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .phone{width:146px;height:300px;border-radius:30px;background:var(--dark-surface);border:6px solid #05050a;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;flex:none;}
 .phone::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:6px;border-radius:var(--r-full);background:#05050a;z-index:2;}
 .phone .screen{position:absolute;inset:6px;border-radius:22px;padding:26px 12px 12px;display:flex;flex-direction:column;gap:8px;}
-.phone.user .screen{background:linear-gradient(180deg,#16161F,#0D0D14);}
-.phone.shop .screen{background:linear-gradient(180deg,#1a1408,#0D0D14);}
+.phone.user .screen{background:#16161F;}
+.phone.shop .screen{background:#16161F;}
 .p-top{display:flex;align-items:center;gap:6px;}
 .p-top .pi{width:19px;height:19px;color:var(--accent-bright);}
 .p-label{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark-muted);}
 .p-card{background:rgba(255,255,255,0.05);border:1px solid var(--dark-border);border-radius:10px;padding:9px 10px;}
 .p-card .k{font-size:0.54rem;color:var(--dark-muted);margin-bottom:3px;}
 .p-card .v{font-size:0.9rem;font-weight:800;color:var(--dark-text);}
-.p-card.gold{background:linear-gradient(135deg,rgba(245,200,66,0.18),rgba(176,121,8,0.06));border-color:rgba(245,200,66,0.3);}
+.p-card.gold{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.3);}
 .p-card.gold .v{color:var(--accent-bright);}
 .p-row{display:flex;align-items:center;gap:6px;font-size:0.58rem;color:var(--dark-text);}
 .p-chip{margin-top:auto;background:var(--accent);color:#0D0D14;font-size:0.58rem;font-weight:800;text-align:center;padding:7px;border-radius:8px;}
@@ -214,7 +202,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .cashback h2{color:var(--dark-text);}
 .cashback .cb-copy p{color:var(--dark-muted);font-size:1.05rem;}
 .cb-stats{display:flex;gap:var(--s-xl);margin-top:var(--s-xl);}
-.cb-stat .n{font-size:1.7rem;font-weight:900;color:var(--accent-bright);letter-spacing:-0.02em;}
+.cb-stat .n{font-size:1.7rem;font-weight:800;color:var(--accent-bright);letter-spacing:-0.02em;}
 .cb-stat .l{font-size:0.82rem;color:var(--dark-muted);}
 .cb-anim{position:relative;height:320px;border-radius:var(--r-xl);background:var(--dark-surface);border:1px solid var(--dark-border);overflow:hidden;display:grid;place-items:center;}
 .cb-track{position:relative;width:82%;height:120px;}
@@ -225,27 +213,14 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .cb-end .ic svg{width:32px;height:32px;}
 .cb-end .t{font-size:0.72rem;font-weight:700;color:var(--dark-text);}
 .cb-end.shop{left:0;} .cb-end.user{right:0;}
-.cb-coin{position:absolute;top:50%;left:14%;width:34px;height:34px;border-radius:var(--r-full);background:radial-gradient(circle at 35% 30%,var(--accent-bright),var(--accent));color:#3a2600;display:grid;place-items:center;transform:translateY(-50%);box-shadow:0 0 16px rgba(245,200,66,0.5);}
+.cb-coin{position:absolute;top:50%;left:14%;width:34px;height:34px;border-radius:var(--r-full);background:var(--accent-bright);color:#3a2600;display:grid;place-items:center;transform:translateY(-50%);}
 .cb-coin svg{width:18px;height:18px;}
 .cb-anim.live .cb-coin{animation:coinCycle 4s ease-in-out infinite;}
 @keyframes coinCycle{0%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}10%{opacity:1;transform:translateY(-50%) scale(1);}45%{left:74%;top:50%;transform:translateY(-50%) scale(1);}55%{left:74%;top:22%;}90%{left:16%;top:22%;opacity:1;}100%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}}
 .cb-path{position:absolute;inset:0;z-index:0;pointer-events:none;}
 .cb-path path{fill:none;stroke:var(--accent);stroke-opacity:0.28;stroke-width:2;stroke-dasharray:5 6;}
-/* COMUNIDAD */
-.community{background:var(--surface);}
-.comm-viz{position:relative;height:380px;max-width:720px;margin:40px auto 0;}
-.bubble{position:absolute;border-radius:var(--r-full);display:grid;place-items:center;color:#fff;opacity:0;transform:scale(0);transition:opacity .6s ease,transform .6s cubic-bezier(0.34,1.56,0.64,1);}
-.comm-viz.reveal .bubble{opacity:1;transform:scale(1);}
-.bubble.shop{background:linear-gradient(135deg,var(--accent),var(--accent-soft));}
-.bubble.user{background:linear-gradient(135deg,var(--purple),#5b21b6);}
-.bubble svg{width:42%;height:42%;opacity:0.92;}
-.comm-viz.reveal .bubble{animation:bob 6s ease-in-out infinite;}
-@keyframes bob{0%,100%{translate:0 0;}50%{translate:0 -10px;}}
-.comm-lines{position:absolute;inset:0;z-index:0;}
-.comm-lines line{stroke:var(--border);stroke-width:1.5;stroke-opacity:0;transition:stroke-opacity 1s ease .4s;}
-.comm-viz.reveal .comm-lines line{stroke-opacity:0.5;}
 /* ECOSISTEMA ONTINYENT (bloque 3) */
-.onti{background:linear-gradient(180deg,var(--surface-2),var(--bg));}
+.onti{background:var(--surface-2);}
 .onet{position:relative;max-width:760px;margin:0 auto;height:420px;}
 .onet-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;background:var(--dark-bg);color:#fff;padding:16px 20px;border-radius:var(--r-xl);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;text-align:left;}
 .onet-center .oi{width:40px;height:40px;border-radius:11px;background:rgba(245,200,66,0.15);color:var(--accent-bright);display:grid;place-items:center;}
@@ -267,10 +242,10 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .future{background:var(--surface);}
 .future-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center;}
 .javi-card{background:var(--dark-bg);color:var(--dark-text);border-radius:var(--r-xl);padding:36px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
-.javi-card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 100% 0%,rgba(245,200,66,0.14),transparent 60%);pointer-events:none;}
+
 .javi-card .jc{position:relative;z-index:1;}
 .javi-avatar{display:flex;align-items:center;gap:12px;margin-bottom:var(--s-lg);}
-.javi-avatar .ava{width:52px;height:52px;border-radius:var(--r-full);background:linear-gradient(135deg,var(--accent-bright),var(--accent));color:#0D0D14;display:grid;place-items:center;font-weight:900;font-size:1.2rem;flex:none;}
+.javi-avatar .ava{width:52px;height:52px;border-radius:var(--r-full);background:var(--accent-bright);color:#0D0D14;display:grid;place-items:center;font-weight:800;font-size:1.2rem;flex:none;}
 .javi-avatar .who{font-size:0.9rem;font-weight:800;color:var(--dark-text);line-height:1.2;}
 .javi-avatar .who small{display:block;font-size:0.72rem;color:var(--dark-muted);font-weight:600;}
 .javi-card .quote{font-size:1.12rem;line-height:1.6;color:var(--dark-text);font-weight:500;margin:0;}
@@ -284,7 +259,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .fitem .ft{font-size:0.92rem;font-weight:700;color:var(--text);}
 .fitem .badge{margin-left:auto;font-size:0.6rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);border:1px solid rgba(176,121,8,0.2);padding:3px 9px;border-radius:var(--r-full);}
 /* PRECIOS */
-.pricing{background:linear-gradient(180deg,var(--bg),var(--surface-2));}
+.pricing{background:var(--bg);}
 .pt-wrap{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-full);padding:4px;margin:0 auto 14px;}
 .pt-center{text-align:center;}
 .pt-wrap button{padding:9px 22px;border-radius:var(--r-full);font-weight:700;font-size:0.9rem;color:var(--muted);transition:all .15s ease;white-space:nowrap;}
@@ -297,7 +272,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .plan h3{font-size:1.35rem;margin-bottom:4px;}
 .plan .tagline{font-size:0.9rem;color:var(--muted);margin-bottom:var(--s-lg);min-height:40px;}
 .price{display:flex;align-items:baseline;gap:5px;}
-.price .amt{font-size:2.7rem;font-weight:900;letter-spacing:-0.03em;color:var(--text);line-height:1;}
+.price .amt{font-size:2.7rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);line-height:1;}
 .price .per{font-size:0.95rem;color:var(--muted);font-weight:700;}
 .price-sub{font-size:0.82rem;color:var(--muted);margin-top:6px;min-height:18px;}
 .price-old{font-size:0.8rem;color:var(--text-dim);text-decoration:line-through;min-height:16px;margin-top:2px;}
@@ -316,7 +291,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 /* CTA */
 .cta-final{padding:0 0 92px;}
 .cta-box{background:var(--dark-bg);border-radius:var(--r-xl);padding:64px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
-.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0%,rgba(245,200,66,0.16),transparent 60%);pointer-events:none;}
+
 .cta-box .inner{position:relative;z-index:1;}
 .cta-box h2{color:var(--dark-text);max-width:20ch;margin:0 auto 14px;}
 .cta-box p{color:var(--dark-muted);max-width:46ch;margin:0 auto 28px;font-size:1.08rem;}
@@ -349,7 +324,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .sc-top,.apps-top,.cb-grid,.future-grid{grid-template-columns:1fr;gap:32px;}
   .scene{height:430px;transform:scale(0.9);}
   .feat-grid{grid-template-columns:repeat(3,1fr);}
-  .benefit-strip{grid-template-columns:1fr 1fr;}
+  
   .rig{max-width:540px;margin:0 auto;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}.footer-brand{grid-column:1/-1;}
 }
@@ -358,13 +333,12 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .section{padding:60px 0;}
   .showcase{padding:56px 0 68px;}
   .feat-grid{grid-template-columns:1fr 1fr;}
-  .benefit-strip{grid-template-columns:1fr;}
+  
   .cb-stats{flex-direction:column;gap:14px;}
   .cta-box{padding:48px 24px;}
   .javi-card{padding:26px;}
   .onode{min-width:0;padding:9px;}.onode p{display:none;}
-  .float-stat{left:0;}
-}
+  }
 @media (max-width:420px){ .feat-grid{grid-template-columns:1fr;} }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;}
@@ -374,13 +348,43 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .node.n5{transform:translateX(-50%)!important;}
   .beam{opacity:1!important;}
 }
+
+/* ===== Ajustes de estilo F6 (web): menos adorno, más lectura ===== */
+.reveal-up{transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;}
+/* Funcionalidades: lista con separadores en vez de muro de tarjetas */
+.feat-grid{gap:0 32px;}
+.feat.dark,.feat.light{background:none;border:0;border-top:1px solid var(--border-soft);border-radius:0;box-shadow:none;padding:18px 0;display:grid;grid-template-columns:36px 1fr;column-gap:14px;align-items:start;}
+.feat .fi{grid-row:1/3;}
+.feat h3,.feat p{grid-column:2;}
+.feat.dark{border-top-color:var(--dark-border);}
+.feat.dark:hover,.feat.light:hover{transform:none;box-shadow:none;border-color:var(--border-soft);}
+.feat.dark:hover{border-color:var(--dark-border);}
+.feat .fi{width:36px;height:36px;border-radius:10px;margin:0;flex:none;}
+.feat .fi svg{width:18px;height:18px;}
+.feat h3{margin-bottom:2px;}
+.sector-grid{gap:0 32px;}
+.sector{background:none;border:0;border-top:1px solid var(--border-soft);border-radius:0;box-shadow:none;padding:20px 0;}
+.sector:hover{transform:none;box-shadow:none;border-color:var(--border-soft);}
+.sector .si{width:38px;height:38px;border-radius:10px;}
+.sector .si svg{width:20px;height:20px;}
+.vcard:hover{transform:translateY(-2px);}
+/* Dos apps: solo los dos móviles, sin burbujas flotando alrededor */
+.scene{height:360px;}
+.node,.spark,.beam,.scene-orbit{display:none!important;}
+/* Ecosistema: fila simple en vez de diagrama de red */
+.onet{height:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:900px;}
+.onet-lines{display:none;}
+.onet-center{position:static;transform:none;grid-column:1/-1;justify-self:center;box-shadow:none;margin-bottom:6px;}
+.onode,.onet.reveal .onode,.onet.reveal .onode:hover{position:static!important;transform:none!important;opacity:1;box-shadow:none;min-width:0;}
+@media (max-width:940px){ .onet{grid-template-columns:1fr 1fr;} .scene{transform:none;} }
+@media (max-width:640px){ .onode p{display:block;} }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container nav">
-    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal <span class="tag" data-i18n="brand_tag">Restauración</span></a>
+    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal <span class="tag" data-i18n="brand_tag">Restauración</span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="/">Inicio</a></li>
       <li><a href="#app-restaurante" data-i18n="nav_app">App del restaurante</a></li>
@@ -403,7 +407,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container inner">
     <div class="sc-top">
       <div class="sc-copy">
-        <span class="eyebrow"><span class="num">01</span><span data-i18n="s1_eyebrow">La app del restaurante</span></span>
+        <span class="eyebrow"><span data-i18n="s1_eyebrow">La app del restaurante</span></span>
         <h1><span data-i18n="s1_h1a">Gestiona todo tu restaurante</span> <span class="hl" data-i18n="s1_h1b">desde una sola app.</span></h1>
         <p class="lead" data-i18n="s1_lead">Carta, TPV, reservas, cocina, inventario, facturación y datos en un único panel. Todo conectado, sin saltar entre programas y sin pagar fortunas.</p>
         <div class="sc-actions">
@@ -417,7 +421,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
           <div class="lid">
             <div class="lscreen">
               <div class="lside">
-                <div class="brand"><span class="lm"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</div>
+                <div class="brand"><span class="lm"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal</div>
                 <div class="lb act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span data-i18n="sb1">Resumen</span></div>
                 <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM8 8h8M8 12h6"/></svg><span data-i18n="sb2">Comandas</span></div>
                 <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-i18n="sb3">Reservas</span></div>
@@ -453,7 +457,6 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
           </div>
           <div class="lbase"></div>
         </div>
-        <div class="float-stat"><span class="fsi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></span><span><span class="fsn">+18%</span><span class="fsl" data-i18n="float_stat">ventas vs ayer</span></span></div>
       </div>
     </div>
 
@@ -472,12 +475,6 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
       <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3 data-i18n="r12_t">Analítica de clientes</h3><p data-i18n="r12_p">Quiénes son, qué piden y cuándo vuelven.</p></div>
     </div>
 
-    <div class="benefit-strip">
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h4 data-i18n="bs1_t">Ahorra tiempo</h4><p data-i18n="bs1_p">Menos tareas manuales cada día.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></div><h4 data-i18n="bs2_t">Más ingresos</h4><p data-i18n="bs2_p">Más rotación y más ventas.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h4 data-i18n="bs3_t">Todo conectado</h4><p data-i18n="bs3_p">Una sola plataforma, sin islas.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h4 data-i18n="bs4_t">Seguridad y RGPD</h4><p data-i18n="bs4_p">Datos protegidos y en regla.</p></div>
-    </div>
   </div>
 </section>
 
@@ -496,7 +493,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container">
     <div class="apps-top">
       <div class="apps-copy reveal-up">
-        <span class="eyebrow"><span class="num">02</span><span data-i18n="s2_eyebrow">Conexión directa con tus clientes</span></span>
+        <span class="eyebrow"><span data-i18n="s2_eyebrow">Conexión directa con tus clientes</span></span>
         <h2><span data-i18n="s2_h2a">Dos apps que se hablan.</span> <span class="hl" data-i18n="s2_h2b">Un ecosistema digital para tu restaurante.</span></h2>
         <p class="lead" data-i18n="s2_p">Comandas sin papel, pedidos desde la mesa, pagos divididos y gestión total. Una app para ti y otra para tus clientes, hablando entre sí, sin intermediarios que se llevan tu margen.</p>
         <a href="#unirse" class="btn btn-primary btn-lg" data-i18n="s2_cta">Quiero llegar a más clientes</a>
@@ -556,7 +553,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
     <div class="cb-copy reveal-up">
       <span class="eyebrow" data-i18n="cb_eyebrow">El poder del cashback</span>
       <h2 data-i18n="cb_h2">Cashback que hace que tus clientes vuelvan.</h2>
-      <p data-i18n="cb_p">Cada consumición genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu restaurante.</p>
+      <p data-i18n="cb_p">Cada consumición genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan.</p>
       <div class="cb-stats">
         <div class="cb-stat"><div class="n" data-i18n="cb_s1_n">Tú decides</div><div class="l" data-i18n="cb_s1_l">el % de cashback de tu local</div></div>
         <div class="cb-stat"><div class="n" data-i18n="cb_s2_n">Repiten</div><div class="l" data-i18n="cb_s2_l">y te recomiendan a los suyos</div></div>
@@ -573,23 +570,12 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   </div>
 </section>
 
-<!-- COMUNIDAD (parte de bloque 2) -->
-<section class="section community" id="comunidad">
-  <div class="container">
-    <div class="section-head reveal-up">
-      <span class="eyebrow" data-i18n="comm_eyebrow">La comunidad que crece</span>
-      <h2 data-i18n="comm_h2">Más restaurantes, más usuarios. Más usuarios, más clientes para todos.</h2>
-      <p data-i18n="comm_p">No competimos entre nosotros. Sumamos fuerzas para que la hostelería local sea la primera opción de la gente.</p>
-    </div>
-    <div class="comm-viz" id="commViz"><svg class="comm-lines" id="commLines" viewBox="0 0 720 380" preserveAspectRatio="none"></svg></div>
-  </div>
-</section>
 
 <!-- BLOQUE 3: ECOSISTEMA ONTINYENT -->
 <section class="section onti" id="ontinyent">
   <div class="container">
     <div class="section-head reveal-up">
-      <span class="eyebrow"><span class="num">03</span><span data-i18n="b3_eyebrow">El ecosistema de Ontinyent</span></span>
+      <span class="eyebrow"><span data-i18n="b3_eyebrow">El ecosistema de Ontinyent</span></span>
       <h2 data-i18n="b3_h2">No estás solo: todo el pueblo empuja contigo.</h2>
       <p data-i18n="b3_p">Un ecosistema conjunto de servicios de Ontinyent, con el Ayuntamiento y el resto de comercios, pensado para atraer más usuarios y clientes hacia tu restaurante.</p>
     </div>
@@ -615,7 +601,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
     <div class="future-grid">
       <div class="javi-card reveal-up">
         <div class="jc">
-          <div class="javi-avatar"><span class="ava">J</span><span class="who">Javi<small data-i18n="javi_role">Creador de Pagolocal · Ontinyent</small></span></div>
+          <div class="javi-avatar"><span class="ava">J</span><span class="who">Javi<small data-i18n="javi_role">Creador de PagoLocal · Ontinyent</small></span></div>
           <p class="quote"><span data-i18n="javi_q1">Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:</span> <span class="hl" data-i18n="javi_q2">"Oye Javi, este botón debe hacer esto o aquello"</span> <span data-i18n="javi_q3">y lo hacemos.</span></p>
         </div>
       </div>
@@ -712,14 +698,13 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
         </div>
         <div class="cta-contact">
           <a href="mailto:hola@pagolocal.xyz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> hola@pagolocal.xyz</a>
-          <a href="tel:+34000000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg> <span data-i18n="cta_phone">Teléfono próximamente</span></a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Enlaces entre páginas de Pagolocal ===== -->
+<!-- ===== Enlaces entre páginas de PagoLocal ===== -->
 <style>
 .pl-crossnav{background:var(--accent-tint,#FBF6E8);border-top:1px solid rgba(176,121,8,.18);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 10px;padding:15px 16px;font-size:.9rem;}
 .pl-crossnav a{color:#7A5406;font-weight:600;text-decoration:none;padding:4px 6px;border-radius:6px;transition:color .15s ease,background .15s ease;}
@@ -727,7 +712,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
 .pl-crossnav a[aria-current="page"]{color:var(--accent,#B07908);font-weight:800;}
 .pl-crossnav .sep{color:rgba(176,121,8,.35);}
 </style>
-<nav class="pl-crossnav" aria-label="Páginas de Pagolocal">
+<nav class="pl-crossnav" aria-label="Páginas de PagoLocal">
   <a href="/">Inicio</a><span class="sep">·</span>
   <a href="/negocios.html">Para negocios</a><span class="sep">·</span>
   <a href="/comercios.html">Comercios</a><span class="sep">·</span>
@@ -739,7 +724,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</a>
+        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal</a>
         <p data-i18n="foot_desc">Una plataforma. Todo tu restaurante. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.</p>
       </div>
       <div class="footer-col"><h4 data-i18n="foot_nav">Secciones</h4><ul>
@@ -760,8 +745,8 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
       </ul></div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year"></span> Pagolocal · pagolocal.xyz</span>
-      <span data-i18n="foot_made">Hecho con ❤️ para la hostelería local de Ontinyent.</span>
+      <span>© <span id="year"></span> PagoLocal · pagolocal.xyz</span>
+      <span data-i18n="foot_made">Hecho para la hostelería local de Ontinyent.</span>
     </div>
   </div>
 </footer>
@@ -810,7 +795,7 @@ const I18N={
  c6_t:"Pagos por la app",c6_p:"Pagan y dividen la cuenta desde el móvil.",
  c7_t:"Cashback",c7_p:"Vuelven una y otra vez gracias a la fidelización.",
  cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que hace que tus clientes vuelvan.",
- cb_p:"Cada consumición genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu restaurante.",
+ cb_p:"Cada consumición genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan.",
  cb_s1_n:"Tú decides",cb_s1_l:"el % de cashback de tu local",cb_s2_n:"Repiten",cb_s2_l:"y te recomiendan a los suyos",cb_shop:"Tu restaurante",cb_user:"Tu cliente",
  comm_eyebrow:"La comunidad que crece",comm_h2:"Más restaurantes, más usuarios. Más usuarios, más clientes para todos.",
  comm_p:"No competimos entre nosotros. Sumamos fuerzas para que la hostelería local sea la primera opción de la gente.",
@@ -820,7 +805,7 @@ const I18N={
  on1_t:"Ayuntamiento",on1_p:"Eventos y agenda local",on2_t:"Comercios locales",on2_p:"Sumáis, no competís",
  on3_t:"Más usuarios",on3_p:"Una comunidad que crece",on4_t:"Cashback compartido",on4_p:"Gastan aquí, vuelven aquí",
  b3_note:"Cada nuevo comercio trae más usuarios, y cada usuario es un cliente potencial para tu restaurante. El comercio local de Ontinyent, jugando en equipo.",
- fut_eyebrow:"Funcionalidades futuras",fut_h2:"Crece contigo, a tu ritmo.",javi_role:"Creador de Pagolocal · Ontinyent",
+ fut_eyebrow:"Funcionalidades futuras",fut_h2:"Crece contigo, a tu ritmo.",javi_role:"Creador de PagoLocal · Ontinyent",
  javi_q1:"Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:",javi_q2:"\"Oye Javi, este botón debe hacer esto o aquello\"",javi_q3:"y lo hacemos.",
  fut_list_t:"Ya trabajando en lo próximo",fut_list_s:"Algunas de las funciones que llegarán al ecosistema.",
  f1:"Integración con proveedores",f2:"Integración con delivery (Dego…)",f3:"Registro horario",f4:"Personal y turnos",f5:"Y lo que tu restaurante necesite",
@@ -829,7 +814,7 @@ const I18N={
  cta_b1:"Solicitar una demo gratuita",cta_b2:"Hablar con nosotros",cta_phone:"Teléfono próximamente",
  foot_desc:"Una plataforma. Todo tu restaurante. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.",
  foot_nav:"Secciones",foot_legal:"Legal",foot_privacy:"Política de privacidad",foot_terms:"Aviso legal",foot_cookies:"Cookies",
- foot_contact:"Contacto",foot_demo:"Solicitar demo",foot_social:"Redes sociales",foot_made:"Hecho con ❤️ para la hostelería local de Ontinyent."},
+ foot_contact:"Contacto",foot_demo:"Solicitar demo",foot_social:"Redes sociales",foot_made:"Hecho para la hostelería local de Ontinyent."},
  va:{brand_tag:"Restauració",nav_app:"App del restaurant",nav_apps:"Dues apps",nav_onti:"Ontinyent",nav_price:"Preus",nav_future:"Futur",nav_cta:"Digitalitzar",
  price_eyebrow:"Preus",price_h2:"Preus clars, sense sorpreses.",price_p:"Tria el pla que encaixa amb el teu restaurant. Canvia o cancel·la quan vulgues.",
  pt_month:"Mensual",pt_year:"Anual",save_hint:"Paga l'any complet i t'estalvies 2 mesos.",
@@ -872,7 +857,7 @@ const I18N={
  c6_t:"Pagaments per l'app",c6_p:"Paguen i divideixen el compte des del mòbil.",
  c7_t:"Cashback",c7_p:"Tornen una vegada i una altra gràcies a la fidelització.",
  cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que fa que els teus clients tornen.",
- cb_p:"Cada consumició genera un percentatge de tornada per al client. Així repetixen i et recomanen. L'estratègia de les grans cadenes, ara al teu restaurant.",
+ cb_p:"Cada consumició genera un percentatge de tornada per al client. Així repetixen i et recomanen.",
  cb_s1_n:"Tu decideixes",cb_s1_l:"el % de cashback del teu local",cb_s2_n:"Repetixen",cb_s2_l:"i et recomanen als seus",cb_shop:"El teu restaurant",cb_user:"El teu client",
  comm_eyebrow:"La comunitat que creix",comm_h2:"Més restaurants, més usuaris. Més usuaris, més clients per a tots.",
  comm_p:"No competim entre nosaltres. Sumem forces perquè l'hostaleria local siga la primera opció de la gent.",
@@ -882,7 +867,7 @@ const I18N={
  on1_t:"Ajuntament",on1_p:"Esdeveniments i agenda local",on2_t:"Comerços locals",on2_p:"Sumeu, no competiu",
  on3_t:"Més usuaris",on3_p:"Una comunitat que creix",on4_t:"Cashback compartit",on4_p:"Gasten ací, tornen ací",
  b3_note:"Cada nou comerç porta més usuaris, i cada usuari és un client potencial per al teu restaurant. El comerç local d'Ontinyent, jugant en equip.",
- fut_eyebrow:"Funcionalitats futures",fut_h2:"Creix amb tu, al teu ritme.",javi_role:"Creador de Pagolocal · Ontinyent",
+ fut_eyebrow:"Funcionalitats futures",fut_h2:"Creix amb tu, al teu ritme.",javi_role:"Creador de PagoLocal · Ontinyent",
  javi_q1:"Som d'Ontinyent. Ajustar-nos a les teues necessitats reals és tan senzill com vindre i dir-me:",javi_q2:"\"Ei Javi, este botó ha de fer açò o allò\"",javi_q3:"i ho fem.",
  fut_list_t:"Ja treballant en el que ve",fut_list_s:"Algunes de les funcions que arribaran a l'ecosistema.",
  f1:"Integració amb proveïdors",f2:"Integració amb delivery (Dego…)",f3:"Registre horari",f4:"Personal i torns",f5:"I el que el teu restaurant necessite",
@@ -891,7 +876,7 @@ const I18N={
  cta_b1:"Sol·licitar una demo gratuïta",cta_b2:"Parlar amb nosaltres",cta_phone:"Telèfon pròximament",
  foot_desc:"Una plataforma. Tot el teu restaurant. Gestió, clients i comunitat local, en un mateix ecosistema fet a Ontinyent.",
  foot_nav:"Seccions",foot_legal:"Legal",foot_privacy:"Política de privacitat",foot_terms:"Avís legal",foot_cookies:"Cookies",
- foot_contact:"Contacte",foot_demo:"Sol·licitar demo",foot_social:"Xarxes socials",foot_made:"Fet amb ❤️ per a l'hostaleria local d'Ontinyent."},
+ foot_contact:"Contacte",foot_demo:"Sol·licitar demo",foot_social:"Xarxes socials",foot_made:"Fet per a l'hostaleria local d'Ontinyent."},
  en:{brand_tag:"Hospitality",nav_app:"Restaurant app",nav_apps:"Two apps",nav_onti:"Ontinyent",nav_price:"Pricing",nav_future:"Future",nav_cta:"Go digital",
  price_eyebrow:"Pricing",price_h2:"Clear pricing, no surprises.",price_p:"Choose the plan that fits your restaurant. Change or cancel anytime.",
  pt_month:"Monthly",pt_year:"Yearly",save_hint:"Pay for the full year and save 2 months.",
@@ -934,7 +919,7 @@ const I18N={
  c6_t:"In-app payments",c6_p:"They pay and split the bill from the phone.",
  c7_t:"Cashback",c7_p:"They come back again and again through loyalty.",
  cb_eyebrow:"The power of cashback",cb_h2:"Cashback that keeps customers coming back.",
- cb_p:"Every purchase gives a percentage back to the customer. So they return and recommend you. The strategy of the big chains, now at your restaurant.",
+ cb_p:"Every purchase gives a percentage back to the customer. So they return and recommend you.",
  cb_s1_n:"You decide",cb_s1_l:"your venue's cashback %",cb_s2_n:"They return",cb_s2_l:"and recommend you to theirs",cb_shop:"Your restaurant",cb_user:"Your customer",
  comm_eyebrow:"A growing community",comm_h2:"More restaurants, more users. More users, more customers for everyone.",
  comm_p:"We don't compete with each other. We join forces so local hospitality is people's first choice.",
@@ -944,7 +929,7 @@ const I18N={
  on1_t:"Town hall",on1_p:"Events and local agenda",on2_t:"Local shops",on2_p:"You add up, you don't compete",
  on3_t:"More users",on3_p:"A growing community",on4_t:"Shared cashback",on4_p:"They spend here, return here",
  b3_note:"Every new shop brings more users, and every user is a potential customer for your restaurant. Ontinyent's local commerce, playing as a team.",
- fut_eyebrow:"Future features",fut_h2:"It grows with you, at your pace.",javi_role:"Creator of Pagolocal · Ontinyent",
+ fut_eyebrow:"Future features",fut_h2:"It grows with you, at your pace.",javi_role:"Creator of PagoLocal · Ontinyent",
  javi_q1:"We're from Ontinyent. Fitting your real needs is as simple as coming and telling me:",javi_q2:"\"Hey Javi, this button should do this or that\"",javi_q3:"and we make it happen.",
  fut_list_t:"Already working on what's next",fut_list_s:"Some of the features coming to the ecosystem.",
  f1:"Supplier integration",f2:"Delivery integration (Dego…)",f3:"Time tracking",f4:"Staff and shifts",f5:"And whatever your restaurant needs",
@@ -953,7 +938,7 @@ const I18N={
  cta_b1:"Request a free demo",cta_b2:"Talk to us",cta_phone:"Phone coming soon",
  foot_desc:"One platform. Your whole restaurant. Management, customers and local community, in one ecosystem made in Ontinyent.",
  foot_nav:"Sections",foot_legal:"Legal",foot_privacy:"Privacy policy",foot_terms:"Legal notice",foot_cookies:"Cookies",
- foot_contact:"Contact",foot_demo:"Request demo",foot_social:"Social media",foot_made:"Made with ❤️ for local hospitality in Ontinyent."}
+ foot_contact:"Contact",foot_demo:"Request demo",foot_social:"Social media",foot_made:"Made for local hospitality in Ontinyent."}
 };
 let currentLang="es";
 function applyLang(lang){currentLang=lang;const d=I18N[lang];document.documentElement.lang=lang;
@@ -984,6 +969,7 @@ heroObs.observe(scene);
 const cbAnim=document.getElementById("cbAnim");
 const cbObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){cbAnim.classList.add("live");cbObs.disconnect();}});},{threshold:0.4});
 cbObs.observe(cbAnim);
+if(document.getElementById("commViz")){
 const commViz=document.getElementById("commViz"),commLines=document.getElementById("commLines");
 const bubbleData=[{x:50,y:46,r:62,type:"shop"},{x:33,y:20,r:34,type:"user"},{x:66,y:18,r:40,type:"shop"},{x:18,y:62,r:44,type:"user"},{x:80,y:60,r:50,type:"shop"},{x:44,y:78,r:34,type:"user"},{x:70,y:82,r:30,type:"user"},{x:26,y:36,r:26,type:"shop"},{x:88,y:34,r:24,type:"user"},{x:58,y:34,r:28,type:"user"}];
 const shopSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20a6 6 0 0 1 12 0M12 6V4M9 6a3 3 0 0 1 6 0"/></svg>';
@@ -1000,6 +986,7 @@ buildBubbles();
 const commObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){commViz.classList.add("reveal");commObs.disconnect();}});},{threshold:0.3});
 commObs.observe(commViz);
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{const had=commViz.classList.contains("reveal");buildBubbles();if(had)commViz.classList.add("reveal");},200);});
+}
 const onet=document.getElementById("onet"),onetLines=document.getElementById("onetLines");
 (function(){const cx=380,cy=210;const t=[[152,50],[608,50],[152,370],[608,370]];
  onetLines.innerHTML=t.map(([x,y])=>`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`).join("");})();

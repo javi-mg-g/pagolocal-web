@@ -32,7 +32,7 @@
   --dark-card:    #1E1E2A;
   --dark-border:  #2A2A3C;
   --dark-text:    #F0F0FA;
-  --dark-muted:   #6060A0;
+  --dark-muted:   #9A9AB8;
 
   /* Secondary */
   --purple:     #7C3AED;
@@ -241,7 +241,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .logo-mark svg {
   width: 20px;
   height: 20px;
-  filter: drop-shadow(0 0 6px rgba(245, 200, 66, 0.5));
 }
 
 .nav-links {
@@ -419,3 +418,21 @@ footer.site-footer .logo-mark {
 
 @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ============================================================
+   F6 · Iconos de línea compartidos (sustituyen a los emojis)
+   ============================================================ */
+.icon-tile {
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--accent-tint);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  margin-bottom: var(--s-md);
+}
+.icon-tile svg { width: 20px; height: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+}

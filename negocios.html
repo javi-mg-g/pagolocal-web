@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagolocal · El ecosistema digital del comercio local de Ontinyent</title>
-<meta name="description" content="La tecnología de las grandes cadenas para el comercio local de Ontinyent. Gestión, cobros, cashback y una app para tus clientes, con una versión para comercios y otra para hostelería.">
+<title>PagoLocal · El ecosistema digital del comercio local de Ontinyent</title>
+<meta name="description" content="Cobros, venta online, cashback y una app para tus clientes, para el comercio local de Ontinyent, con una versión para comercios y otra para hostelería.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230D0D14'/%3E%3Cpath d='M17.5 6 9 18h5l-1.5 8 8.5-12h-5z' fill='%23F5C842'/%3E%3C/svg%3E">
 <style>
 /* TOKENS: replican styles.css de pagolocal.xyz */
@@ -17,7 +17,7 @@
   --accent:#B07908;--accent-hover:#C8870A;--accent-soft:#8A5E06;
   --accent-bright:#F5C842;--accent-dim:rgba(176,121,8,0.10);--accent-tint:#FBF6E8;
   --dark-bg:#0D0D14;--dark-surface:#16161F;--dark-card:#1E1E2A;--dark-border:#2A2A3C;
-  --dark-text:#F0F0FA;--dark-muted:#6060A0;
+  --dark-text:#F0F0FA;--dark-muted:#9A9AB8;
   --purple:#7C3AED;--red:#DC2626;--blue:#2563EB;--green:#059669;
   --text:#1A1A2E;--muted:#6B7280;--text-dim:#A1A1AA;--white:#FFFFFF;
   --s-xs:4px;--s-sm:8px;--s-md:12px;--s-lg:16px;--s-xl:24px;--s-xxl:32px;--s-huge:48px;
@@ -59,7 +59,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:var(--s-xl);}
 .logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;color:var(--text);}
 .logo-mark{width:38px;height:38px;background:var(--dark-bg);border-radius:var(--r-full);display:grid;place-items:center;color:var(--accent-bright);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,0.04);flex:none;}
-.logo-mark svg{width:20px;height:20px;filter:drop-shadow(0 0 6px rgba(245,200,66,0.5));}
+.logo-mark svg{width:20px;height:20px;}
 .logo .tag{font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);padding:2px 7px;border-radius:var(--r-full);border:1px solid rgba(176,121,8,0.2);}
 .nav-links{display:flex;align-items:center;gap:22px;list-style:none;margin:0;padding:0;}
 .nav-links a{font-size:0.9rem;font-weight:600;color:var(--muted);transition:color .15s ease;white-space:nowrap;}
@@ -79,7 +79,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 }
 /* SHOWCASE = BLOQUE 1 (hero oscuro) */
 .showcase{background:var(--dark-bg);color:var(--dark-text);position:relative;overflow:hidden;padding:70px 0 92px;}
-.showcase::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 480px at 82% -5%,rgba(245,200,66,0.14),transparent 60%),radial-gradient(700px 400px at 10% 20%,rgba(124,58,237,0.10),transparent 55%);}
+
 .showcase .inner{position:relative;z-index:1;}
 .showcase .eyebrow{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.25);color:var(--accent-bright);}
 .showcase h1,.showcase h2{color:var(--dark-text);}
@@ -117,19 +117,14 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .chart-card{background:rgba(255,255,255,0.03);border:1px solid var(--dark-border);border-radius:8px;padding:9px;display:flex;flex-direction:column;}
 .chart-card .ct{font-size:0.5rem;color:var(--dark-muted);margin-bottom:7px;}
 .bars{display:flex;align-items:flex-end;gap:5px;flex:1;min-height:64px;}
-.bars .bar{flex:1;background:linear-gradient(180deg,rgba(245,200,66,0.55),rgba(176,121,8,0.35));border-radius:3px 3px 0 0;}
-.bars .bar.hot{background:linear-gradient(180deg,var(--accent-bright),var(--accent));}
+.bars .bar{flex:1;background:rgba(245,200,66,0.35);border-radius:3px 3px 0 0;}
+.bars .bar.hot{background:var(--accent-bright);}
 .donut{width:62px;height:62px;border-radius:50%;margin:0 auto;background:conic-gradient(var(--accent-bright) 0 48%,var(--purple) 48% 76%,#3a3a52 76% 100%);position:relative;}
 .donut::after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--dark-card);}
 .legend{display:flex;flex-direction:column;gap:3px;margin-top:8px;}
 .legend .lg{display:flex;align-items:center;gap:5px;font-size:0.5rem;color:var(--dark-muted);}
 .legend .lg .d{width:6px;height:6px;border-radius:2px;flex:none;}
-.laptop .lbase{height:11px;background:linear-gradient(180deg,#1a1a24,#05050a);border-radius:0 0 12px 12px;margin:0 auto;width:76%;box-shadow:var(--shadow);}
-.float-stat{position:absolute;left:-10px;bottom:24px;background:var(--surface);color:var(--text);border-radius:var(--r-md);padding:10px 14px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;z-index:3;}
-.float-stat .fsi{width:30px;height:30px;border-radius:8px;background:rgba(5,150,105,0.14);color:var(--green);display:grid;place-items:center;}
-.float-stat .fsi svg{width:16px;height:16px;}
-.float-stat .fsn{font-size:0.9rem;font-weight:800;line-height:1;display:block;}
-.float-stat .fsl{font-size:0.62rem;color:var(--muted);display:block;}
+.laptop .lbase{height:11px;background:#14141c;border-radius:0 0 12px 12px;margin:0 auto;width:76%;box-shadow:var(--shadow);}
 /* feature tiles */
 .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 .feat{border-radius:var(--r-lg);padding:18px;transition:transform .18s cubic-bezier(0.16,1,0.3,1),box-shadow .18s ease,border-color .18s ease;}
@@ -147,13 +142,6 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .feat.light .fi{background:var(--accent-tint);color:var(--accent);}
 .feat.light h3{color:var(--text);}
 .feat.light p{color:var(--muted);}
-/* benefit strip */
-.benefit-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--dark-border);border:1px solid var(--dark-border);border-radius:var(--r-lg);overflow:hidden;margin-top:32px;}
-.benefit{background:var(--dark-bg);padding:20px 18px;}
-.benefit .bi{width:34px;height:34px;border-radius:9px;background:rgba(245,200,66,0.12);color:var(--accent-bright);display:grid;place-items:center;margin-bottom:10px;}
-.benefit .bi svg{width:18px;height:18px;}
-.benefit h4{font-size:0.9rem;color:var(--dark-text);margin-bottom:3px;}
-.benefit p{font-size:0.78rem;color:var(--dark-muted);margin:0;}
 /* APP STRIP */
 .applink{border-bottom:1px solid var(--border-soft);background:var(--surface);}
 .applink .container{display:flex;align-items:center;justify-content:center;gap:var(--s-xl);flex-wrap:wrap;padding-top:22px;padding-bottom:22px;}
@@ -176,7 +164,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 /* VERTICALES (para quién) */
 .verticals{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto;}
 .vcard{display:flex;flex-direction:column;border-radius:var(--r-xl);padding:34px;background:var(--surface);border:1px solid var(--border-soft);box-shadow:var(--shadow-sm);transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s ease,border-color .2s ease;position:relative;overflow:hidden;}
-.vcard::after{content:"";position:absolute;inset:0;background:radial-gradient(320px 160px at 92% 0%,var(--accent-dim),transparent 60%);pointer-events:none;}
+
 .vcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--accent);}
 .vcard .vic{width:60px;height:60px;border-radius:var(--r-lg);background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1;}
 .vcard .vic svg{width:30px;height:30px;}
@@ -195,15 +183,15 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .phone{width:146px;height:300px;border-radius:30px;background:var(--dark-surface);border:6px solid #05050a;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;flex:none;}
 .phone::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:6px;border-radius:var(--r-full);background:#05050a;z-index:2;}
 .phone .screen{position:absolute;inset:6px;border-radius:22px;padding:26px 12px 12px;display:flex;flex-direction:column;gap:8px;}
-.phone.user .screen{background:linear-gradient(180deg,#16161F,#0D0D14);}
-.phone.shop .screen{background:linear-gradient(180deg,#1a1408,#0D0D14);}
+.phone.user .screen{background:#16161F;}
+.phone.shop .screen{background:#16161F;}
 .p-top{display:flex;align-items:center;gap:6px;}
 .p-top .pi{width:19px;height:19px;color:var(--accent-bright);}
 .p-label{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark-muted);}
 .p-card{background:rgba(255,255,255,0.05);border:1px solid var(--dark-border);border-radius:10px;padding:9px 10px;}
 .p-card .k{font-size:0.54rem;color:var(--dark-muted);margin-bottom:3px;}
 .p-card .v{font-size:0.9rem;font-weight:800;color:var(--dark-text);}
-.p-card.gold{background:linear-gradient(135deg,rgba(245,200,66,0.18),rgba(176,121,8,0.06));border-color:rgba(245,200,66,0.3);}
+.p-card.gold{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.3);}
 .p-card.gold .v{color:var(--accent-bright);}
 .p-row{display:flex;align-items:center;gap:6px;font-size:0.58rem;color:var(--dark-text);}
 .p-chip{margin-top:auto;background:var(--accent);color:#0D0D14;font-size:0.58rem;font-weight:800;text-align:center;padding:7px;border-radius:8px;}
@@ -236,7 +224,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .cashback h2{color:var(--dark-text);}
 .cashback .cb-copy p{color:var(--dark-muted);font-size:1.05rem;}
 .cb-stats{display:flex;gap:var(--s-xl);margin-top:var(--s-xl);}
-.cb-stat .n{font-size:1.7rem;font-weight:900;color:var(--accent-bright);letter-spacing:-0.02em;}
+.cb-stat .n{font-size:1.7rem;font-weight:800;color:var(--accent-bright);letter-spacing:-0.02em;}
 .cb-stat .l{font-size:0.82rem;color:var(--dark-muted);}
 .cb-anim{position:relative;height:320px;border-radius:var(--r-xl);background:var(--dark-surface);border:1px solid var(--dark-border);overflow:hidden;display:grid;place-items:center;}
 .cb-track{position:relative;width:82%;height:120px;}
@@ -247,27 +235,14 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .cb-end .ic svg{width:32px;height:32px;}
 .cb-end .t{font-size:0.72rem;font-weight:700;color:var(--dark-text);}
 .cb-end.shop{left:0;} .cb-end.user{right:0;}
-.cb-coin{position:absolute;top:50%;left:14%;width:34px;height:34px;border-radius:var(--r-full);background:radial-gradient(circle at 35% 30%,var(--accent-bright),var(--accent));color:#3a2600;display:grid;place-items:center;transform:translateY(-50%);box-shadow:0 0 16px rgba(245,200,66,0.5);}
+.cb-coin{position:absolute;top:50%;left:14%;width:34px;height:34px;border-radius:var(--r-full);background:var(--accent-bright);color:#3a2600;display:grid;place-items:center;transform:translateY(-50%);}
 .cb-coin svg{width:18px;height:18px;}
 .cb-anim.live .cb-coin{animation:coinCycle 4s ease-in-out infinite;}
 @keyframes coinCycle{0%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}10%{opacity:1;transform:translateY(-50%) scale(1);}45%{left:74%;top:50%;transform:translateY(-50%) scale(1);}55%{left:74%;top:22%;}90%{left:16%;top:22%;opacity:1;}100%{left:16%;top:50%;opacity:0;transform:translateY(-50%) scale(0.6);}}
 .cb-path{position:absolute;inset:0;z-index:0;pointer-events:none;}
 .cb-path path{fill:none;stroke:var(--accent);stroke-opacity:0.28;stroke-width:2;stroke-dasharray:5 6;}
-/* COMUNIDAD */
-.community{background:var(--surface);}
-.comm-viz{position:relative;height:380px;max-width:720px;margin:40px auto 0;}
-.bubble{position:absolute;border-radius:var(--r-full);display:grid;place-items:center;color:#fff;opacity:0;transform:scale(0);transition:opacity .6s ease,transform .6s cubic-bezier(0.34,1.56,0.64,1);}
-.comm-viz.reveal .bubble{opacity:1;transform:scale(1);}
-.bubble.shop{background:linear-gradient(135deg,var(--accent),var(--accent-soft));}
-.bubble.user{background:linear-gradient(135deg,var(--purple),#5b21b6);}
-.bubble svg{width:42%;height:42%;opacity:0.92;}
-.comm-viz.reveal .bubble{animation:bob 6s ease-in-out infinite;}
-@keyframes bob{0%,100%{translate:0 0;}50%{translate:0 -10px;}}
-.comm-lines{position:absolute;inset:0;z-index:0;}
-.comm-lines line{stroke:var(--border);stroke-width:1.5;stroke-opacity:0;transition:stroke-opacity 1s ease .4s;}
-.comm-viz.reveal .comm-lines line{stroke-opacity:0.5;}
 /* ECOSISTEMA ONTINYENT */
-.onti{background:linear-gradient(180deg,var(--surface-2),var(--bg));}
+.onti{background:var(--surface-2);}
 .onet{position:relative;max-width:760px;margin:0 auto;height:420px;}
 .onet-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;background:var(--dark-bg);color:#fff;padding:16px 20px;border-radius:var(--r-xl);box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;text-align:left;}
 .onet-center .oi{width:40px;height:40px;border-radius:11px;background:rgba(245,200,66,0.15);color:var(--accent-bright);display:grid;place-items:center;}
@@ -289,10 +264,10 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .future{background:var(--surface);}
 .future-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center;}
 .javi-card{background:var(--dark-bg);color:var(--dark-text);border-radius:var(--r-xl);padding:36px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
-.javi-card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 100% 0%,rgba(245,200,66,0.14),transparent 60%);pointer-events:none;}
+
 .javi-card .jc{position:relative;z-index:1;}
 .javi-avatar{display:flex;align-items:center;gap:12px;margin-bottom:var(--s-lg);}
-.javi-avatar .ava{width:52px;height:52px;border-radius:var(--r-full);background:linear-gradient(135deg,var(--accent-bright),var(--accent));color:#0D0D14;display:grid;place-items:center;font-weight:900;font-size:1.2rem;flex:none;}
+.javi-avatar .ava{width:52px;height:52px;border-radius:var(--r-full);background:var(--accent-bright);color:#0D0D14;display:grid;place-items:center;font-weight:800;font-size:1.2rem;flex:none;}
 .javi-avatar .who{font-size:0.9rem;font-weight:800;color:var(--dark-text);line-height:1.2;}
 .javi-avatar .who small{display:block;font-size:0.72rem;color:var(--dark-muted);font-weight:600;}
 .javi-card .quote{font-size:1.12rem;line-height:1.6;color:var(--dark-text);font-weight:500;margin:0;}
@@ -306,7 +281,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .fitem .ft{font-size:0.92rem;font-weight:700;color:var(--text);}
 .fitem .badge{margin-left:auto;font-size:0.6rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-tint);border:1px solid rgba(176,121,8,0.2);padding:3px 9px;border-radius:var(--r-full);}
 /* PRECIOS */
-.pricing{background:linear-gradient(180deg,var(--bg),var(--surface-2));}
+.pricing{background:var(--bg);}
 .pt-wrap{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-full);padding:4px;margin:0 auto 14px;}
 .pt-center{text-align:center;}
 .pt-wrap button{padding:9px 22px;border-radius:var(--r-full);font-weight:700;font-size:0.9rem;color:var(--muted);transition:all .15s ease;white-space:nowrap;}
@@ -319,7 +294,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .plan h3{font-size:1.35rem;margin-bottom:4px;}
 .plan .tagline{font-size:0.9rem;color:var(--muted);margin-bottom:var(--s-lg);min-height:40px;}
 .price{display:flex;align-items:baseline;gap:5px;}
-.price .amt{font-size:2.7rem;font-weight:900;letter-spacing:-0.03em;color:var(--text);line-height:1;}
+.price .amt{font-size:2.7rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);line-height:1;}
 .price .per{font-size:0.95rem;color:var(--muted);font-weight:700;}
 .price-sub{font-size:0.82rem;color:var(--muted);margin-top:6px;min-height:18px;}
 .price-old{font-size:0.8rem;color:var(--text-dim);text-decoration:line-through;min-height:16px;margin-top:2px;}
@@ -344,7 +319,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .ent-list li svg{width:20px;height:20px;color:var(--green);flex:none;margin-top:3px;}
 .ent-visual{display:grid;place-items:center;}
 .tik{width:100%;max-width:360px;background:var(--dark-bg);color:var(--dark-text);border-radius:var(--r-xl);padding:26px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;}
-.tik::after{content:"";position:absolute;inset:0;background:radial-gradient(300px 160px at 90% 0%,rgba(245,200,66,0.14),transparent 60%);pointer-events:none;}
+
 .tik-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;z-index:1;}
 .tik-top .ev{font-weight:800;font-size:1.05rem;color:var(--dark-text);}
 .tik-top .dt{font-size:0.82rem;color:var(--dark-muted);margin-top:4px;}
@@ -357,7 +332,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 .tik-foot .qr svg{width:100%;height:100%;}
 .tik-foot .valid{font-size:0.85rem;color:var(--dark-muted);font-weight:600;line-height:1.4;}
 /* FAQ */
-.faq-sec{background:linear-gradient(180deg,var(--surface-2),var(--bg));}
+.faq-sec{background:var(--surface-2);}
 .faq{max-width:820px;margin:0 auto;}
 .faq-item{border:1px solid var(--border-soft);border-radius:var(--r-md);margin-bottom:12px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow-sm);}
 .faq-q{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 20px;font-weight:700;font-size:1rem;color:var(--text);}
@@ -370,7 +345,7 @@ section[id],div[id="top"]{scroll-margin-top:84px;}
 /* CTA */
 .cta-final{padding:0 0 92px;}
 .cta-box{background:var(--dark-bg);border-radius:var(--r-xl);padding:64px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
-.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0%,rgba(245,200,66,0.16),transparent 60%);pointer-events:none;}
+
 .cta-box .inner{position:relative;z-index:1;}
 .cta-box h2{color:var(--dark-text);max-width:20ch;margin:0 auto 14px;}
 .cta-box p{color:var(--dark-muted);max-width:46ch;margin:0 auto 28px;font-size:1.08rem;}
@@ -403,7 +378,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .sc-top,.apps-top,.cb-grid,.future-grid{grid-template-columns:1fr;gap:32px;}
   .scene{height:430px;transform:scale(0.9);}
   .feat-grid,.sector-grid{grid-template-columns:repeat(3,1fr);}
-  .benefit-strip{grid-template-columns:1fr 1fr;}
+  
   .rig{max-width:540px;margin:0 auto;}
   .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}.footer-brand{grid-column:1/-1;}
 }
@@ -412,13 +387,12 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .section{padding:60px 0;}
   .showcase{padding:56px 0 68px;}
   .feat-grid,.sector-grid{grid-template-columns:1fr 1fr;}
-  .benefit-strip{grid-template-columns:1fr;}
+  
   .cb-stats{flex-direction:column;gap:14px;}
   .cta-box{padding:48px 24px;}
   .javi-card{padding:26px;}
   .onode{min-width:0;padding:9px;}.onode p{display:none;}
-  .float-stat{left:0;}
-}
+  }
 @media (max-width:420px){ .feat-grid,.sector-grid{grid-template-columns:1fr;} }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important;}
@@ -428,13 +402,43 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   .node.n5{transform:translateX(-50%)!important;}
   .beam{opacity:1!important;}
 }
+
+/* ===== Ajustes de estilo F6 (web): menos adorno, más lectura ===== */
+.reveal-up{transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;}
+/* Funcionalidades: lista con separadores en vez de muro de tarjetas */
+.feat-grid{gap:0 32px;}
+.feat.dark,.feat.light{background:none;border:0;border-top:1px solid var(--border-soft);border-radius:0;box-shadow:none;padding:18px 0;display:grid;grid-template-columns:36px 1fr;column-gap:14px;align-items:start;}
+.feat .fi{grid-row:1/3;}
+.feat h3,.feat p{grid-column:2;}
+.feat.dark{border-top-color:var(--dark-border);}
+.feat.dark:hover,.feat.light:hover{transform:none;box-shadow:none;border-color:var(--border-soft);}
+.feat.dark:hover{border-color:var(--dark-border);}
+.feat .fi{width:36px;height:36px;border-radius:10px;margin:0;flex:none;}
+.feat .fi svg{width:18px;height:18px;}
+.feat h3{margin-bottom:2px;}
+.sector-grid{gap:0 32px;}
+.sector{background:none;border:0;border-top:1px solid var(--border-soft);border-radius:0;box-shadow:none;padding:20px 0;}
+.sector:hover{transform:none;box-shadow:none;border-color:var(--border-soft);}
+.sector .si{width:38px;height:38px;border-radius:10px;}
+.sector .si svg{width:20px;height:20px;}
+.vcard:hover{transform:translateY(-2px);}
+/* Dos apps: solo los dos móviles, sin burbujas flotando alrededor */
+.scene{height:360px;}
+.node,.spark,.beam,.scene-orbit{display:none!important;}
+/* Ecosistema: fila simple en vez de diagrama de red */
+.onet{height:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:900px;}
+.onet-lines{display:none;}
+.onet-center{position:static;transform:none;grid-column:1/-1;justify-self:center;box-shadow:none;margin-bottom:6px;}
+.onode,.onet.reveal .onode,.onet.reveal .onode:hover{position:static!important;transform:none!important;opacity:1;box-shadow:none;min-width:0;}
+@media (max-width:940px){ .onet{grid-template-columns:1fr 1fr;} .scene{transform:none;} }
+@media (max-width:640px){ .onode p{display:block;} }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container nav">
-    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal <span class="tag" data-i18n="brand_tag">Ontinyent</span></a>
+    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal <span class="tag" data-i18n="brand_tag">Ontinyent</span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="/">Inicio</a></li>
       <li><a href="#plataforma" data-i18n="nav_app">La plataforma</a></li>
@@ -457,8 +461,8 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container inner">
     <div class="sc-top">
       <div class="sc-copy">
-        <span class="eyebrow"><span class="num">01</span><span data-i18n="s1_eyebrow">El comercio local de Ontinyent, en digital</span></span>
-        <h1><span data-i18n="s1_h1a">Digitaliza tu negocio local</span> <span class="hl" data-i18n="s1_h1b">con la tecnología de las grandes cadenas.</span></h1>
+        <span class="eyebrow"><span data-i18n="s1_eyebrow">El comercio local de Ontinyent, en digital</span></span>
+        <h1><span data-i18n="s1_h1a">Cobra, vende online y fideliza a tus clientes</span> <span class="hl" data-i18n="s1_h1b">desde una sola app.</span></h1>
         <p class="lead" data-i18n="s1_lead">Gestión, cobros, fidelización y una app para tus clientes, en una sola plataforma. Una versión para comercios y otra para hostelería, hecha en Ontinyent.</p>
         <div class="sc-actions">
           <a href="#unirse" class="btn btn-primary btn-lg" data-i18n="s1_cta1">Quiero digitalizar mi negocio</a>
@@ -471,7 +475,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
           <div class="lid">
             <div class="lscreen">
               <div class="lside">
-                <div class="brand"><span class="lm"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</div>
+                <div class="brand"><span class="lm"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal</div>
                 <div class="lb act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span data-i18n="sb1">Resumen</span></div>
                 <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg><span data-i18n="sb2">Pedidos</span></div>
                 <div class="lb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-i18n="sb3">Reservas</span></div>
@@ -505,7 +509,6 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
           </div>
           <div class="lbase"></div>
         </div>
-        <div class="float-stat"><span class="fsi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></span><span><span class="fsn">+18%</span><span class="fsl" data-i18n="float_stat">ventas vs ayer</span></span></div>
       </div>
     </div>
 
@@ -524,12 +527,6 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
       <div class="feat dark reveal-up"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><h3 data-i18n="r12_t">Notificaciones</h3><p data-i18n="r12_p">Novedades y promos directo al móvil del cliente.</p></div>
     </div>
 
-    <div class="benefit-strip">
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h4 data-i18n="bs1_t">Ahorra tiempo</h4><p data-i18n="bs1_p">Menos tareas manuales cada día.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></div><h4 data-i18n="bs2_t">Más ingresos</h4><p data-i18n="bs2_p">Más ventas online y en tienda.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><h4 data-i18n="bs3_t">Todo conectado</h4><p data-i18n="bs3_p">Una sola plataforma, sin islas.</p></div>
-      <div class="benefit"><div class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h4 data-i18n="bs4_t">Seguridad y RGPD</h4><p data-i18n="bs4_p">Datos protegidos y en regla.</p></div>
-    </div>
   </div>
 </section>
 
@@ -547,22 +544,22 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
 <section class="section sectors" id="verticales">
   <div class="container">
     <div class="section-head reveal-up">
-      <span class="eyebrow"><span class="num">02</span><span data-i18n="v_eyebrow">Para tu tipo de negocio</span></span>
+      <span class="eyebrow"><span data-i18n="v_eyebrow">Para tu tipo de negocio</span></span>
       <h2 data-i18n="v_h2">Una plataforma, adaptada a lo que tú haces.</h2>
-      <p data-i18n="v_p">Comercio u hostelería: elige tu mundo y descubre la versión de Pagolocal pensada para ti, con las herramientas de tu sector activadas de serie.</p>
+      <p data-i18n="v_p">Comercio u hostelería: elige tu mundo y descubre la versión de PagoLocal pensada para ti, con las herramientas de tu sector activadas de serie.</p>
     </div>
     <div class="verticals">
       <a class="vcard reveal-up" href="/comercios.html">
         <div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></div>
         <h3 data-i18n="v1_t">Comercio y servicios</h3>
         <p data-i18n="v1_p">Moda, belleza, alimentación, zapatería, servicios, eventos y reserva de espacios. Catálogo, TPV, citas y stock por variantes.</p>
-        <span class="vgo" data-i18n="v1_cta">Ver Pagolocal Comercios</span>
+        <span class="vgo" data-i18n="v1_cta">Ver PagoLocal Comercios</span>
       </a>
       <a class="vcard reveal-up d2" href="/restauracion.html">
         <div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20a6 6 0 0 1 12 0M12 6V4M9 6a3 3 0 0 1 6 0"/></svg></div>
         <h3 data-i18n="v2_t">Bares y restaurantes</h3>
         <p data-i18n="v2_p">Restaurantes, bares, cafeterías y food trucks. Comanda sin papel, KDS de cocina, pedidos desde la mesa y gestión de mesas.</p>
-        <span class="vgo" data-i18n="v2_cta">Ver Pagolocal Restauración</span>
+        <span class="vgo" data-i18n="v2_cta">Ver PagoLocal Restauración</span>
       </a>
     </div>
     <p class="sectors-note" data-i18n="v_note">¿Tu negocio no encaja en ninguna? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada negocio de Ontinyent.</p>
@@ -574,7 +571,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container">
     <div class="apps-top">
       <div class="apps-copy reveal-up">
-        <span class="eyebrow"><span class="num">03</span><span data-i18n="s2_eyebrow">Conexión directa con tus clientes</span></span>
+        <span class="eyebrow"><span data-i18n="s2_eyebrow">Conexión directa con tus clientes</span></span>
         <h2><span data-i18n="s2_h2a">Dos apps que se hablan.</span> <span class="hl" data-i18n="s2_h2b">Un ecosistema digital para tu comercio.</span></h2>
         <p class="lead" data-i18n="s2_p">Una app para ti y otra para tus clientes, hablando entre sí. Te descubren, compran, reservan y pagan, y vuelven gracias al cashback. Sin intermediarios que se llevan tu margen.</p>
         <a href="#unirse" class="btn btn-primary btn-lg" data-i18n="s2_cta">Quiero llegar a más clientes</a>
@@ -634,7 +631,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
     <div class="cb-copy reveal-up">
       <span class="eyebrow" data-i18n="cb_eyebrow">El poder del cashback</span>
       <h2 data-i18n="cb_h2">Cashback que hace que tus clientes vuelvan.</h2>
-      <p data-i18n="cb_p">Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu comercio.</p>
+      <p data-i18n="cb_p">Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan.</p>
       <div class="cb-stats">
         <div class="cb-stat"><div class="n" data-i18n="cb_s1_n">Tú decides</div><div class="l" data-i18n="cb_s1_l">el % de cashback de tu comercio</div></div>
         <div class="cb-stat"><div class="n" data-i18n="cb_s2_n">Repiten</div><div class="l" data-i18n="cb_s2_l">y te recomiendan a los suyos</div></div>
@@ -651,17 +648,6 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   </div>
 </section>
 
-<!-- COMUNIDAD -->
-<section class="section community" id="comunidad">
-  <div class="container">
-    <div class="section-head reveal-up">
-      <span class="eyebrow" data-i18n="comm_eyebrow">La comunidad que crece</span>
-      <h2 data-i18n="comm_h2">Más comercios, más usuarios. Más usuarios, más clientes para todos.</h2>
-      <p data-i18n="comm_p">No competimos entre nosotros. Sumamos fuerzas para que el comercio local sea la primera opción de la gente.</p>
-    </div>
-    <div class="comm-viz" id="commViz"><svg class="comm-lines" id="commLines" viewBox="0 0 720 380" preserveAspectRatio="none"></svg></div>
-  </div>
-</section>
 
 <!-- BLOQUE 4: ECOSISTEMA ONTINYENT -->
 <section class="section onti" id="ontinyent">
@@ -693,7 +679,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
     <div class="future-grid">
       <div class="javi-card reveal-up">
         <div class="jc">
-          <div class="javi-avatar"><span class="ava">J</span><span class="who">Javi<small data-i18n="javi_role">Creador de Pagolocal · Ontinyent</small></span></div>
+          <div class="javi-avatar"><span class="ava">J</span><span class="who">Javi<small data-i18n="javi_role">Creador de PagoLocal · Ontinyent</small></span></div>
           <p class="quote"><span data-i18n="javi_q1">Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:</span> <span class="hl" data-i18n="javi_q2">"Oye Javi, este botón debe hacer esto o aquello"</span> <span data-i18n="javi_q3">y lo hacemos.</span></p>
         </div>
       </div>
@@ -785,7 +771,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
     <div class="sector-grid">
       <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3 data-i18n="seg1_t">Pagos seguros</h3><p data-i18n="seg1_p">Pasarela bancaria con autenticación reforzada (SCA). No guardamos los datos de tu tarjeta.</p></div>
       <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 data-i18n="seg2_t">Cumplimiento RGPD</h3><p data-i18n="seg2_p">Tus datos protegidos y tus derechos garantizados en todo momento.</p></div>
-      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><circle cx="12" cy="16" r="1.6"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3 data-i18n="seg3_t">Datos cifrados</h3><p data-i18n="seg3_p">Comunicaciones y datos protegidos de extremo a extremo.</p></div>
+      <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><circle cx="12" cy="16" r="1.6"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3 data-i18n="seg3_t">Datos cifrados</h3><p data-i18n="seg3_p">Conexiones cifradas (HTTPS) y contraseñas guardadas con hash.</p></div>
       <div class="sector reveal-up"><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg></div><h3 data-i18n="seg4_t">Local y transparente</h3><p data-i18n="seg4_p">Tus datos no se venden a terceros. Hecho en Ontinyent, para Ontinyent.</p></div>
     </div>
   </div>
@@ -799,7 +785,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
       <h2 data-i18n="faq_h2">Resolvemos tus dudas.</h2>
     </div>
     <div class="faq reveal-up">
-      <div class="faq-item"><button class="faq-q"><span data-i18n="q1">¿Qué es Pagolocal?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a1">La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.</p></div></div>
+      <div class="faq-item"><button class="faq-q"><span data-i18n="q1">¿Qué es PagoLocal?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a1">La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.</p></div></div>
       <div class="faq-item"><button class="faq-q"><span data-i18n="q2">¿Cuánto cuesta?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a2">Para el usuario, la app es gratis. Para el negocio, desde 45 €/mes (Lite) o 60 €/mes (Pro), con 2 meses gratis en el pago anual.</p></div></div>
       <div class="faq-item"><button class="faq-q"><span data-i18n="q3">¿Es seguro pagar?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a3">Sí. Los pagos se procesan con pasarela bancaria segura y autenticación reforzada (SCA), y nunca guardamos los datos de tu tarjeta.</p></div></div>
       <div class="faq-item"><button class="faq-q"><span data-i18n="q4">¿Sirve para mi tipo de negocio?</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-a"><p data-i18n="a4">Sí. Hay una versión para comercio y servicios y otra para hostelería, y adaptamos la plantilla a tu sector.</p></div></div>
@@ -822,14 +808,13 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
         </div>
         <div class="cta-contact">
           <a href="mailto:hola@pagolocal.xyz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> hola@pagolocal.xyz</a>
-          <a href="tel:+34000000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg> <span data-i18n="cta_phone">Teléfono próximamente</span></a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Enlaces entre páginas de Pagolocal ===== -->
+<!-- ===== Enlaces entre páginas de PagoLocal ===== -->
 <style>
 .pl-crossnav{background:var(--accent-tint,#FBF6E8);border-top:1px solid rgba(176,121,8,.18);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 10px;padding:15px 16px;font-size:.9rem;}
 .pl-crossnav a{color:#7A5406;font-weight:600;text-decoration:none;padding:4px 6px;border-radius:6px;transition:color .15s ease,background .15s ease;}
@@ -837,7 +822,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
 .pl-crossnav a[aria-current="page"]{color:var(--accent,#B07908);font-weight:800;}
 .pl-crossnav .sep{color:rgba(176,121,8,.35);}
 </style>
-<nav class="pl-crossnav" aria-label="Páginas de Pagolocal">
+<nav class="pl-crossnav" aria-label="Páginas de PagoLocal">
   <a href="/">Inicio</a><span class="sep">·</span>
   <a href="/negocios.html" aria-current="page">Para negocios</a><span class="sep">·</span>
   <a href="/comercios.html">Comercios</a><span class="sep">·</span>
@@ -849,7 +834,7 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>Pagolocal</a>
+        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="currentColor"/></svg></span>PagoLocal</a>
         <p data-i18n="foot_desc">Una plataforma. Todo tu comercio. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.</p>
       </div>
       <div class="footer-col"><h4 data-i18n="foot_nav">Secciones</h4><ul>
@@ -870,8 +855,8 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
       </ul></div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year"></span> Pagolocal · pagolocal.xyz</span>
-      <span data-i18n="foot_made">Hecho con ❤️ para el comercio local de Ontinyent.</span>
+      <span>© <span id="year"></span> PagoLocal · pagolocal.xyz</span>
+      <span data-i18n="foot_made">Hecho para el comercio local de Ontinyent.</span>
     </div>
   </div>
 </footer>
@@ -879,14 +864,14 @@ footer.site-footer .logo-mark{background:var(--dark-card);box-shadow:0 0 0 1px v
 <script>
 const I18N={
  es:{brand_tag:"Ontinyent",nav_app:"La plataforma",nav_verticals:"Para quién",nav_apps:"Dos apps",nav_price:"Precios",nav_future:"Futuro",nav_cta:"Digitalizar",
- s1_eyebrow:"El comercio local de Ontinyent, en digital",s1_h1a:"Digitaliza tu negocio local",s1_h1b:"con la tecnología de las grandes cadenas.",
+ s1_eyebrow:"El comercio local de Ontinyent, en digital",s1_h1a:"Cobra, vende online y fideliza a tus clientes",s1_h1b:"desde una sola app.",
  s1_lead:"Gestión, cobros, fidelización y una app para tus clientes, en una sola plataforma. Una versión para comercios y otra para hostelería, hecha en Ontinyent.",
  s1_cta1:"Quiero digitalizar mi negocio",s1_cta2:"Elige tu negocio",s1_trust:"Comercios, servicios y hostelería de Ontinyent",
- v_eyebrow:"Para tu tipo de negocio",v_h2:"Una plataforma, adaptada a lo que tú haces.",v_p:"Comercio u hostelería: elige tu mundo y descubre la versión de Pagolocal pensada para ti, con las herramientas de tu sector activadas de serie.",v1_t:"Comercio y servicios",v1_p:"Moda, belleza, alimentación, zapatería, servicios, eventos y reserva de espacios. Catálogo, TPV, citas y stock por variantes.",v1_cta:"Ver Pagolocal Comercios",v2_t:"Bares y restaurantes",v2_p:"Restaurantes, bares, cafeterías y food trucks. Comanda sin papel, KDS de cocina, pedidos desde la mesa y gestión de mesas.",v2_cta:"Ver Pagolocal Restauración",v_note:"¿Tu negocio no encaja en ninguna? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada negocio de Ontinyent.",
+ v_eyebrow:"Para tu tipo de negocio",v_h2:"Una plataforma, adaptada a lo que tú haces.",v_p:"Comercio u hostelería: elige tu mundo y descubre la versión de PagoLocal pensada para ti, con las herramientas de tu sector activadas de serie.",v1_t:"Comercio y servicios",v1_p:"Moda, belleza, alimentación, zapatería, servicios, eventos y reserva de espacios. Catálogo, TPV, citas y stock por variantes.",v1_cta:"Ver PagoLocal Comercios",v2_t:"Bares y restaurantes",v2_p:"Restaurantes, bares, cafeterías y food trucks. Comanda sin papel, KDS de cocina, pedidos desde la mesa y gestión de mesas.",v2_cta:"Ver PagoLocal Restauración",v_note:"¿Tu negocio no encaja en ninguna? Lo adaptamos. Ese es el sentido de un proyecto local: hacerlo a la medida de cada negocio de Ontinyent.",
  nav_tickets:"Entradas",nav_faq:"FAQ",
  ent_eyebrow:"Entradas y eventos",ent_h2:"Los eventos de Ontinyent, en la misma app.",ent_p:"Descubre los eventos del pueblo, compra tu entrada y valídala en la puerta con un QR. El Ayuntamiento y los comercios publican sus eventos; tú los llevas en el bolsillo, con cashback también aquí.",ent_b1:"Compra de entradas desde la app",ent_b2:"Validación con QR en la puerta",ent_b3:"Aforo y asistentes en tiempo real",ent_b4:"Eventos del Ayuntamiento y comercios locales",tik_badge:"Entrada",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"20 dic · 19:00 · Plaça Major",tik_valid:"Válida en puerta · Aforo controlado",
- seg_eyebrow:"Seguridad y confianza",seg_h2:"Tu dinero y tus datos, protegidos.",seg_p:"Un proyecto local no significa menos seguridad. Al revés: pagos con pasarela bancaria y datos tratados con el máximo cuidado.",seg1_t:"Pagos seguros",seg1_p:"Pasarela bancaria con autenticación reforzada (SCA). No guardamos los datos de tu tarjeta.",seg2_t:"Cumplimiento RGPD",seg2_p:"Tus datos protegidos y tus derechos garantizados en todo momento.",seg3_t:"Datos cifrados",seg3_p:"Comunicaciones y datos protegidos de extremo a extremo.",seg4_t:"Local y transparente",seg4_p:"Tus datos no se venden a terceros. Hecho en Ontinyent, para Ontinyent.",
- faq_eyebrow:"Preguntas frecuentes",faq_h2:"Resolvemos tus dudas.",q1:"¿Qué es Pagolocal?",a1:"La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.",q2:"¿Cuánto cuesta?",a2:"Para el usuario, la app es gratis. Para el negocio, desde 45 €/mes (Lite) o 60 €/mes (Pro), con 2 meses gratis en el pago anual.",q3:"¿Es seguro pagar?",a3:"Sí. Los pagos se procesan con pasarela bancaria segura y autenticación reforzada (SCA), y nunca guardamos los datos de tu tarjeta.",q4:"¿Sirve para mi tipo de negocio?",a4:"Sí. Hay una versión para comercio y servicios y otra para hostelería, y adaptamos la plantilla a tu sector.",q5:"¿Qué pasa con mis datos?",a5:"Cumplimos el RGPD: tus datos están protegidos, no se venden a terceros y puedes ejercer tus derechos cuando quieras.",q6:"¿Necesito instalar algo o comprar máquinas?",a6:"No. Funciona desde el móvil o el navegador. Y próximamente podrás conectar TPV físico y datáfono si lo necesitas.",
+ seg_eyebrow:"Seguridad y confianza",seg_h2:"Tu dinero y tus datos, protegidos.",seg_p:"Un proyecto local no significa menos seguridad. Al revés: pagos con pasarela bancaria y datos tratados con el máximo cuidado.",seg1_t:"Pagos seguros",seg1_p:"Pasarela bancaria con autenticación reforzada (SCA). No guardamos los datos de tu tarjeta.",seg2_t:"Cumplimiento RGPD",seg2_p:"Tus datos protegidos y tus derechos garantizados en todo momento.",seg3_t:"Datos cifrados",seg3_p:"Conexiones cifradas (HTTPS) y contraseñas guardadas con hash.",seg4_t:"Local y transparente",seg4_p:"Tus datos no se venden a terceros. Hecho en Ontinyent, para Ontinyent.",
+ faq_eyebrow:"Preguntas frecuentes",faq_h2:"Resolvemos tus dudas.",q1:"¿Qué es PagoLocal?",a1:"La plataforma digital del comercio local de Ontinyent: una app para tus clientes y otra para tu negocio, conectadas, con cashback y marketplace.",q2:"¿Cuánto cuesta?",a2:"Para el usuario, la app es gratis. Para el negocio, desde 45 €/mes (Lite) o 60 €/mes (Pro), con 2 meses gratis en el pago anual.",q3:"¿Es seguro pagar?",a3:"Sí. Los pagos se procesan con pasarela bancaria segura y autenticación reforzada (SCA), y nunca guardamos los datos de tu tarjeta.",q4:"¿Sirve para mi tipo de negocio?",a4:"Sí. Hay una versión para comercio y servicios y otra para hostelería, y adaptamos la plantilla a tu sector.",q5:"¿Qué pasa con mis datos?",a5:"Cumplimos el RGPD: tus datos están protegidos, no se venden a terceros y puedes ejercer tus derechos cuando quieras.",q6:"¿Necesito instalar algo o comprar máquinas?",a6:"No. Funciona desde el móvil o el navegador. Y próximamente podrás conectar TPV físico y datáfono si lo necesitas.",
  sb1:"Resumen",sb2:"Pedidos",sb3:"Reservas",sb4:"Inventario",sb5:"Estadísticas",dash_title:"Panel de control",dash_today:"Hoy",
  dk_sales:"Ventas",dk_orders:"Pedidos",dk_ticket:"Ticket medio",ch_sales:"Ventas · últimos 7 días",ch_channel:"Por canal",lg_shop:"Tienda 48%",lg_online:"Online 28%",lg_book:"Reservas 24%",float_stat:"ventas vs ayer",
  r1_t:"Escaparate digital",r1_p:"Tu catálogo online, con fotos, precios y variantes.",
@@ -905,7 +890,7 @@ const I18N={
  bs3_t:"Todo conectado",bs3_p:"Una sola plataforma, sin islas.",bs4_t:"Seguridad y RGPD",bs4_p:"Datos protegidos y en regla.",
  app_strip:"Una app para tu comercio, otra para tus clientes. Disponibles en:",app_soon:"Próximamente",
  sec_eyebrow:"Una versión para cada comercio",sec_h2:"No es una app genérica. Es la de tu sector.",
- sec_p:"Cada comercio funciona distinto. Por eso Pagolocal tiene una plantilla adaptada a lo que tú necesitas, con las herramientas de tu sector activadas de serie.",
+ sec_p:"Cada comercio funciona distinto. Por eso PagoLocal tiene una plantilla adaptada a lo que tú necesitas, con las herramientas de tu sector activadas de serie.",
  sc1_t:"Belleza y peluquería",sc1_p:"Citas, fichas de cliente, bonos y servicios.",
  sc2_t:"Reserva de espacios",sc2_p:"Salas, pistas y equipos por franjas horarias.",
  sc3_t:"Eventos",sc3_p:"Entradas, aforo y validación en la puerta.",
@@ -927,7 +912,7 @@ const I18N={
  c6_t:"Pagos por la app",c6_p:"Pagan desde el móvil, en tienda u online.",
  c7_t:"Cashback",c7_p:"Vuelven una y otra vez gracias a la fidelización.",
  cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que hace que tus clientes vuelvan.",
- cb_p:"Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan. La estrategia de las grandes cadenas, ahora en tu comercio.",
+ cb_p:"Cada compra genera un porcentaje de vuelta para el cliente. Así repiten y te recomiendan.",
  cb_s1_n:"Tú decides",cb_s1_l:"el % de cashback de tu comercio",cb_s2_n:"Repiten",cb_s2_l:"y te recomiendan a los suyos",cb_shop:"Tu comercio",cb_user:"Tu cliente",
  comm_eyebrow:"La comunidad que crece",comm_h2:"Más comercios, más usuarios. Más usuarios, más clientes para todos.",
  comm_p:"No competimos entre nosotros. Sumamos fuerzas para que el comercio local sea la primera opción de la gente.",
@@ -937,7 +922,7 @@ const I18N={
  on1_t:"Ayuntamiento",on1_p:"Eventos y agenda local",on2_t:"Comerç In",on2_p:"La asociación de comercios",
  on3_t:"Otros comercios",on3_p:"Sumáis, no competís",on4_t:"Más usuarios",on4_p:"Una comunidad que crece",
  b3_note:"Cada nuevo comercio trae más usuarios, y cada usuario es un cliente potencial para tu tienda. El comercio local de Ontinyent, jugando en equipo.",
- fut_eyebrow:"Funcionalidades futuras",fut_h2:"Crece contigo, a tu ritmo.",javi_role:"Creador de Pagolocal · Ontinyent",
+ fut_eyebrow:"Funcionalidades futuras",fut_h2:"Crece contigo, a tu ritmo.",javi_role:"Creador de PagoLocal · Ontinyent",
  javi_q1:"Somos de Ontinyent. Ajustarnos a tus necesidades reales es tan sencillo como venir y decirme:",javi_q2:"\"Oye Javi, este botón debe hacer esto o aquello\"",javi_q3:"y lo hacemos.",
  fut_list_t:"Ya trabajando en lo próximo",fut_list_s:"Algunas de las funciones que llegarán al ecosistema.",
  f1:"Integración con proveedores",f2:"TPV físico y datáfono",f3:"Registro horario",f4:"Personal y turnos",f5:"Y lo que tu comercio necesite",
@@ -955,16 +940,16 @@ const I18N={
  cta_b1:"Solicitar una demo gratuita",cta_b2:"Hablar con nosotros",cta_phone:"Teléfono próximamente",
  foot_desc:"Una plataforma. Todo tu comercio. Gestión, clientes y comunidad local, en un mismo ecosistema hecho en Ontinyent.",
  foot_nav:"Secciones",foot_legal:"Legal",foot_privacy:"Política de privacidad",foot_terms:"Aviso legal",foot_cookies:"Cookies",
- foot_contact:"Contacto",foot_demo:"Solicitar demo",foot_social:"Redes sociales",foot_made:"Hecho con ❤️ para el comercio local de Ontinyent."},
+ foot_contact:"Contacto",foot_demo:"Solicitar demo",foot_social:"Redes sociales",foot_made:"Hecho para el comercio local de Ontinyent."},
  va:{brand_tag:"Ontinyent",nav_app:"La plataforma",nav_verticals:"Per a qui",nav_apps:"Dues apps",nav_price:"Preus",nav_future:"Futur",nav_cta:"Digitalitzar",
- s1_eyebrow:"El comerç local d'Ontinyent, en digital",s1_h1a:"Digitalitza el teu negoci local",s1_h1b:"amb la tecnologia de les grans cadenes.",
+ s1_eyebrow:"El comerç local d'Ontinyent, en digital",s1_h1a:"Cobra, ven en línia i fidelitza els teus clients",s1_h1b:"des d'una sola app.",
  s1_lead:"Gestió, cobraments, fidelització i una app per als teus clients, en una sola plataforma. Una versió per a comerços i una altra per a hostaleria, feta a Ontinyent.",
  s1_cta1:"Vull digitalitzar el meu negoci",s1_cta2:"Tria el teu negoci",s1_trust:"Comerços, serveis i hostaleria d'Ontinyent",
- v_eyebrow:"Per al teu tipus de negoci",v_h2:"Una plataforma, adaptada al que tu fas.",v_p:"Comerç o hostaleria: tria el teu món i descobrix la versió de Pagolocal pensada per a tu, amb les ferramentes del teu sector activades de sèrie.",v1_t:"Comerç i serveis",v1_p:"Moda, bellesa, alimentació, sabateria, serveis, esdeveniments i reserva d'espais. Catàleg, TPV, cites i estoc per variants.",v1_cta:"Veure Pagolocal Comerços",v2_t:"Bars i restaurants",v2_p:"Restaurants, bars, cafeteries i food trucks. Comanda sense paper, KDS de cuina, comandes des de la taula i gestió de taules.",v2_cta:"Veure Pagolocal Restauració",v_note:"El teu negoci no encaixa en cap? L'adaptem. Eixe és el sentit d'un projecte local: fer-lo a la mida de cada negoci d'Ontinyent.",
+ v_eyebrow:"Per al teu tipus de negoci",v_h2:"Una plataforma, adaptada al que tu fas.",v_p:"Comerç o hostaleria: tria el teu món i descobrix la versió de PagoLocal pensada per a tu, amb les ferramentes del teu sector activades de sèrie.",v1_t:"Comerç i serveis",v1_p:"Moda, bellesa, alimentació, sabateria, serveis, esdeveniments i reserva d'espais. Catàleg, TPV, cites i estoc per variants.",v1_cta:"Veure PagoLocal Comerços",v2_t:"Bars i restaurants",v2_p:"Restaurants, bars, cafeteries i food trucks. Comanda sense paper, KDS de cuina, comandes des de la taula i gestió de taules.",v2_cta:"Veure PagoLocal Restauració",v_note:"El teu negoci no encaixa en cap? L'adaptem. Eixe és el sentit d'un projecte local: fer-lo a la mida de cada negoci d'Ontinyent.",
  nav_tickets:"Entrades",nav_faq:"FAQ",
  ent_eyebrow:"Entrades i esdeveniments",ent_h2:"Els esdeveniments d'Ontinyent, en la mateixa app.",ent_p:"Descobrix els esdeveniments del poble, compra la teua entrada i valida-la a la porta amb un QR. L'Ajuntament i els comerços publiquen els seus esdeveniments; tu els portes a la butxaca, amb cashback també ací.",ent_b1:"Compra d'entrades des de l'app",ent_b2:"Validació amb QR a la porta",ent_b3:"Aforament i assistents en temps real",ent_b4:"Esdeveniments de l'Ajuntament i comerços locals",tik_badge:"Entrada",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"20 des · 19:00 · Plaça Major",tik_valid:"Vàlida a la porta · Aforament controlat",
- seg_eyebrow:"Seguretat i confiança",seg_h2:"Els teus diners i les teues dades, protegits.",seg_p:"Un projecte local no vol dir menys seguretat. Al contrari: pagaments amb passarel·la bancària i dades tractades amb la màxima cura.",seg1_t:"Pagaments segurs",seg1_p:"Passarel·la bancària amb autenticació reforçada (SCA). No guardem les dades de la teua targeta.",seg2_t:"Compliment RGPD",seg2_p:"Les teues dades protegides i els teus drets garantits en tot moment.",seg3_t:"Dades xifrades",seg3_p:"Comunicacions i dades protegides d'extrem a extrem.",seg4_t:"Local i transparent",seg4_p:"Les teues dades no es venen a tercers. Fet a Ontinyent, per a Ontinyent.",
- faq_eyebrow:"Preguntes freqüents",faq_h2:"Resolem els teus dubtes.",q1:"Què és Pagolocal?",a1:"La plataforma digital del comerç local d'Ontinyent: una app per als teus clients i una altra per al teu negoci, connectades, amb cashback i marketplace.",q2:"Quant costa?",a2:"Per a l'usuari, l'app és gratis. Per al negoci, des de 45 €/mes (Lite) o 60 €/mes (Pro), amb 2 mesos gratis en el pagament anual.",q3:"És segur pagar?",a3:"Sí. Els pagaments es processen amb passarel·la bancària segura i autenticació reforçada (SCA), i mai guardem les dades de la teua targeta.",q4:"Serveix per al meu tipus de negoci?",a4:"Sí. Hi ha una versió per a comerç i serveis i una altra per a hostaleria, i adaptem la plantilla al teu sector.",q5:"Què passa amb les meues dades?",a5:"Complim el RGPD: les teues dades estan protegides, no es venen a tercers i pots exercir els teus drets quan vulgues.",q6:"Necessite instal·lar res o comprar màquines?",a6:"No. Funciona des del mòbil o el navegador. I pròximament podràs connectar TPV físic i datàfon si el necessites.",
+ seg_eyebrow:"Seguretat i confiança",seg_h2:"Els teus diners i les teues dades, protegits.",seg_p:"Un projecte local no vol dir menys seguretat. Al contrari: pagaments amb passarel·la bancària i dades tractades amb la màxima cura.",seg1_t:"Pagaments segurs",seg1_p:"Passarel·la bancària amb autenticació reforçada (SCA). No guardem les dades de la teua targeta.",seg2_t:"Compliment RGPD",seg2_p:"Les teues dades protegides i els teus drets garantits en tot moment.",seg3_t:"Dades xifrades",seg3_p:"Connexions xifrades (HTTPS) i contrasenyes guardades amb hash.",seg4_t:"Local i transparent",seg4_p:"Les teues dades no es venen a tercers. Fet a Ontinyent, per a Ontinyent.",
+ faq_eyebrow:"Preguntes freqüents",faq_h2:"Resolem els teus dubtes.",q1:"Què és PagoLocal?",a1:"La plataforma digital del comerç local d'Ontinyent: una app per als teus clients i una altra per al teu negoci, connectades, amb cashback i marketplace.",q2:"Quant costa?",a2:"Per a l'usuari, l'app és gratis. Per al negoci, des de 45 €/mes (Lite) o 60 €/mes (Pro), amb 2 mesos gratis en el pagament anual.",q3:"És segur pagar?",a3:"Sí. Els pagaments es processen amb passarel·la bancària segura i autenticació reforçada (SCA), i mai guardem les dades de la teua targeta.",q4:"Serveix per al meu tipus de negoci?",a4:"Sí. Hi ha una versió per a comerç i serveis i una altra per a hostaleria, i adaptem la plantilla al teu sector.",q5:"Què passa amb les meues dades?",a5:"Complim el RGPD: les teues dades estan protegides, no es venen a tercers i pots exercir els teus drets quan vulgues.",q6:"Necessite instal·lar res o comprar màquines?",a6:"No. Funciona des del mòbil o el navegador. I pròximament podràs connectar TPV físic i datàfon si el necessites.",
  sb1:"Resum",sb2:"Comandes",sb3:"Reserves",sb4:"Inventari",sb5:"Estadístiques",dash_title:"Panell de control",dash_today:"Hui",
  dk_sales:"Vendes",dk_orders:"Comandes",dk_ticket:"Tiquet mitjà",ch_sales:"Vendes · últims 7 dies",ch_channel:"Per canal",lg_shop:"Botiga 48%",lg_online:"Online 28%",lg_book:"Reserves 24%",float_stat:"vendes vs ahir",
  r1_t:"Aparador digital",r1_p:"El teu catàleg en línia, amb fotos, preus i variants.",
@@ -983,7 +968,7 @@ const I18N={
  bs3_t:"Tot connectat",bs3_p:"Una sola plataforma, sense illes.",bs4_t:"Seguretat i RGPD",bs4_p:"Dades protegides i en regla.",
  app_strip:"Una app per al teu comerç, una altra per als teus clients. Disponibles a:",app_soon:"Pròximament",
  sec_eyebrow:"Una versió per a cada comerç",sec_h2:"No és una app genèrica. És la del teu sector.",
- sec_p:"Cada comerç funciona distint. Per això Pagolocal té una plantilla adaptada al que necessites, amb les ferramentes del teu sector activades de sèrie.",
+ sec_p:"Cada comerç funciona distint. Per això PagoLocal té una plantilla adaptada al que necessites, amb les ferramentes del teu sector activades de sèrie.",
  sc1_t:"Bellesa i perruqueria",sc1_p:"Cites, fitxes de client, bons i serveis.",
  sc2_t:"Reserva d'espais",sc2_p:"Sales, pistes i equips per franges horàries.",
  sc3_t:"Esdeveniments",sc3_p:"Entrades, aforament i validació a la porta.",
@@ -1005,7 +990,7 @@ const I18N={
  c6_t:"Pagaments per l'app",c6_p:"Paguen des del mòbil, en botiga o en línia.",
  c7_t:"Cashback",c7_p:"Tornen una vegada i una altra gràcies a la fidelització.",
  cb_eyebrow:"El poder del cashback",cb_h2:"Cashback que fa que els teus clients tornen.",
- cb_p:"Cada compra genera un percentatge de tornada per al client. Així repetixen i et recomanen. L'estratègia de les grans cadenes, ara al teu comerç.",
+ cb_p:"Cada compra genera un percentatge de tornada per al client. Així repetixen i et recomanen.",
  cb_s1_n:"Tu decideixes",cb_s1_l:"el % de cashback del teu comerç",cb_s2_n:"Repetixen",cb_s2_l:"i et recomanen als seus",cb_shop:"El teu comerç",cb_user:"El teu client",
  comm_eyebrow:"La comunitat que creix",comm_h2:"Més comerços, més usuaris. Més usuaris, més clients per a tots.",
  comm_p:"No competim entre nosaltres. Sumem forces perquè el comerç local siga la primera opció de la gent.",
@@ -1015,7 +1000,7 @@ const I18N={
  on1_t:"Ajuntament",on1_p:"Esdeveniments i agenda local",on2_t:"Comerç In",on2_p:"L'associació de comerços",
  on3_t:"Altres comerços",on3_p:"Sumeu, no competiu",on4_t:"Més usuaris",on4_p:"Una comunitat que creix",
  b3_note:"Cada nou comerç porta més usuaris, i cada usuari és un client potencial per a la teua botiga. El comerç local d'Ontinyent, jugant en equip.",
- fut_eyebrow:"Funcionalitats futures",fut_h2:"Creix amb tu, al teu ritme.",javi_role:"Creador de Pagolocal · Ontinyent",
+ fut_eyebrow:"Funcionalitats futures",fut_h2:"Creix amb tu, al teu ritme.",javi_role:"Creador de PagoLocal · Ontinyent",
  javi_q1:"Som d'Ontinyent. Ajustar-nos a les teues necessitats reals és tan senzill com vindre i dir-me:",javi_q2:"\"Ei Javi, este botó ha de fer açò o allò\"",javi_q3:"i ho fem.",
  fut_list_t:"Ja treballant en el que ve",fut_list_s:"Algunes de les funcions que arribaran a l'ecosistema.",
  f1:"Integració amb proveïdors",f2:"TPV físic i datàfon",f3:"Registre horari",f4:"Personal i torns",f5:"I el que el teu comerç necessite",
@@ -1033,16 +1018,16 @@ const I18N={
  cta_b1:"Sol·licitar una demo gratuïta",cta_b2:"Parlar amb nosaltres",cta_phone:"Telèfon pròximament",
  foot_desc:"Una plataforma. Tot el teu comerç. Gestió, clients i comunitat local, en un mateix ecosistema fet a Ontinyent.",
  foot_nav:"Seccions",foot_legal:"Legal",foot_privacy:"Política de privacitat",foot_terms:"Avís legal",foot_cookies:"Cookies",
- foot_contact:"Contacte",foot_demo:"Sol·licitar demo",foot_social:"Xarxes socials",foot_made:"Fet amb ❤️ per al comerç local d'Ontinyent."},
+ foot_contact:"Contacte",foot_demo:"Sol·licitar demo",foot_social:"Xarxes socials",foot_made:"Fet per al comerç local d'Ontinyent."},
  en:{brand_tag:"Ontinyent",nav_app:"The platform",nav_verticals:"For who",nav_apps:"Two apps",nav_price:"Pricing",nav_future:"Future",nav_cta:"Go digital",
- s1_eyebrow:"Ontinyent's local commerce, gone digital",s1_h1a:"Digitalize your local business",s1_h1b:"with the technology of the big chains.",
+ s1_eyebrow:"Ontinyent's local commerce, gone digital",s1_h1a:"Get paid, sell online and keep your customers",s1_h1b:"from a single app.",
  s1_lead:"Management, payments, loyalty and a customer app, all in one platform. One version for shops and another for hospitality, made in Ontinyent.",
  s1_cta1:"I want to digitalize my business",s1_cta2:"Choose your business",s1_trust:"Shops, services and hospitality in Ontinyent",
- v_eyebrow:"For your type of business",v_h2:"One platform, tailored to what you do.",v_p:"Retail or hospitality: choose your world and discover the Pagolocal version built for you, with your sector's tools on out of the box.",v1_t:"Shops and services",v1_p:"Fashion, beauty, grocery, footwear, services, events and space booking. Catalog, POS, appointments and stock by variants.",v1_cta:"See Pagolocal Retail",v2_t:"Bars and restaurants",v2_p:"Restaurants, bars, cafes and food trucks. Paperless orders, kitchen KDS, order from the table and table management.",v2_cta:"See Pagolocal Hospitality",v_note:"Your business doesn't fit any of these? We adapt it. That's the point of a local project: built to fit every business in Ontinyent.",
+ v_eyebrow:"For your type of business",v_h2:"One platform, tailored to what you do.",v_p:"Retail or hospitality: choose your world and discover the PagoLocal version built for you, with your sector's tools on out of the box.",v1_t:"Shops and services",v1_p:"Fashion, beauty, grocery, footwear, services, events and space booking. Catalog, POS, appointments and stock by variants.",v1_cta:"See PagoLocal Retail",v2_t:"Bars and restaurants",v2_p:"Restaurants, bars, cafes and food trucks. Paperless orders, kitchen KDS, order from the table and table management.",v2_cta:"See PagoLocal Hospitality",v_note:"Your business doesn't fit any of these? We adapt it. That's the point of a local project: built to fit every business in Ontinyent.",
  nav_tickets:"Tickets",nav_faq:"FAQ",
  ent_eyebrow:"Tickets and events",ent_h2:"Ontinyent's events, in the same app.",ent_p:"Discover the town's events, buy your ticket and validate it at the door with a QR. The town hall and shops publish their events; you carry them in your pocket, with cashback here too.",ent_b1:"Buy tickets from the app",ent_b2:"QR validation at the door",ent_b3:"Capacity and attendees in real time",ent_b4:"Events from the town hall and local shops",tik_badge:"Ticket",tik_ev:"Fira de Nadal · Ontinyent",tik_dt:"Dec 20 · 19:00 · Plaça Major",tik_valid:"Valid at the door · Capacity controlled",
- seg_eyebrow:"Security and trust",seg_h2:"Your money and your data, protected.",seg_p:"A local project doesn't mean less security. Quite the opposite: bank-grade payments and data handled with the utmost care.",seg1_t:"Secure payments",seg1_p:"Bank payment gateway with strong authentication (SCA). We never store your card details.",seg2_t:"GDPR compliant",seg2_p:"Your data protected and your rights guaranteed at all times.",seg3_t:"Encrypted data",seg3_p:"Communications and data protected end to end.",seg4_t:"Local and transparent",seg4_p:"Your data is never sold to third parties. Made in Ontinyent, for Ontinyent.",
- faq_eyebrow:"Frequently asked questions",faq_h2:"We answer your questions.",q1:"What is Pagolocal?",a1:"The digital platform for Ontinyent's local commerce: one app for your customers and one for your business, connected, with cashback and marketplace.",q2:"How much does it cost?",a2:"For users, the app is free. For businesses, from €45/mo (Lite) or €60/mo (Pro), with 2 months free on annual billing.",q3:"Is paying secure?",a3:"Yes. Payments are processed through a secure bank gateway with strong authentication (SCA), and we never store your card details.",q4:"Does it work for my type of business?",a4:"Yes. There's a version for retail and services and another for hospitality, and we adapt the template to your sector.",q5:"What about my data?",a5:"We are GDPR compliant: your data is protected, never sold to third parties, and you can exercise your rights anytime.",q6:"Do I need to install anything or buy hardware?",a6:"No. It works from your phone or browser. And soon you'll be able to connect a physical POS and card reader if you need one.",
+ seg_eyebrow:"Security and trust",seg_h2:"Your money and your data, protected.",seg_p:"A local project doesn't mean less security. Quite the opposite: bank-grade payments and data handled with the utmost care.",seg1_t:"Secure payments",seg1_p:"Bank payment gateway with strong authentication (SCA). We never store your card details.",seg2_t:"GDPR compliant",seg2_p:"Your data protected and your rights guaranteed at all times.",seg3_t:"Encrypted data",seg3_p:"Encrypted connections (HTTPS) and hashed passwords.",seg4_t:"Local and transparent",seg4_p:"Your data is never sold to third parties. Made in Ontinyent, for Ontinyent.",
+ faq_eyebrow:"Frequently asked questions",faq_h2:"We answer your questions.",q1:"What is PagoLocal?",a1:"The digital platform for Ontinyent's local commerce: one app for your customers and one for your business, connected, with cashback and marketplace.",q2:"How much does it cost?",a2:"For users, the app is free. For businesses, from €45/mo (Lite) or €60/mo (Pro), with 2 months free on annual billing.",q3:"Is paying secure?",a3:"Yes. Payments are processed through a secure bank gateway with strong authentication (SCA), and we never store your card details.",q4:"Does it work for my type of business?",a4:"Yes. There's a version for retail and services and another for hospitality, and we adapt the template to your sector.",q5:"What about my data?",a5:"We are GDPR compliant: your data is protected, never sold to third parties, and you can exercise your rights anytime.",q6:"Do I need to install anything or buy hardware?",a6:"No. It works from your phone or browser. And soon you'll be able to connect a physical POS and card reader if you need one.",
  sb1:"Overview",sb2:"Orders",sb3:"Bookings",sb4:"Inventory",sb5:"Analytics",dash_title:"Control panel",dash_today:"Today",
  dk_sales:"Sales",dk_orders:"Orders",dk_ticket:"Avg ticket",ch_sales:"Sales · last 7 days",ch_channel:"By channel",lg_shop:"In-store 48%",lg_online:"Online 28%",lg_book:"Bookings 24%",float_stat:"sales vs yesterday",
  r1_t:"Digital storefront",r1_p:"Your catalog online, with photos, prices and variants.",
@@ -1061,7 +1046,7 @@ const I18N={
  bs3_t:"All connected",bs3_p:"One platform, no silos.",bs4_t:"Security and GDPR",bs4_p:"Data protected and compliant.",
  app_strip:"One app for your shop, another for your customers. Available on:",app_soon:"Coming soon",
  sec_eyebrow:"A version for every shop",sec_h2:"Not a generic app. It's your sector's.",
- sec_p:"Every shop works differently. That's why Pagolocal has a template tailored to what you need, with your sector's tools on out of the box.",
+ sec_p:"Every shop works differently. That's why PagoLocal has a template tailored to what you need, with your sector's tools on out of the box.",
  sc1_t:"Beauty and hair",sc1_p:"Appointments, client profiles, passes and services.",
  sc2_t:"Space booking",sc2_p:"Rooms, courts and gear by time slots.",
  sc3_t:"Events",sc3_p:"Tickets, capacity and door validation.",
@@ -1083,7 +1068,7 @@ const I18N={
  c6_t:"In-app payments",c6_p:"They pay from the phone, in store or online.",
  c7_t:"Cashback",c7_p:"They come back again and again through loyalty.",
  cb_eyebrow:"The power of cashback",cb_h2:"Cashback that keeps customers coming back.",
- cb_p:"Every purchase gives a percentage back to the customer. So they return and recommend you. The strategy of the big chains, now at your shop.",
+ cb_p:"Every purchase gives a percentage back to the customer. So they return and recommend you.",
  cb_s1_n:"You decide",cb_s1_l:"your shop's cashback %",cb_s2_n:"They return",cb_s2_l:"and recommend you to theirs",cb_shop:"Your shop",cb_user:"Your customer",
  comm_eyebrow:"A growing community",comm_h2:"More shops, more users. More users, more customers for everyone.",
  comm_p:"We don't compete with each other. We join forces so local commerce is people's first choice.",
@@ -1093,7 +1078,7 @@ const I18N={
  on1_t:"Town hall",on1_p:"Events and local agenda",on2_t:"Comerç In",on2_p:"The merchants' association",
  on3_t:"Other shops",on3_p:"You add up, you don't compete",on4_t:"More users",on4_p:"A growing community",
  b3_note:"Every new shop brings more users, and every user is a potential customer for your store. Ontinyent's local commerce, playing as a team.",
- fut_eyebrow:"Future features",fut_h2:"It grows with you, at your pace.",javi_role:"Creator of Pagolocal · Ontinyent",
+ fut_eyebrow:"Future features",fut_h2:"It grows with you, at your pace.",javi_role:"Creator of PagoLocal · Ontinyent",
  javi_q1:"We're from Ontinyent. Fitting your real needs is as simple as coming and telling me:",javi_q2:"\"Hey Javi, this button should do this or that\"",javi_q3:"and we make it happen.",
  fut_list_t:"Already working on what's next",fut_list_s:"Some of the features coming to the ecosystem.",
  f1:"Supplier integration",f2:"Physical POS and card reader",f3:"Time tracking",f4:"Staff and shifts",f5:"And whatever your shop needs",
@@ -1111,7 +1096,7 @@ const I18N={
  cta_b1:"Request a free demo",cta_b2:"Talk to us",cta_phone:"Phone coming soon",
  foot_desc:"One platform. Your whole shop. Management, customers and local community, in one ecosystem made in Ontinyent.",
  foot_nav:"Sections",foot_legal:"Legal",foot_privacy:"Privacy policy",foot_terms:"Legal notice",foot_cookies:"Cookies",
- foot_contact:"Contact",foot_demo:"Request demo",foot_social:"Social media",foot_made:"Made with ❤️ for local commerce in Ontinyent."}
+ foot_contact:"Contact",foot_demo:"Request demo",foot_social:"Social media",foot_made:"Made for local commerce in Ontinyent."}
 };
 let currentLang="es";
 function applyLang(lang){currentLang=lang;const d=I18N[lang];document.documentElement.lang=lang;
@@ -1143,6 +1128,7 @@ heroObs.observe(scene);
 const cbAnim=document.getElementById("cbAnim");
 const cbObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){cbAnim.classList.add("live");cbObs.disconnect();}});},{threshold:0.4});
 cbObs.observe(cbAnim);
+if(document.getElementById("commViz")){
 const commViz=document.getElementById("commViz"),commLines=document.getElementById("commLines");
 const bubbleData=[{x:50,y:46,r:62,type:"shop"},{x:33,y:20,r:34,type:"user"},{x:66,y:18,r:40,type:"shop"},{x:18,y:62,r:44,type:"user"},{x:80,y:60,r:50,type:"shop"},{x:44,y:78,r:34,type:"user"},{x:70,y:82,r:30,type:"user"},{x:26,y:36,r:26,type:"shop"},{x:88,y:34,r:24,type:"user"},{x:58,y:34,r:28,type:"user"}];
 const shopSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 5 3h14l2 6M4 9v11h16V9M9 20v-6h6v6"/></svg>';
@@ -1159,6 +1145,7 @@ buildBubbles();
 const commObs=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){commViz.classList.add("reveal");commObs.disconnect();}});},{threshold:0.3});
 commObs.observe(commViz);
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{const had=commViz.classList.contains("reveal");buildBubbles();if(had)commViz.classList.add("reveal");},200);});
+}
 const onet=document.getElementById("onet"),onetLines=document.getElementById("onetLines");
 (function(){const cx=380,cy=210;const t=[[152,50],[608,50],[152,370],[608,370]];
  onetLines.innerHTML=t.map(([x,y])=>`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`).join("");})();

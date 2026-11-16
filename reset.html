@@ -27,20 +27,6 @@
       position: relative;
       overflow-x: hidden;
     }
-    /* Glow dorado suave decorativo */
-    body::before {
-      content: "";
-      position: absolute;
-      top: -200px;
-      right: -200px;
-      width: 500px;
-      height: 500px;
-      background: var(--accent);
-      opacity: 0.08;
-      border-radius: 50%;
-      filter: blur(120px);
-      z-index: 0;
-    }
 
     /* Card sobre fondo claro */
     .reset-card {
@@ -73,7 +59,6 @@
     .reset-logo svg {
       width: 36px;
       height: 36px;
-      filter: drop-shadow(0 0 8px rgba(245, 200, 66, 0.5));
     }
     .reset-card h1 {
       font-size: 1.5rem;
@@ -289,7 +274,7 @@
     }
 
     btn.disabled = true;
-    btn.textContent = 'Procesando...';
+    btn.textContent = 'Guardando…';
     alertBox.className = 'alert';
 
     try {

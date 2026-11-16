@@ -39,19 +39,6 @@
       padding: 60px 0 100px;
       overflow: hidden;
     }
-    /* Glow dorado decorativo de fondo */
-    .hero-decor {
-      position: absolute;
-      width: 480px; height: 480px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.06;
-      filter: blur(110px);
-      top: -80px;
-      right: -100px;
-      z-index: 0;
-      pointer-events: none;
-    }
     .hero-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -66,16 +53,6 @@
       font-style: normal;
       color: var(--accent);
       position: relative;
-    }
-    .hero h1 em::after {
-      content: "";
-      position: absolute;
-      left: -4px; right: -4px; bottom: 0.06em;
-      height: 0.18em;
-      background: var(--accent);
-      opacity: 0.18;
-      border-radius: 2px;
-      z-index: -1;
     }
     .hero-lead {
       font-size: 1.15rem;
@@ -153,17 +130,6 @@
       position: relative;
       overflow: hidden;
     }
-    .phone-balance::after {
-      content: "";
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(245, 200, 66, 0.18);
-      filter: blur(8px);
-    }
     .phone-balance-label {
       font-size: 0.72rem;
       color: var(--dark-muted);
@@ -202,8 +168,9 @@
       border-radius: var(--r-sm);
       display: grid;
       place-items: center;
-      font-size: 1rem;
+      color: var(--dark-muted);
     }
+    .phone-row-icon svg { width: 18px; height: 18px; }
     .phone-row-main { flex: 1; min-width: 0; }
     .phone-row-name {
       font-weight: 600;
@@ -258,20 +225,6 @@
       position: relative;
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .step:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: var(--shadow);
-    }
-    .step-num {
-      position: absolute;
-      top: var(--s-xl); right: 28px;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--surface-3);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
     .step-icon {
       width: 52px; height: 52px;
       background: var(--accent-tint);
@@ -307,16 +260,7 @@
       border: 1px solid var(--border);
       transition: all .2s ease;
     }
-    .where-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-sm);
-    }
-    .where-emoji {
-      font-size: 2rem;
-      margin-bottom: var(--s-md);
-      display: block;
-    }
+    a.where-card:hover { border-color: var(--accent); }
     .where-card h3 {
       font-size: 1rem;
       margin-bottom: var(--s-xs);
@@ -336,16 +280,6 @@
       padding: 70px 60px;
       position: relative;
       overflow: hidden;
-    }
-    .merchants::before {
-      content: "";
-      position: absolute;
-      width: 380px; height: 380px;
-      border-radius: 50%;
-      background: var(--accent-bright);
-      opacity: 0.12;
-      filter: blur(110px);
-      top: -100px; right: -80px;
     }
     .merchants-grid {
       display: grid;
@@ -538,7 +472,6 @@
 
   <!-- =================== HERO =================== -->
   <section class="hero">
-    <div class="hero-decor" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div>
         <span class="eyebrow" data-i18n="hero.eyebrow"></span>
@@ -579,7 +512,7 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <div class="phone-row">
-                <div class="phone-row-icon">☕</div>
+                <div class="phone-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a3 3 0 0 1 0 6h-1"/><path d="M3 8h14v6a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/><path d="M7 2v3M11 2v3M15 2v3"/></svg></div>
                 <div class="phone-row-main">
                   <div class="phone-row-name">Cafetería Central</div>
                   <div class="phone-row-sub">Hoy · 09:14</div>
@@ -590,7 +523,7 @@
                 </div>
               </div>
               <div class="phone-row">
-                <div class="phone-row-icon">🥐</div>
+                <div class="phone-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18l-1.7 9.3A2 2 0 0 1 17.3 21H6.7a2 2 0 0 1-2-1.7L3 10z"/><path d="m8 10 3-6M16 10l-3-6"/></svg></div>
                 <div class="phone-row-main">
                   <div class="phone-row-name">Forn Pa i Coca</div>
                   <div class="phone-row-sub">Ayer · 08:32</div>
@@ -601,7 +534,7 @@
                 </div>
               </div>
               <div class="phone-row">
-                <div class="phone-row-icon">👕</div>
+                <div class="phone-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 3.5 5.5 2 10l3 1.2V21h14v-9.8l3-1.2-1.5-4.5L16 3c-.7 1.3-2.2 2-4 2s-3.3-.7-4-2z"/></svg></div>
                 <div class="phone-row-main">
                   <div class="phone-row-name">Boutique Lola</div>
                   <div class="phone-row-sub">Lun · 18:05</div>
@@ -628,7 +561,6 @@
       </div>
       <div class="how-grid">
         <div class="step">
-          <div class="step-num">01</div>
           <div class="step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           </div>
@@ -636,7 +568,6 @@
           <p  data-i18n="how.step1.text"></p>
         </div>
         <div class="step">
-          <div class="step-num">02</div>
           <div class="step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           </div>
@@ -644,7 +575,6 @@
           <p  data-i18n="how.step2.text"></p>
         </div>
         <div class="step">
-          <div class="step-num">03</div>
           <div class="step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
@@ -664,14 +594,14 @@
         <p data-i18n="where.lead"></p>
       </div>
       <div class="where-grid">
-        <a class="where-card" href="/restauracion.html" style="cursor:pointer;text-decoration:none;display:block"><span class="where-emoji">🍽️</span><h3 data-i18n="where.c1.title"></h3><p data-i18n="where.c1.text"></p><span style="display:inline-block;margin-top:8px;color:var(--accent);font-weight:700;font-size:0.82rem">Ver más →</span></a>
-        <div class="where-card"><span class="where-emoji">👕</span><h3 data-i18n="where.c2.title"></h3><p data-i18n="where.c2.text"></p></div>
-        <div class="where-card"><span class="where-emoji">🥖</span><h3 data-i18n="where.c3.title"></h3><p data-i18n="where.c3.text"></p></div>
-        <div class="where-card"><span class="where-emoji">💆</span><h3 data-i18n="where.c4.title"></h3><p data-i18n="where.c4.text"></p></div>
-        <div class="where-card"><span class="where-emoji">📚</span><h3 data-i18n="where.c5.title"></h3><p data-i18n="where.c5.text"></p></div>
-        <div class="where-card"><span class="where-emoji">🌺</span><h3 data-i18n="where.c6.title"></h3><p data-i18n="where.c6.text"></p></div>
-        <div class="where-card"><span class="where-emoji">💍</span><h3 data-i18n="where.c7.title"></h3><p data-i18n="where.c7.text"></p></div>
-        <div class="where-card"><span class="where-emoji">✨</span><h3 data-i18n="where.c8.title"></h3><p data-i18n="where.c8.text"></p></div>
+        <a class="where-card" href="/restauracion.html" style="cursor:pointer;text-decoration:none;display:block"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v6a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M7 11v10"/><path d="M17 21V3c-2 0-3.5 2.5-3.5 6s1.5 4 3.5 4"/></svg></span><h3 data-i18n="where.c1.title"></h3><p data-i18n="where.c1.text"></p><span style="display:inline-block;margin-top:8px;color:var(--accent);font-weight:600;font-size:0.82rem">Ver restauración</span></a>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 3.5 5.5 2 10l3 1.2V21h14v-9.8l3-1.2-1.5-4.5L16 3c-.7 1.3-2.2 2-4 2s-3.3-.7-4-2z"/></svg></span><h3 data-i18n="where.c2.title"></h3><p data-i18n="where.c2.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18l-1.7 9.3A2 2 0 0 1 17.3 21H6.7a2 2 0 0 1-2-1.7L3 10z"/><path d="m8 10 3-6M16 10l-3-6"/></svg></span><h3 data-i18n="where.c3.title"></h3><p data-i18n="where.c3.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg></span><h3 data-i18n="where.c4.title"></h3><p data-i18n="where.c4.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg></span><h3 data-i18n="where.c5.title"></h3><p data-i18n="where.c5.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 5 4 5c0 5 3 7 8 7z"/><path d="M12 12c0-4 3-7 8-7 0 5-3 7-8 7z"/></svg></span><h3 data-i18n="where.c6.title"></h3><p data-i18n="where.c6.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6-4 12"/></svg></span><h3 data-i18n="where.c7.title"></h3><p data-i18n="where.c7.text"></p></div>
+        <div class="where-card"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></span><h3 data-i18n="where.c8.title"></h3><p data-i18n="where.c8.text"></p></div>
       </div>
     </div>
   </section>
@@ -918,7 +848,7 @@
         eyebrow: "Comercio local · Ontinyent",
         title:   "Paga en tu barrio. <em>Gana</em> en cada compra.",
         lead:    "PagoLocal es la app de pago del comercio de Ontinyent. Compra con un QR en tus tiendas de siempre, recibe cashback en cada compra y descubre productos locales en el marketplace.",
-        trust:   "Pagos seguros · 100% gratis para usuarios"
+        trust:   "Pagos protegidos por Cecabank · 100% gratis para usuarios"
       },
 
       phone: { balance: "Tu cashback disponible" },
@@ -926,16 +856,16 @@
       how: {
         eyebrow: "Cómo funciona",
         title:   "Empieza a ahorrar en tres pasos",
-        lead:    "Sin papeleos, sin tarjetas físicas, sin esperas. Solo el comercio de Ontinyent en tu móvil.",
-        step1: { title: "1. Descarga la app",     text: "Disponible para iOS y Android. El registro es gratuito y tarda menos de un minuto." },
-        step2: { title: "2. Paga con QR",         text: "Escanea el QR del comercio o muestra el tuyo. El pago se hace al instante, con verificación biométrica." },
-        step3: { title: "3. Acumula cashback",    text: "Cada compra te devuelve un porcentaje en saldo, que puedes gastar en tu próxima compra en cualquier comercio PagoLocal." }
+        lead:    "Te das de alta en un minuto y pagas con el móvil en las tiendas adheridas.",
+        step1: { title: "1. Descarga la app",     text: "Crea tu cuenta con tu email. Es gratis y tardas menos de un minuto." },
+        step2: { title: "2. Paga con QR",         text: "Escanea el QR del comercio y confirma con tu huella o Face ID." },
+        step3: { title: "3. Acumula cashback",    text: "Cada compra te devuelve un porcentaje en saldo para gastar en los comercios PagoLocal que lo aceptan." }
       },
 
       where: {
         eyebrow: "Comercios PagoLocal",
         title:   "Donde compras siempre, ahora con cashback",
-        lead:    "Una red de comercios de Ontinyent crece cada semana. Estos son algunos de los sectores donde ya puedes usar PagoLocal.",
+        lead:    "Estos son algunos de los sectores donde ya puedes pagar con PagoLocal.",
         c1: { title: "Restaurantes y cafeterías", text: "Bares, restaurantes, panaderías y heladerías." },
         c2: { title: "Moda y calzado",            text: "Tiendas de ropa, zapaterías y complementos." },
         c3: { title: "Alimentación",              text: "Fruterías, carnicerías, ultramarinos y especialistas." },
@@ -960,10 +890,10 @@
       security: {
         eyebrow: "Seguridad",
         title:   "Tu dinero, siempre protegido",
-        lead:    "PagoLocal cumple las normativas europeas de pagos y se apoya en infraestructura bancaria de primer nivel.",
-        s1: { title: "Pagos tokenizados",          text: "Toda transacción se procesa con pasarelas 100% seguras." },
-        s2: { title: "Identificación biométrica",   text: "Face ID o huella protegen cada pago, incluso si pierdes el móvil." },
-        s3: { title: "Cifrado de extremo a extremo", text: "Tus datos viajan cifrados y no se guardan en el dispositivo." },
+        lead:    "Los pagos los procesa la pasarela bancaria de Cecabank. PagoLocal no guarda los datos de tu tarjeta.",
+        s1: { title: "Pagos por Cecabank",          text: "Toda transacción se procesa con la pasarela TPV Virtual de Cecabank." },
+        s2: { title: "Identificación biométrica",   text: "Cada pago se confirma con tu huella o Face ID." },
+        s3: { title: "Conexión cifrada",            text: "Todo viaja por HTTPS y tu contraseña se guarda cifrada (hash), nunca en claro." },
         s4: { title: "Cumplimiento PSD2",           text: "Bajo la normativa europea de servicios de pago." }
       },
 
@@ -975,7 +905,7 @@
         q3: { q: "¿Cómo me doy de alta?",                           a: "Descarga PagoLocal desde App Store o Google Play, introduce tu email, crea una contraseña y verifica tu cuenta. Es cuestión de un minuto." },
         q4: { q: "¿Cómo gano cashback?",                            a: "Cada comercio PagoLocal decide qué porcentaje devuelve por cada compra. Al pagar, ese porcentaje se acumula automáticamente en tu saldo, listo para gastar en cualquier comercio que acepte saldo PagoLocal." },
         q5: { q: "¿Dónde puedo gastar mi cashback?",                a: "En cualquier comercio PagoLocal que tenga activada la opción de aceptar saldo. Lo verás claramente al elegir cómo pagar." },
-        q6: { q: "¿Es seguro?",                                     a: "Sí. Los pagos se procesan a través de tarjetas tokenizadas. Además, cada pago se confirma con huella o Face ID, y la app cumple la normativa PSD2 europea." },
+        q6: { q: "¿Es seguro?",                                     a: "Sí. Los pagos se procesan a través de Cecabank, una de las pasarelas bancarias más usadas en España. Además, cada pago se confirma con huella o Face ID, y la app cumple la normativa PSD2 europea." },
         q7: { q: "¿Qué pasa si pierdo el móvil?",                   a: "Tu dinero está a salvo. Nadie puede acceder a la app sin tu huella o Face ID, y puedes pedir la baja desde el panel de soporte escribiendo a soporte@pagolocal.xyz." },
         q8: { q: "¿Funciona sin internet?",                         a: "PagoLocal necesita conexión a internet (datos móviles o WiFi) para realizar pagos, porque cada operación se procesa al instante con tu banco." },
         moreText: "¿No encuentras tu respuesta?",
@@ -984,8 +914,8 @@
 
       ctafinal: {
         eyebrow: "Empieza hoy",
-        title:   "Descubre el comercio de Ontinyent como nunca antes",
-        lead:    "Descarga PagoLocal, paga en tus tiendas de siempre y empieza a ganar en cada compra."
+        title:   "Tus tiendas de siempre, ahora con cashback",
+        lead:    "Descarga PagoLocal y paga con el móvil en los comercios de Ontinyent."
       },
 
       modal: {
